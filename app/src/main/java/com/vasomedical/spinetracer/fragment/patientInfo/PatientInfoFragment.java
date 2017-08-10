@@ -28,6 +28,8 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.camera.PhotoIntentActivity;
 import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
+import com.vasomedical.spinetracer.fragment.detect.DetectingFragment;
+import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
 import com.vasomedical.spinetracer.fragment.view3d.View3dFragment;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
@@ -81,7 +83,7 @@ public class PatientInfoFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_patient_info_new, container, false);
         Bundle args = getArguments();
 
-        
+
         keyboardAdvance(view);
         setStepIndicator(0);
 
@@ -94,28 +96,7 @@ public class PatientInfoFragment extends BaseFragment {
     }
 
 
-    /** Check if this device has a camera */
-    private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
-    }
 
-
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-           // c = Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
-    }
 
 
     @Override
@@ -228,16 +209,23 @@ public class PatientInfoFragment extends BaseFragment {
     }
 
 
+
+    /**
+     * Next Button  : New Patient
+     * */
     private void nextButtonPressOnNewPatient(){
 
         String username = newPatientNameEditText.getText().toString().trim().replace(" ", "").toLowerCase();
         String gender = newPatientGenderEditText.getText().toString();
 
-
+        fragmentUtil.showFragment(new DetectionOptionsFragment());
 
 
     }
 
+    /**
+     * Next Button  : Existing patient list
+     * */
     private void nextButtonPressOnExistPatientList(){
         // 1. Instantiate an AlertDialog.Builder with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -252,6 +240,10 @@ public class PatientInfoFragment extends BaseFragment {
         dialog.show();
     }
 
+
+    /**
+     * Next Button : Existing patient details
+     * */
     private void nextButtonPressOnExistPatientDetails(){
 
     }

@@ -59,6 +59,7 @@
     <dimen name="button_w_10">130dp</dimen>
     <dimen name="button_w_11">101dp</dimen>
     <dimen name="button_w_12">96dp</dimen>
+    <dimen name="button_w_13">60dp</dimen>
     <dimen name="button_back">40dp</dimen>
 
 
@@ -69,7 +70,7 @@
     <dimen name="button_h_5">61dp</dimen>
     <dimen name="button_h_6">52dp</dimen>
     <dimen name="button_h_7">45dp</dimen>
-
+    <dimen name="button_h_8">30dp</dimen>
     <dimen name="wave_meter_w">260dp</dimen>
     <dimen name="line_chart_h">208dp</dimen>
 

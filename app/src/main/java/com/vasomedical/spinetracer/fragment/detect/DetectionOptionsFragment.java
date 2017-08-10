@@ -10,6 +10,7 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
+import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
 /**
  * Created by dehualai on 5/14/17.
@@ -27,6 +28,7 @@ public class DetectionOptionsFragment extends BaseFragment {
     NJButton optionButton5;
 
     Button nextButton;
+    Button introButton;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class DetectionOptionsFragment extends BaseFragment {
         optionButton4 = (NJButton)view.findViewById(R.id.option_button_4);
         optionButton5 = (NJButton)view.findViewById(R.id.option_button_5);
         nextButton = (Button)view.findViewById(R.id.next_button);
+        introButton = (Button)view.findViewById(R.id.intro_button);
     }
 
     @Override
@@ -96,12 +99,23 @@ public class DetectionOptionsFragment extends BaseFragment {
                 fragmentUtil.showFragment(new DetectingFragment());
             }
         });
+
+        introButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntroDialog dialog = new IntroDialog(mContext);
+                dialog.showDialog();
+            }
+        });
+
+
     }
 
 
     private void refresh(){
 
         nextButton.setVisibility(AlgorithmFactory.detectionOption==0?View.GONE:View.VISIBLE);
+        introButton.setVisibility(AlgorithmFactory.detectionOption==0?View.GONE:View.VISIBLE);
         optionButton1.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton2.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton3.setButtonTheme(NJButton.THEME_DEFAULT);

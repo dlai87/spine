@@ -57,6 +57,7 @@
     <string name="detect_option_3">前倾／后伸</string>
     <string name="detect_option_4">左倾／右倾</string>
     <string name="detect_option_5">驼背角</string>
+    <string name="intro">详细介绍</string>
     <string name="next">下一步</string>
     <string name="start">开始测量</string>
     <string name="stop">结束测量</string>
