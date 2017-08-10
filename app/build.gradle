@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.vasomedical.spinetracer"
+        minSdkVersion 23
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+}
+
+
+def external_lib_prefix = null
+if (project.hasProperty("Tango.catkin_devel_prefix")) {
+    external_lib_prefix = project.property("Tango.catkin_devel_prefix")
+} else {
+    // Building in standalone sample form.
+    external_lib_prefix = "../../TangoReleaseLibs"
+}
+
+dependencies {
+
+
+    compile fileTree(dir: external_lib_prefix + '/jar', include: ['**/*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.2.0'
+
+    testCompile 'junit:junit:4.12'
+
+    // 3d modeling
+    compile 'org.rajawali3d:rajawali:1.1.346-SNAPSHOT@aar'
+
+    // UI framework
+    compile 'com.github.Yalantis:GuillotineMenu-Android:1.2'
+
+    // Chart Library
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+
+    // pdf
+    compile 'com.itextpdf:itextpdf:5.5.10'
+
+    // side menu drawer
+    compile 'com.yarolegovich:sliding-root-nav:1.0.2'
+
+    // step indicator
+    compile 'com.github.badoualy:stepper-indicator:1.0.6'
+
+    // list view
+    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
+
+}
+
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="selected_item_color">#30d1d5</color>
+
+    <color name="red">#ff0000</color>
+    <color name="white">#ffffff</color>
+    <color name="semi_white">#33ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="text_gray_dark">#555555</color>
+    <color name="text_gray_mid">#aaaaaa</color>
+    <color name="text_gray_light">#cccccc</color>
+
+    <color name="semi_transparent">#55000000</color>
+
+    <!-- 249 205 173 -->
+    <color name="guillotine_background_dark">#f9cdad</color>
+    <!-- 60 145 170 -->
+    <color name="guillotine_background">#3c91aa</color>
+
+    <color name="bright_blue">#448AFF</color>
+    <color name="theme_minor_color">#448AFF</color>
+    <color name="theme_minor_color_2">#83af9b</color>
+    <color name="theme_major_color">#303F9F</color>
+
+
+
+    <color name="njbutton_white">#FFFFFF</color>
+    <color name="njbutton_lightgray">#bcbec0</color>
+    <!--  188,190,192 -->
+    <color name="njbutton_darkgray">#808285</color>
+    <!--   128,130,133 -->
+    <color name="njbutton_red">#ff0000</color>
+    <!--   r:255 g:0 b:0 -->
+    <color name="njbutton_red_pressed">#ffabab</color>
+    <!--   r:255 g:171 b:171 -->
+    <color name="njbutton_green">#1FB531</color>
+    <!--   r:31 g:181 b:49 -->
+    <color name="njbutton_green_pressed">#AAEAB0</color>
+    <!--  r:170 g:234 b:176 -->
+    <color name="njbutton_blue">#00d6ff</color>
+    <!--  r:0 g:214 b:255 -->
+    <color name="njbutton_blue_pressed">#7feaff</color>
+    <!--  r: 127 g:234 b:255 -->
+    <color name="njbutton_cherry_red">#FF6259</color>
+    <!--  r: 127 g:234 b:255 -->
+    <color name="njbutton_transparent">#00000000</color>
+
+
+
+
+
+
+
+
+
+</resources>
