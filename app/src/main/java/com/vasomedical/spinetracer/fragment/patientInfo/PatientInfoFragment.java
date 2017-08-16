@@ -1,17 +1,11 @@
 package com.vasomedical.spinetracer.fragment.patientInfo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,24 +16,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.vasomedical.spinetracer.LoginActivity;
-import com.vasomedical.spinetracer.MainActivity;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
-import com.vasomedical.spinetracer.fragment.camera.PhotoIntentActivity;
-import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
-import com.vasomedical.spinetracer.fragment.detect.DetectingFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
-import com.vasomedical.spinetracer.fragment.view3d.View3dFragment;
-import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.ButtonActionHandler;
 import com.vasomedical.spinetracer.util.widget.dialog.DatePickerDialog;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by dehualai on 5/14/17.
@@ -48,14 +33,11 @@ import java.util.Locale;
 public class PatientInfoFragment extends BaseFragment {
 
 
-
-
-    int currentStatus = -1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     final int STATUS_NEW_PATIENT = 0 ;
     final int STATUS_EXIST_PATIENT_LIST = 1;
     final int STATUS_EXIST_PATIENT_DETAILS = 2;
-
-
+    int currentStatus = -1;
     NJButton chooseFromExistingButton;
     NJButton createNewButton;
 
@@ -169,12 +151,9 @@ public class PatientInfoFragment extends BaseFragment {
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent targetIntent = new Intent(mContext, PhotoIntentActivity.class);
-
-                if(targetIntent!=null){
-                    targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    mContext.startActivity(targetIntent);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
 
             }
@@ -208,7 +187,16 @@ public class PatientInfoFragment extends BaseFragment {
 
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Saving the picture just taken as avatar.
+            newPatientAvatar.setBackground(null);
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            newPatientAvatar.setImageBitmap(imageBitmap);
+        }
+    }
 
     /**
      * Next Button  : New Patient
