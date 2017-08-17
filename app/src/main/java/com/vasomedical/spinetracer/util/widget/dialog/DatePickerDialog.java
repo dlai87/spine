@@ -14,12 +14,12 @@ import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by dehualai on 1/29/17.
@@ -168,6 +168,15 @@ public class DatePickerDialog {
             dialog.dismiss();
             dialog = null;
         }
+    }
+
+    public Date getPickerDate() {
+        int year = datePicker.getYear();
+        int month = datePicker.getMonth();
+        int dayOfMonth = datePicker.getDayOfMonth();
+        Calendar calendar = Calendar.getInstance();
+        Date date = new GregorianCalendar(year, month, dayOfMonth).getTime();
+        return date;
     }
 
 }

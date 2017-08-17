@@ -24,6 +24,10 @@ import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.ButtonActionHandler;
 import com.vasomedical.spinetracer.util.widget.dialog.DatePickerDialog;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -90,6 +94,7 @@ public class PatientInfoFragment extends BaseFragment {
         newPatientLayout = (LinearLayout)view.findViewById(R.id.new_patient_layout);
         existPatientListLayout = (LinearLayout)view.findViewById(R.id.exist_petient_list_layout);
         existPatientDetailsLayout = (LinearLayout)view.findViewById(R.id.exist_petient_details_layout);
+        newPatientDateOfBirthText = (TextView) view.findViewById(R.id.new_patient_date_of_birth_text);
 
         // newPatientLayout
         newPatientAvatar = (ImageView)view.findViewById(R.id.new_patient_avatar);
@@ -163,7 +168,7 @@ public class PatientInfoFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog dialog = new DatePickerDialog(mContext);
+                final DatePickerDialog dialog = new DatePickerDialog(mContext);
                 dialog.setTitleView(null);
                 dialog.setMessageView(mContext.getResources().getString(R.string.select_you_date_of_birth));
                 dialog.setButtons(mContext.getResources().getString(R.string.cancel),
@@ -176,8 +181,10 @@ public class PatientInfoFragment extends BaseFragment {
 
                             @Override
                             public void button2Pressed() {
-
-
+                                Date date = dialog.getPickerDate();
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+                                String dateString = dateFormat.format(date).toString();
+                                newPatientDateOfBirthText.setText(dateString);
                             }
                         });
                 dialog.showDialog();
