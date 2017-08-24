@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,6 +66,12 @@ public class PatientInfoFragment extends BaseFragment {
     TextView newPatientDateOfBirthText;
     EditText newPatientContactInfoEditText;
     EditText newPatientNoteEditText;
+
+    EditText existingPatientNameEditText;
+    EditText existingPatientGenderEditText;
+    TextView existingPatientDateOfBirthText;
+    EditText existingPatientContactInfoEditText;
+    EditText existingPatientNoteEditText;
 
     LinearListView patientListView;
 
@@ -148,7 +153,12 @@ public class PatientInfoFragment extends BaseFragment {
         patientListView.setAdapter(adapter);
 
         // existPatientDetailsLayout
-
+        // exisitngPatientAvatar = (ImageView)view.findViewById(R.id.exisiting_patient_avatar);
+        existingPatientNameEditText = (EditText) view.findViewById(R.id.existing_patient_name);
+        existingPatientGenderEditText = (EditText) view.findViewById(R.id.existing_patient_gender);
+        existingPatientDateOfBirthText = (TextView) view.findViewById(R.id.existing_patient_date_of_birth_text);
+        existingPatientContactInfoEditText = (EditText) view.findViewById(R.id.existing_patient_contact_info);
+        existingPatientNoteEditText = (EditText) view.findViewById(R.id.existing_patient_note);
     }
 
     @Override
@@ -267,17 +277,15 @@ public class PatientInfoFragment extends BaseFragment {
      * Next Button  : Existing patient list
      * */
     private void nextButtonPressOnExistPatientList(){
-        // 1. Instantiate an AlertDialog.Builder with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        setStatus(STATUS_EXIST_PATIENT_DETAILS);
 
-        // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("alert")
-                .setTitle("warning");
+        PatientModel patientModel = patientList.get(0);
 
-        builder.setPositiveButton("OK", null);
-        // 3. Get the AlertDialog from create()
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        existingPatientNameEditText.setText(patientModel.getName());
+        existingPatientGenderEditText.setText(patientModel.getGender());
+        existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
+        existingPatientContactInfoEditText.setText(patientModel.getPhone());
+        existingPatientNoteEditText.setText(patientModel.getNote());
     }
 
 
