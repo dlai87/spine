@@ -78,36 +78,6 @@ public class PatientInfoFragment extends BaseFragment {
     private SQLiteDatabase database = DBAdapter.getDatabase(mContext);
     private TBPatient tbPatient = new TBPatient();
     private ArrayList<PatientModel> patientList = tbPatient.getPatientList(database);
-    private BaseAdapter adapter = new BaseAdapter() {
-        @Override
-        public int getCount() {
-            return patientList.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return patientList.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            if (view == null) {
-                view = LayoutInflater.from(mContext).inflate(R.layout.patient_line, viewGroup, false);
-            }
-            TextView nameTextView = (TextView) view.findViewById(R.id.patient_line_headline);
-            TextView descriptionTextView = (TextView) view.findViewById(R.id.patient_line_sidehead);
-            ImageView avatarImageView = (ImageView) view.findViewById(R.id.patient_line_avatar);
-            PatientModel patientModel = (PatientModel) getItem(i);
-            nameTextView.setText(patientModel.getName());
-            descriptionTextView.setText(patientModel.getNote());
-            return view;
-        }
-    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -150,7 +120,51 @@ public class PatientInfoFragment extends BaseFragment {
 
         // existPatientListLayout
         patientListView = (LinearListView) view.findViewById(R.id.list);
+        BaseAdapter adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return patientList.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return patientList.get(i);
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                if (view == null) {
+                    view = LayoutInflater.from(mContext).inflate(R.layout.patient_line, viewGroup, false);
+                }
+                TextView nameTextView = (TextView) view.findViewById(R.id.patient_line_headline);
+                TextView descriptionTextView = (TextView) view.findViewById(R.id.patient_line_sidehead);
+                ImageView avatarImageView = (ImageView) view.findViewById(R.id.patient_line_avatar);
+                PatientModel patientModel = (PatientModel) getItem(i);
+                nameTextView.setText(patientModel.getName());
+                descriptionTextView.setText(patientModel.getNote());
+                return view;
+            }
+        };
         patientListView.setAdapter(adapter);
+        LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(LinearListView parent, View view, int position, long id) {
+                PatientModel patientModel = patientList.get(position);
+                existingPatientNameEditText.setText(patientModel.getName());
+                existingPatientGenderEditText.setText(patientModel.getGender());
+                existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
+                existingPatientContactInfoEditText.setText(patientModel.getPhone());
+                existingPatientNoteEditText.setText(patientModel.getNote());
+
+                setStatus(STATUS_EXIST_PATIENT_DETAILS);
+            }
+        };
+        patientListView.setOnItemClickListener(onItemClickListener);
 
         // existPatientDetailsLayout
         // exisitngPatientAvatar = (ImageView)view.findViewById(R.id.exisiting_patient_avatar);
@@ -277,15 +291,6 @@ public class PatientInfoFragment extends BaseFragment {
      * Next Button  : Existing patient list
      * */
     private void nextButtonPressOnExistPatientList(){
-        setStatus(STATUS_EXIST_PATIENT_DETAILS);
-
-        PatientModel patientModel = patientList.get(0);
-
-        existingPatientNameEditText.setText(patientModel.getName());
-        existingPatientGenderEditText.setText(patientModel.getGender());
-        existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
-        existingPatientContactInfoEditText.setText(patientModel.getPhone());
-        existingPatientNoteEditText.setText(patientModel.getNote());
     }
 
 
