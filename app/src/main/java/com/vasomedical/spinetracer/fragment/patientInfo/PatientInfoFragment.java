@@ -2,29 +2,35 @@ package com.vasomedical.spinetracer.fragment.patientInfo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.linearlistview.LinearListView;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.database.table.TBPatient;
+import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.ButtonActionHandler;
 import com.vasomedical.spinetracer.util.widget.dialog.DatePickerDialog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -61,7 +67,17 @@ public class PatientInfoFragment extends BaseFragment {
     EditText newPatientContactInfoEditText;
     EditText newPatientNoteEditText;
 
+    EditText existingPatientNameEditText;
+    EditText existingPatientGenderEditText;
+    TextView existingPatientDateOfBirthText;
+    EditText existingPatientContactInfoEditText;
+    EditText existingPatientNoteEditText;
 
+    LinearListView patientListView;
+
+    private SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+    private TBPatient tbPatient = new TBPatient();
+    private ArrayList<PatientModel> patientList = tbPatient.getPatientList(database);
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,10 +96,6 @@ public class PatientInfoFragment extends BaseFragment {
         return superView;
 
     }
-
-
-
-
 
     @Override
     protected void assignViews(){
@@ -107,9 +119,60 @@ public class PatientInfoFragment extends BaseFragment {
 
 
         // existPatientListLayout
+        patientListView = (LinearListView) view.findViewById(R.id.list);
+        BaseAdapter adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return patientList.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return patientList.get(i);
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                if (view == null) {
+                    view = LayoutInflater.from(mContext).inflate(R.layout.patient_line, viewGroup, false);
+                }
+                TextView nameTextView = (TextView) view.findViewById(R.id.patient_line_headline);
+                TextView descriptionTextView = (TextView) view.findViewById(R.id.patient_line_sidehead);
+                ImageView avatarImageView = (ImageView) view.findViewById(R.id.patient_line_avatar);
+                PatientModel patientModel = (PatientModel) getItem(i);
+                nameTextView.setText(patientModel.getName());
+                descriptionTextView.setText(patientModel.getNote());
+                return view;
+            }
+        };
+        patientListView.setAdapter(adapter);
+        LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(LinearListView parent, View view, int position, long id) {
+                PatientModel patientModel = patientList.get(position);
+                existingPatientNameEditText.setText(patientModel.getName());
+                existingPatientGenderEditText.setText(patientModel.getGender());
+                existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
+                existingPatientContactInfoEditText.setText(patientModel.getPhone());
+                existingPatientNoteEditText.setText(patientModel.getNote());
+
+                setStatus(STATUS_EXIST_PATIENT_DETAILS);
+            }
+        };
+        patientListView.setOnItemClickListener(onItemClickListener);
 
         // existPatientDetailsLayout
-
+        // exisitngPatientAvatar = (ImageView)view.findViewById(R.id.exisiting_patient_avatar);
+        existingPatientNameEditText = (EditText) view.findViewById(R.id.existing_patient_name);
+        existingPatientGenderEditText = (EditText) view.findViewById(R.id.existing_patient_gender);
+        existingPatientDateOfBirthText = (TextView) view.findViewById(R.id.existing_patient_date_of_birth_text);
+        existingPatientContactInfoEditText = (EditText) view.findViewById(R.id.existing_patient_contact_info);
+        existingPatientNoteEditText = (EditText) view.findViewById(R.id.existing_patient_note);
     }
 
     @Override
@@ -183,7 +246,7 @@ public class PatientInfoFragment extends BaseFragment {
                             public void button2Pressed() {
                                 Date date = dialog.getPickerDate();
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
-                                String dateString = dateFormat.format(date).toString();
+                                String dateString = dateFormat.format(date);
                                 newPatientDateOfBirthText.setText(dateString);
                             }
                         });
@@ -212,6 +275,12 @@ public class PatientInfoFragment extends BaseFragment {
 
         String username = newPatientNameEditText.getText().toString().trim().replace(" ", "").toLowerCase();
         String gender = newPatientGenderEditText.getText().toString();
+        String birthOfDate = newPatientDateOfBirthText.getText().toString();
+        String phone = newPatientContactInfoEditText.getText().toString();
+
+        PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(username, username, gender, birthOfDate);
+        patientBuilder.phone(phone);
+        tbPatient.smartInsert(database, patientBuilder.build());
 
         fragmentUtil.showFragment(new DetectionOptionsFragment());
 
@@ -222,17 +291,6 @@ public class PatientInfoFragment extends BaseFragment {
      * Next Button  : Existing patient list
      * */
     private void nextButtonPressOnExistPatientList(){
-        // 1. Instantiate an AlertDialog.Builder with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("alert")
-                .setTitle("warning");
-
-        builder.setPositiveButton("OK", null);
-        // 3. Get the AlertDialog from create()
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 

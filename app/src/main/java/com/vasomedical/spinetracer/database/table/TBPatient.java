@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vasomedical.spinetracer.database.util.DBGlobal;
 import com.vasomedical.spinetracer.database.util.DBUtil;
-import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ public class TBPatient {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
-        DBUtil.smartPut(cv, DBGlobal.COL_GENDER, model.getName());
-        DBUtil.smartPut(cv, DBGlobal.COL_DATE_OF_BIRTH, model.getName());
+        DBUtil.smartPut(cv, DBGlobal.COL_GENDER, model.getGender());
+        DBUtil.smartPut(cv, DBGlobal.COL_DATE_OF_BIRTH, model.getDate_of_birth());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
         DBUtil.smartPut(cv, DBGlobal.COL_PHOTO, model.getPhoto());
         DBUtil.smartPut(cv, DBGlobal.COL_NOTE, model.getNote());
