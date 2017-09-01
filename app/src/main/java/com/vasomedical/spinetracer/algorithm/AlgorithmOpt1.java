@@ -19,6 +19,9 @@ public class AlgorithmOpt1 extends AlgorithmBase {
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
+        return createDataForChart(inputData, Coordinate.y, Coordinate.ry, 100);
+
+        /*
         ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
 
         int totalSamples = inputData.size();
@@ -40,6 +43,8 @@ public class AlgorithmOpt1 extends AlgorithmBase {
 
         //return null;
         return dataWithProcess;
+
+        */
     }
 
     private Pose[] findNestestTwoPoints(ArrayList<Pose> inputData, float target){
