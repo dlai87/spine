@@ -60,6 +60,13 @@ public abstract class AlgorithmBase  {
     }
 
 
+    /**
+     *
+     *
+     *
+     * */
+
+
     private float valueOfCoordinate(Pose pose, Coordinate c){
         switch (c){
             case x:

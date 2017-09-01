@@ -115,23 +115,23 @@ public class AnalyticFragment extends BaseFragment {
         mChart.getDescription().setEnabled(false);
 
         // enable touch gestures
-        mChart.setTouchEnabled(true);
+        mChart.setTouchEnabled(false);
 
         // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
+        mChart.setDragEnabled(false);
+        mChart.setScaleEnabled(false);
         // mChart.setScaleXEnabled(true);
         // mChart.setScaleYEnabled(true);
 
         // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(true);
+        mChart.setPinchZoom(false);
 
         // set an alternative background color
         // mChart.setBackgroundColor(Color.GRAY);
 
         // x-axis limit line
         LimitLine llXAxis = new LimitLine(10f, "Index 10");
-        llXAxis.setLineWidth(4f);
+        llXAxis.setLineWidth(8f);
         llXAxis.enableDashedLine(10f, 10f, 0f);
         llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
         llXAxis.setTextSize(10f);
@@ -219,15 +219,15 @@ public class AnalyticFragment extends BaseFragment {
             set1 = new LineDataSet(yVals1, "DataSet 1");
 
             set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            set1.setCircleColor(Color.BLACK);
-            set1.setLineWidth(2f);
-            set1.setCircleRadius(2f);
-            //set1.setFillAlpha(65);
-            //set1.setFillColor(ColorTemplate.getHoloBlue());
+            set1.setCircleColor(Color.TRANSPARENT);
+            set1.setLineWidth(20f);
+            set1.setCircleRadius(0f);
+            set1.setFillAlpha(0);
             set1.setDrawCircleHole(false);
             set1.setDrawFilled(true);
             //set1.setFormLineDashEffect(new DashPathEffect(new float[]{20f, 20f}, 0f));
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set1.setValueTextColor(Color.TRANSPARENT);
 
             // create a data object with the datasets
             LineData data = new LineData(set1);
