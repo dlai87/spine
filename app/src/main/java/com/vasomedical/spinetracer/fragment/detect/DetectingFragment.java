@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -27,6 +28,7 @@ import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
+import com.vasomedical.spinetracer.util.widget.angleRule.AngleRulerLayout;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.progressDialog.NJProgressDialog;
 
@@ -49,6 +51,8 @@ public class DetectingFragment extends BaseFragment {
     Button previousButton;
     Button nextButton;
     TextView realTimeDisplay;
+    AngleRulerLayout angleRulerLayout;
+    ImageView indicator;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +70,8 @@ public class DetectingFragment extends BaseFragment {
         nextButton = (Button)view.findViewById(R.id.next_button);
         previousButton = (Button)view.findViewById(R.id.previous_button);
         realTimeDisplay = (TextView)view.findViewById(R.id.real_time_display);
+        angleRulerLayout = (AngleRulerLayout)view.findViewById(R.id.angleRulerLayout);
+        indicator = (ImageView)view.findViewById(R.id.indicator);
 
     }
 
@@ -229,7 +235,22 @@ public class DetectingFragment extends BaseFragment {
                 @Override
                 public void run() {
                     float degree = Util.radianToDegree((float) euler[1]);
-                    realTimeDisplay.setText( degree + mContext.getResources().getString(R.string.degree_mark));
+                    realTimeDisplay.setText( Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
+
+                    float w = angleRulerLayout.getWidth() - indicator.getWidth();
+                    float h = angleRulerLayout.getHeight() - indicator.getWidth();
+
+                    float tempX =  (float) (Math.sin( Math.toRadians(Math.abs(degree)) ) * h) ;
+                    if (degree < 0 ){
+                        indicator.setX( w/2-tempX);
+                    }else {
+                        indicator.setX( w/2+tempX );
+                    }
+
+                    float tempY =  (float) (Math.cos( Math.toRadians(Math.abs(degree)) ) * h) ;
+
+                    Log.e("show", "w " + w + "h " + h + "x " + tempX + "y " + tempY);
+                    indicator.setY(tempY -indicator.getHeight());
                 }
             });
         }catch (Exception e){

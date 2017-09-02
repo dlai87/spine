@@ -123,4 +123,8 @@
 
     <dimen name="step_indicator_w">400dp</dimen>
 
+    <dimen name="angle_rule_w">400dp</dimen>
+    <dimen name="angle_rule_h">200dp</dimen>
+    <dimen name="angle_indicator_r">20dp</dimen>
+
 </resources>
