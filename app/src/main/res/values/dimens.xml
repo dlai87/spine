@@ -28,7 +28,7 @@
     <dimen name="menu_option_img_w">25dp</dimen>
     <dimen name="menu_option_img_h">25dp</dimen>
 
-    <dimen name="text_h_huge">98dp</dimen>
+    <dimen name="text_h_huge">75dp</dimen>
     <dimen name="text_h_0">68dp</dimen>
     <dimen name="text_h_1">34dp</dimen>
     <dimen name="text_h_2">27dp</dimen>

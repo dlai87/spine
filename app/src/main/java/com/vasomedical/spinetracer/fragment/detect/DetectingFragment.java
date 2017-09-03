@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -51,7 +52,7 @@ public class DetectingFragment extends BaseFragment {
     Button previousButton;
     Button nextButton;
     TextView realTimeDisplay;
-    AngleRulerLayout angleRulerLayout;
+    RelativeLayout angleRulerLayout;
     ImageView indicator;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +71,7 @@ public class DetectingFragment extends BaseFragment {
         nextButton = (Button)view.findViewById(R.id.next_button);
         previousButton = (Button)view.findViewById(R.id.previous_button);
         realTimeDisplay = (TextView)view.findViewById(R.id.real_time_display);
-        angleRulerLayout = (AngleRulerLayout)view.findViewById(R.id.angleRulerLayout);
+        angleRulerLayout = (RelativeLayout)view.findViewById(R.id.angleRulerLayout);
         indicator = (ImageView)view.findViewById(R.id.indicator);
 
     }
@@ -93,6 +94,17 @@ public class DetectingFragment extends BaseFragment {
 
             }
         });
+
+        try{
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    drawIndicator(0);
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
 
@@ -236,21 +248,7 @@ public class DetectingFragment extends BaseFragment {
                 public void run() {
                     float degree = Util.radianToDegree((float) euler[1]);
                     realTimeDisplay.setText( Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
-
-                    float w = angleRulerLayout.getWidth() - indicator.getWidth();
-                    float h = angleRulerLayout.getHeight() - indicator.getWidth();
-
-                    float tempX =  (float) (Math.sin( Math.toRadians(Math.abs(degree)) ) * h) ;
-                    if (degree < 0 ){
-                        indicator.setX( w/2-tempX);
-                    }else {
-                        indicator.setX( w/2+tempX );
-                    }
-
-                    float tempY =  (float) (Math.cos( Math.toRadians(Math.abs(degree)) ) * h) ;
-
-                    Log.e("show", "w " + w + "h " + h + "x " + tempX + "y " + tempY);
-                    indicator.setY(tempY -indicator.getHeight());
+                    drawIndicator(degree);
                 }
             });
         }catch (Exception e){
@@ -259,5 +257,29 @@ public class DetectingFragment extends BaseFragment {
 
         poseLog.recordPoseData(pose);
     }
+
+
+    private void drawIndicator(float degree){
+
+        float layoutW = angleRulerLayout.getWidth();
+        float layoutH = angleRulerLayout.getHeight();
+        float indicatorR = indicator.getWidth()/2;
+
+        float radius = layoutH - indicatorR;
+        float tempX =  (float) (Math.sin( Math.toRadians(Math.abs(degree)) ) * radius) ;
+
+        if (degree < 0 ){
+            indicator.setX( layoutW/2-tempX - indicatorR);
+        }else {
+            indicator.setX( layoutW/2+tempX - indicatorR);
+        }
+
+        float tempY =  (float) (Math.cos( Math.toRadians(Math.abs(degree)) ) * radius) ;
+
+        indicator.setY(tempY - indicatorR);
+
+    }
+
+
 
 }
