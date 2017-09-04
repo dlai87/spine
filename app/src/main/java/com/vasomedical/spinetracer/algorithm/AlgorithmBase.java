@@ -1,5 +1,7 @@
 package com.vasomedical.spinetracer.algorithm;
 
+import android.util.Log;
+
 import com.github.mikephil.charting.data.Entry;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Util;
@@ -53,7 +55,15 @@ public abstract class AlgorithmBase  {
             float calculateRotateY = (i - y0) / (y1- y0) *(ry1 - ry0) + ry0;
             float calculateDegree = Util.radianToDegree(calculateRotateY);
 
-            dataWithProcess.add(new Entry(i,calculateDegree));
+            if (!Float.isNaN(calculateDegree)){
+                dataWithProcess.add(new Entry(i,calculateDegree));
+            }else {
+                Entry lastEntry = dataWithProcess.get(dataWithProcess.size()-1);
+                dataWithProcess.add(new Entry(i, lastEntry.getY()));
+
+                
+            }
+
         }
 
         return dataWithProcess;
