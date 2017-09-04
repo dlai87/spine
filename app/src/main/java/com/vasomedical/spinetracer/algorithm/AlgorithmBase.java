@@ -61,7 +61,7 @@ public abstract class AlgorithmBase  {
                 Entry lastEntry = dataWithProcess.get(dataWithProcess.size()-1);
                 dataWithProcess.add(new Entry(i, lastEntry.getY()));
 
-                
+
             }
 
         }
