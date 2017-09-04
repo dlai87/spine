@@ -7,28 +7,23 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.badoualy.stepperindicator.StepperIndicator;
+import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
-import com.vasomedical.spinetracer.fragment.detect.DetectFragment;
-import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
-import com.vasomedical.spinetracer.fragment.patientInfo.PatientInfoFragment;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.fragmentTransation.FragmentUtil;
 import com.vasomedical.spinetracer.util.fragmentTransation.IMainAppHandler;
@@ -36,7 +31,7 @@ import com.vasomedical.spinetracer.util.menu.DrawerAdapter;
 import com.vasomedical.spinetracer.util.menu.DrawerItem;
 import com.vasomedical.spinetracer.util.menu.SimpleItem;
 import com.vasomedical.spinetracer.util.menu.SpaceItem;
-import com.yalantis.guillotine.animation.GuillotineAnimation;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.Arrays;
@@ -44,29 +39,21 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener, IMainAppHandler {
 
-    String TAG = "MainActivity";
-
-
-    FragmentUtil fragmentUtil;
-    Context mContext;
-
-    private String[] screenTitles;
-    private Drawable[] screenIcons;
-
     private static final int POS_PATIENT_INFO = 0;
     private static final int POS_HISTORY = 1;
     private static final int POS_DOCTOR_SETTINGS = 2;
     private static final int POS_LOGOUT = 4;
-
-
     private static final int REQUEST_WRITE_STORAGE = 112;
     private static final int REQUEST_READ_STORAGE = 113;
     private static final int REQUEST_CAMERA = 114;
-
-
+    String TAG = "MainActivity";
+    FragmentUtil fragmentUtil;
+    Context mContext;
     StepperIndicator stepperIndicator;
     LinearLayout stepperIndicatLayout;
-
+    SlidingRootNav slidingRootNav;
+    private String[] screenTitles;
+    private Drawable[] screenIcons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +62,11 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         mContext = this;
         fragmentUtil = new FragmentUtil(this);
-        fragmentUtil.showFragment(ControlPanel.getFragment());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new SlidingRootNavBuilder(this)
+        slidingRootNav = new SlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(toolbar)
                 .withMenuOpened(false)
                 .withDragDistance(140)
@@ -262,6 +248,24 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             mContext.startActivity(targetIntent);
+        } else {
+            BaseFragment fragment = ControlPanel.getFragment();
+            switch (position) {
+                case POS_PATIENT_INFO:
+                    fragment = ControlPanel.getFragment();
+                    break;
+                case POS_HISTORY:
+                    // TODO
+                    break;
+                case POS_DOCTOR_SETTINGS:
+                    // TODO
+                    break;
+                default:
+                    fragment = ControlPanel.getFragment();
+            }
+            fragmentUtil.showFragment(fragment);
+
+            slidingRootNav.closeMenu(true);
         }
 
     }

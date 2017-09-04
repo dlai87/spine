@@ -13,13 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TextView;
 
 import com.vasomedical.spinetracer.R;
-import com.vasomedical.spinetracer.util.widget.button.NJButton;
-
-import java.util.Date;
+import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 
 /**
  * Created by dehualai on 8/10/17.
@@ -50,7 +46,7 @@ public class IntroDialog {
 
     private void assignViews(){
         closeButton = (Button)view.findViewById(R.id.close_button);
-
+        webView = (WebView) view.findViewById(R.id.webview);
     }
 
     private void addActionToViews(){
@@ -82,6 +78,28 @@ public class IntroDialog {
         dialog.getWindow().setGravity(Gravity.CENTER);
 
         dialog.show();
+
+        String url;
+        switch (AlgorithmFactory.detectionOption) {
+            case AlgorithmFactory.DETECT_OPT_1:
+                url = "https://www.reddit.com/";
+                break;
+            case AlgorithmFactory.DETECT_OPT_2:
+                url = "https://www.4chan.org/";
+                break;
+            case AlgorithmFactory.DETECT_OPT_3:
+                url = "https://www.facebook.com/";
+                break;
+            case AlgorithmFactory.DETECT_OPT_4:
+                url = "https://www.instagram.com/";
+                break;
+            case AlgorithmFactory.DETECT_OPT_5:
+                url = "https://www.quora.com/";
+                break;
+            default:
+                url = "https://www.google.com/";
+        }
+        webView.loadUrl(url);
     }
 
     public void dismiss()
