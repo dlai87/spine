@@ -5,6 +5,8 @@ import android.util.Log;
 import com.github.mikephil.charting.data.Entry;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Util;
+import org.apache.commons.math3.fitting.PolynomialFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoint;
 
 import java.util.ArrayList;
 
