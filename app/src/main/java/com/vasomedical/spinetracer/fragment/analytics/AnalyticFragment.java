@@ -216,7 +216,7 @@ public class AnalyticFragment extends BaseFragment {
 
         } else {
             // create a dataset and give it a type
-            set1 = new LineDataSet(yVals1, "DataSet 1");
+            set1 = new LineDataSet(yVals1, null);
 
             set1.setAxisDependency(YAxis.AxisDependency.LEFT);
             set1.setCircleColor(Color.TRANSPARENT);
@@ -225,6 +225,7 @@ public class AnalyticFragment extends BaseFragment {
             set1.setFillAlpha(0);
             set1.setDrawCircleHole(false);
             set1.setDrawFilled(true);
+
             //set1.setFormLineDashEffect(new DashPathEffect(new float[]{20f, 20f}, 0f));
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set1.setValueTextColor(Color.TRANSPARENT);
@@ -237,6 +238,9 @@ public class AnalyticFragment extends BaseFragment {
             // set data
             mChart.setData(data);
             mChart.getDescription().setEnabled(false);
+            // disable legend
+            mChart.getLegend().setEnabled(false);
+
 
         }
     }

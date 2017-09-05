@@ -89,4 +89,14 @@ public class Pose {
     public Date getTimeStamp() {
         return timeStamp;
     }
+
+    @Override
+    public String toString(){
+        return "x:" + x +
+                ",y:" + y +
+                ",z:" + z +
+                ",rx:" + euler_x +
+                ",ry:" + euler_y +
+                ",rz:" + euler_z;
+    }
 }

@@ -41,13 +41,18 @@ public abstract class AlgorithmBase  {
         ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
 
 
+        for (Pose pose : inputData){
+            Log.d("dataprocess", "raw " + pose );
+        }
+
         int totalSamples = inputData.size();
         float minValue = valueOfCoordinate( inputData.get(0), c1);
         float maxValue = valueOfCoordinate( inputData.get(totalSamples - 1 ), c1);
         float totalValue = maxValue - minValue;
         float eachStepIncrease = totalValue / numSamples;
+
         for (float i = minValue; i < totalValue; i += eachStepIncrease){
-            Pose[] neaestPoints = findNestestTwoPoints(inputData, i);
+            Pose[] neaestPoints = findNestestTwoPoints(inputData, i, c1);
             float y0 = valueOfCoordinate( neaestPoints[0], c1);
             float ry0 = valueOfCoordinate( neaestPoints[0], c2);
             float y1 = valueOfCoordinate( neaestPoints[1], c1);
@@ -55,14 +60,18 @@ public abstract class AlgorithmBase  {
             float calculateRotateY = (i - y0) / (y1- y0) *(ry1 - ry0) + ry0;
             float calculateDegree = Util.radianToDegree(calculateRotateY);
 
+
+            Log.d("dataprocess", "y0 " + y0 + " ry0 " + ry0 + " y1 " + y1 + " ry1 " + ry1
+                    + " calculateRotateY " + calculateRotateY
+                    + " calculateDegree " + calculateDegree);
             if (!Float.isNaN(calculateDegree)){
                 dataWithProcess.add(new Entry(i,calculateDegree));
             }else {
                 Entry lastEntry = dataWithProcess.get(dataWithProcess.size()-1);
                 dataWithProcess.add(new Entry(i, lastEntry.getY()));
-
-
             }
+
+
 
         }
 
@@ -96,20 +105,23 @@ public abstract class AlgorithmBase  {
     }
 
 
-    private Pose[] findNestestTwoPoints(ArrayList<Pose> inputData, float target){
+    private Pose[] findNestestTwoPoints(ArrayList<Pose> inputData, float target, Coordinate c){
         Pose[] points = new Pose[2];
         float point0 = 888;
         float point1 = 999;
         for (Pose pose : inputData){
-            float diff = Math.abs(pose.getY() - target);
+            float diff = Math.abs( valueOfCoordinate(pose, c) - target);
             if ( diff < point0){
                 point1 = point0;
                 point0 = diff;
                 points[1] = points[0];
                 points[0] = pose;
+
             }else if( diff < point1){
                 point1 = diff;
                 points[1] = pose;
+            }else{
+
             }
         }
         return points;
