@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fifth_bg"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/doctor_settings_layout"
+        android:layout_width="@dimen/patient_info_dialog_w"
+        android:layout_height="@dimen/patient_info_dialog_h"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/grey_round_rect"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_1"
+            android:paddingRight="@dimen/margin_1">
+
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/doctor_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="姓名"
+                android:imeOptions="flagNoExtractUi"
+                android:paddingLeft="@dimen/margin_1"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_5">
+
+                <requestFocus />
+            </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/doctor_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="电话"
+                android:imeOptions="flagNoExtractUi"
+                android:paddingLeft="@dimen/margin_1"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_5">
+
+            </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/doctor_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="邮箱"
+                android:imeOptions="flagNoExtractUi"
+                android:paddingLeft="@dimen/margin_1"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_5">
+
+            </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/doctor_hospital"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="医院"
+                android:imeOptions="flagNoExtractUi"
+                android:paddingLeft="@dimen/margin_1"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_5">
+
+            </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/doctor_department"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:hint="部门"
+                android:imeOptions="flagNoExtractUi"
+                android:paddingLeft="@dimen/margin_1"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_5">
+
+            </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
