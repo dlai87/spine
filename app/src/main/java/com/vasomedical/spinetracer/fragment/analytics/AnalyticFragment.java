@@ -64,19 +64,22 @@ public class AnalyticFragment extends BaseFragment {
     }
 
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_analytic, container, false);
-        Bundle args = getArguments();
 
         setStepIndicator(2);
 
-        assignViews();
-        addActionToViews();
+        try {
+            assignViews();
+            addActionToViews();
+        }catch (Exception e){
+            Log.e("show", "Exception " + e.getMessage());
+        }
 
-       // screenShot();
-       // createandDisplayPdf("test");
+
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -110,66 +113,36 @@ public class AnalyticFragment extends BaseFragment {
         }
 
         mChart.setDrawGridBackground(false);
-
-        // no description text
         mChart.getDescription().setEnabled(false);
-
-        // enable touch gestures
         mChart.setTouchEnabled(false);
-
-        // enable scaling and dragging
         mChart.setDragEnabled(false);
         mChart.setScaleEnabled(false);
-        // mChart.setScaleXEnabled(true);
-        // mChart.setScaleYEnabled(true);
-
-        // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(false);
-
-        // set an alternative background color
-        // mChart.setBackgroundColor(Color.GRAY);
-
         // x-axis limit line
         LimitLine llXAxis = new LimitLine(10f, "Index 10");
         llXAxis.setLineWidth(8f);
         llXAxis.enableDashedLine(10f, 10f, 0f);
         llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        llXAxis.setTextSize(10f);
+        llXAxis.setTextSize(15f);
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-        //xAxis.setValueFormatter(new MyCustomXAxisValueFormatter());
-        //xAxis.addLimitLine(llXAxis); // add x-axis limit line
-
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
         leftAxis.setAxisMaximum(yAxisRange);
         leftAxis.setAxisMinimum(-yAxisRange);
-        //leftAxis.setYOffset(20f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
-
-        // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(true);
-
         mChart.getAxisRight().setEnabled(false);
 
-        //mChart.getViewPortHandler().setMaximumScaleY(2f);
-        //mChart.getViewPortHandler().setMaximumScaleX(2f);
+        setData(detectionData);
 
         // add data
-        setData();
-
-
         mChart.animateX(2500);
-        //mChart.invalidate();
+        mChart.getLegend().setEnabled(false);
 
-        // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
-
-        // modify the legend ...
-        l.setForm(Legend.LegendForm.LINE);
     }
 
     @Override
@@ -189,20 +162,15 @@ public class AnalyticFragment extends BaseFragment {
     }
 
 
-    private void setData() {
-        createData();
-    }
 
-
-    private void createData() {
+    private void setData(ArrayList<Entry> inputData) {
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        if (detectionData!=null){
-            if (detectionData.size() <= 0){
+        if (inputData!=null){
+            if (inputData.size() <= 0){
                 // illegal detection data
                 return;
             }
-            yVals1 = detectionData;
+            yVals1 = inputData;
         }
 
         LineDataSet set1;
@@ -225,21 +193,15 @@ public class AnalyticFragment extends BaseFragment {
             set1.setFillAlpha(0);
             set1.setDrawCircleHole(false);
             set1.setDrawFilled(true);
-
             //set1.setFormLineDashEffect(new DashPathEffect(new float[]{20f, 20f}, 0f));
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             set1.setValueTextColor(Color.TRANSPARENT);
 
             // create a data object with the datasets
             LineData data = new LineData(set1);
-            //   data.setValueTextColor(Color.WHITE);
-            //   data.setValueTextSize(9f);
 
             // set data
             mChart.setData(data);
-            mChart.getDescription().setEnabled(false);
-            // disable legend
-            mChart.getLegend().setEnabled(false);
 
 
         }

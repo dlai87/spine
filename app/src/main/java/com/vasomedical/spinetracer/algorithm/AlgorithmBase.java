@@ -5,8 +5,11 @@ import android.util.Log;
 import com.github.mikephil.charting.data.Entry;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Util;
+
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.PolynomialFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
+import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
 import java.util.ArrayList;
 
@@ -26,11 +29,19 @@ public abstract class AlgorithmBase  {
         rz
     }
 
+
+    public enum DATA_RESULT{
+        illegal,
+        warning,
+        success
+    }
+
     public abstract ArrayList<Entry> processData(ArrayList<Pose> inputData);
+
 
     /**
      *
-     *   create data for Chart with 2 Coordinates
+     *   create data for Chart with 2 Coordinates -- continuous method
      *
      *   c2 is the function of c1:   c2 = f(c1)
      *
@@ -83,11 +94,33 @@ public abstract class AlgorithmBase  {
 
     /**
      *
+     *   create data for Chart with 2 Coordinates -- discrete method ; using raw data
+     *
+     *   c2 is the function of c1:   c2 = f(c1)
+     *
+     * */
+    protected ArrayList<Entry> createDataForChart(ArrayList<Pose> inputData,
+                                                  int numSamples){
+
+        ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
+        int step = inputData.size() / numSamples;
+        Log.e("show", "++++ step length ++++" + step);
+        for (int i = 0 ; i < inputData.size(); i+=step ){
+            Pose temp = inputData.get(i);
+            float eulurDegree =  Util.radianToDegree(temp.getEuler_y());
+            Log.e("show", "++++ y ++++" + temp.getY() + " " + temp.getEuler_y() + " degree " + eulurDegree);
+            dataWithProcess.add(new Entry(temp.getY(), eulurDegree));
+        }
+        return dataWithProcess;
+    }
+
+
+
+    /**
+     *
      *
      *
      * */
-
-
     private float valueOfCoordinate(Pose pose, Coordinate c){
         switch (c){
             case x:
@@ -127,6 +160,13 @@ public abstract class AlgorithmBase  {
             }
         }
         return points;
+    }
+
+
+    protected DATA_RESULT preAnalyseData(ArrayList<Entry> data){
+
+
+        return DATA_RESULT.illegal;
     }
 
 }

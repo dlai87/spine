@@ -157,6 +157,7 @@ public class DetectingFragment extends BaseFragment {
         }
         AnalyticFragment analyticFragment = new AnalyticFragment();
         analyticFragment.setDetectionData(processedData);
+
         fragmentUtil.showFragment(analyticFragment);
 
     }

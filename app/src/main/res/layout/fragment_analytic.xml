@@ -10,16 +10,15 @@
         android:id="@+id/invalid_detection_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:gravity="center">
+        android:visibility="gone">
 
         <com.vasomedical.spinetracer.util.widget.textView.NJTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/invalid_detection_data"
             android:layout_marginBottom="@dimen/margin_2"
-            />
+            android:text="@string/invalid_detection_data" />
 
         <com.vasomedical.spinetracer.util.widget.button.NJButton
             android:id="@+id/re_test_button"
@@ -27,7 +26,7 @@
             android:layout_height="@dimen/button_h_6"
             android:text="@string/re_test"
             android:textColor="@color/njbutton_white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -41,116 +40,242 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <Button
+                android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="save"
-                android:id="@+id/saveButton"/>
-            
+                android:visibility="gone"/>
+
             <RelativeLayout
                 android:layout_width="@dimen/layout_chart_w"
-                android:layout_height="@dimen/layout_chart_h"
-                >
+                android:layout_height="@dimen/layout_chart_h">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:text="脊柱位置(cm)"/>
+                    android:layout_alignParentTop="true"
+                    android:text="脊柱位置(cm)" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:text="旋转角度(度)"/>
+                    android:text="旋转角度(度)" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart1"
                     android:layout_width="@dimen/img_chart_w"
                     android:layout_height="@dimen/img_chart_h"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true" />
 
             </RelativeLayout>
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="adgfnaoregtjaoerijgjadoring" />
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <!-- diagnosis -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:alignmentMode="alignMargins"
+                    android:useDefaultMargins="true"
+                    android:columnCount="4"
+                    android:rowCount="5"
+                    android:visibility="visible">
+                    <Button android:layout_column="0"
+                        android:layout_row="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 1"/>
+                    <Button android:layout_column="1"
+                        android:layout_row="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 2222222"/>
+                    <Button android:layout_column="2"
+                        android:layout_row="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 33"/>
+                    <Button android:layout_column="0"
+                        android:layout_row="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 4"/>
+                    <Button android:layout_column="1"
+                        android:layout_row="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 5"/>
+                    <Button android:layout_column="2"
+                        android:layout_row="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 6"/>
+                    <Button android:layout_column="0"
+                        android:layout_row="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 7"/>
+                    <Button android:layout_column="1"
+                        android:layout_row="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 8"/>
+                    <Button android:layout_column="2"
+                        android:layout_row="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 9"/>
+                    <Button android:layout_column="0"
+                        android:layout_row="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="0"/>
+                    <Button android:layout_column="1"
+                        android:layout_row="3"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_columnSpan="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis 1212"/>
+                    <Button android:layout_column="0"
+                        android:layout_row="4"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis Clear"/>
+                    <Button android:layout_column="2"
+                        android:layout_row="4"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="="/>
+                    <Button android:layout_column="3"
+                        android:layout_row="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:padding="10dip"
+                        android:text="diagnosis "/>
+                    <Button android:layout_column="3"
+                        android:layout_row="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:padding="10dip"
+                        android:text="diagnosis -"/>
+                    <Button android:layout_column="3"
+                        android:layout_row="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:padding="10dip"
+                        android:text="diagnosis *"/>
+                    <Button android:layout_column="3"
+                        android:layout_row="3"
+                        android:layout_columnSpan="1"
+                        android:layout_gravity="fill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dip"
+                        android:text="diagnosis /"/>
+                </GridLayout>
+
+
+                <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                    android:id="@+id/diagnosis_edittext"
+                    android:imeOptions="flagNoExtractUi"
+                    android:layout_width="@dimen/button_h_2"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:background="@color/transparent"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="Comment"
+                    android:textColor="@color/text_gray_dark"
+                    android:textColorHint="@color/text_gray_light"
+                    android:textSize="@dimen/text_h_5">
+
+                    <requestFocus />
+                </com.vasomedical.spinetracer.util.widget.editText.NJEditText>
+
+            </LinearLayout>
+
+
+            <!-- Button Group -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_2">
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/cancel_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginRight="@dimen/margin_1"
+                    android:layout_marginTop="@dimen/margin_0"
+                    android:text="@string/cancel_detection_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/save_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginRight="@dimen/margin_1"
+                    android:layout_marginTop="@dimen/margin_0"
+                    android:text="@string/accpet_detection_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/pdf_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginTop="@dimen/margin_0"
+                    android:text="@string/accpet_and_sent_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
