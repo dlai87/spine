@@ -111,6 +111,27 @@ public abstract class AlgorithmBase  {
             Log.e("show", "++++ y ++++" + temp.getY() + " " + temp.getEuler_y() + " degree " + eulurDegree);
             dataWithProcess.add(new Entry(temp.getY(), eulurDegree));
         }
+
+        for (Entry entry : dataWithProcess){
+            Log.e("show", "entry " + entry.toString());
+        }
+
+        if (preAnalyseData(dataWithProcess) == DATA_RESULT.illegal ){
+            // remove first element and try again
+            Log.e("temp", "Try again 1st time" );
+            dataWithProcess.remove(0);
+            if (preAnalyseData(dataWithProcess) == DATA_RESULT.illegal ){
+                // remove first element and try again
+                Log.e("temp", "Try again 2nd time" );
+                dataWithProcess.remove(0);
+                if (preAnalyseData(dataWithProcess) == DATA_RESULT.illegal ){
+                    // give up trying, still illegal , clean data
+                    dataWithProcess.clear();
+                }
+            }
+        }
+
+
         return dataWithProcess;
     }
 
@@ -165,8 +186,25 @@ public abstract class AlgorithmBase  {
 
     protected DATA_RESULT preAnalyseData(ArrayList<Entry> data){
 
+        float firstValue = data.get(0).getX();
+        boolean pureIncrease = true;
 
-        return DATA_RESULT.illegal;
+        for(int i = 1 ; i < data.size()-1; i ++){
+            Entry entry = data.get(i);
+            if (entry.getX() < firstValue){
+                Log.e("temp", "DATA_RESULT.illegal " + entry.getX() + " " + firstValue + " "+i);
+                return DATA_RESULT.illegal;
+            }
+            Entry preEntry = data.get(i-1);
+            if (entry.getX() < preEntry.getX()){
+                Log.e("temp", "DATA_RESULT.warning " + entry.getX() + " " + firstValue + " "+i);
+                pureIncrease = false;
+            }
+        }
+        if (pureIncrease){
+            return DATA_RESULT.success;
+        }
+        return DATA_RESULT.warning;
     }
 
 }

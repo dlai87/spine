@@ -131,4 +131,25 @@
     <dimen name="angle_rule_h">200dp</dimen>
     <dimen name="angle_indicator_r">20dp</dimen>
 
+
+    <dimen name="elem_radius_button_d">25dp</dimen>
+    <dimen name="fragment_inner_spacing_extra_dose_list">376dp</dimen>
+    <dimen name="fragment_inner_spacing_side_effects_list">466dp</dimen>
+    <dimen name="fragment_inner_spacing_xxx_large">241dp</dimen>
+    <dimen name="fragment_inner_spacing_xx_large">158dp</dimen>
+    <dimen name="fragment_inner_spacing_x_large">136dp</dimen>
+    <dimen name="fragment_inner_spacing_large">98dp</dimen>
+    <dimen name="fragment_inner_spacing_med_large">79dp</dimen>
+    <dimen name="fragment_inner_spacing_med">61dp</dimen>
+    <dimen name="fragment_inner_spacing">46dp</dimen>
+    <dimen name="fragment_inner_spacing_small">23dp</dimen>
+    <dimen name="fragment_inner_spacing_x_small">17dp</dimen>
+    <dimen name="fragment_inner_spacing_xx_small">10dp</dimen>
+
+    <dimen name="dialog_spacing_x_large">91dp</dimen>
+    <dimen name="dialog_spacing_large">27dp</dimen>
+    <dimen name="dialog_spacing">16dp</dimen>
+    <dimen name="dialog_spacing_small">8dp</dimen>
+    <dimen name="dialog_spacing_x_small">4dp</dimen>
+
 </resources>

@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.StateSet;
@@ -20,7 +21,7 @@ import com.vasomedical.spinetracer.util.Global;
  * Created by dehualai on 5/13/17.
  */
 
-public class NJButton extends Button {
+public class NJButton extends AppCompatButton {
 
 
     private final float DECREMENT_FACTOR = .1f;

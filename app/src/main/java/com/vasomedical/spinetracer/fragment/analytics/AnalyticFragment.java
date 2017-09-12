@@ -23,7 +23,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.parser.Line;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 
 import com.itextpdf.text.Document;
@@ -35,7 +37,12 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
+
 import com.github.mikephil.charting.charts.LineChart;
+import com.vasomedical.spinetracer.fragment.analytics.diagnosis.BaseCell;
+import com.vasomedical.spinetracer.fragment.analytics.diagnosis.MultiChoiceCell;
+import com.vasomedical.spinetracer.fragment.analytics.diagnosis.SurveyQuestionObject;
+import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,6 +62,15 @@ public class AnalyticFragment extends BaseFragment {
     Button reTestButton;
     LinearLayout invalidDetectionLayout;
     ScrollView validLayout;
+
+    LinearLayout list1Layout;
+    LinearLayout list2Layout;
+    LinearLayout list3Layout;
+    boolean flag = true;
+
+    String[] suggestion = {"thaq", "adfhad", "jyj", "thjrjarqja", "htah ath ", "htjmaoin", "htahaeh"};
+
+    ArrayList<OnOffButton> selectButtonArray = new ArrayList<OnOffButton>();
     private ArrayList<Entry> detectionData;
     float yAxisRange = 10f;
 
@@ -94,6 +110,41 @@ public class AnalyticFragment extends BaseFragment {
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
 
+        list1Layout = (LinearLayout)view.findViewById(R.id.list1);
+        list2Layout = (LinearLayout)view.findViewById(R.id.list2);
+        list3Layout = (LinearLayout)view.findViewById(R.id.list3);
+
+        if (flag){
+            flag = false;
+            for(int i = 0 ; i < suggestion.length; i++){
+                final OnOffButton button = new OnOffButton(mContext);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 30);
+                params.setMargins(10, 5, 10, 5);
+                button.setLayoutParams(params);
+                button.setBackground(mContext.getResources().getDrawable(R.drawable.grey_round_rect));
+                button.setText(suggestion[i]);
+                if (i%3==0){
+                    list1Layout.addView(button);
+                }else if(i%3==1){
+                    list2Layout.addView(button);
+                }else{
+                    list3Layout.addView(button);
+                }
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        button.onClick();
+                        button.setBackground(button.isOn()?
+                                mContext.getResources().getDrawable(R.drawable.green_round_rect):
+                                mContext.getResources().getDrawable(R.drawable.grey_round_rect)
+                        );
+                    }
+                });
+
+                selectButtonArray.add(button);
+            }
+        }
+
 
         if(detectionData != null){
 
@@ -103,6 +154,7 @@ public class AnalyticFragment extends BaseFragment {
                 validLayout.setVisibility(View.GONE);
                 return;
             }
+
 
             for (Entry e : detectionData){
                 float range = Math.abs(e.getY());
@@ -128,6 +180,7 @@ public class AnalyticFragment extends BaseFragment {
         XAxis xAxis = mChart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
 
+
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
         leftAxis.setAxisMaximum(yAxisRange);
@@ -147,6 +200,7 @@ public class AnalyticFragment extends BaseFragment {
 
     @Override
     protected void addActionToViews() {
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

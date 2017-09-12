@@ -152,9 +152,7 @@ public class DetectingFragment extends BaseFragment {
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
         AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_1);
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
-        for (Entry entry : processedData){
-            Log.e("show", "entry " + entry.toString());
-        }
+
         AnalyticFragment analyticFragment = new AnalyticFragment();
         analyticFragment.setDetectionData(processedData);
 

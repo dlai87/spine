@@ -97,4 +97,8 @@
     <string name="accpet_and_sent_result">生成PDF报告</string>
 
 
+    <string name="suggest_diagnosis">参考结论</string>
+    <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
+    <string name="please_write_diagnosis">医生备注</string>
+
 </resources>

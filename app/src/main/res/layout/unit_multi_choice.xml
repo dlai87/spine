@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bright_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+
+
+        <RelativeLayout
+            android:id="@+id/image_button_layout_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+
+            <ImageView
+                android:id="@+id/image_button"
+                android:layout_width="@dimen/elem_radius_button_d"
+                android:layout_height="@dimen/elem_radius_button_d"
+                android:background="@drawable/checkbox_blank"
+                android:layout_marginTop="@dimen/dialog_spacing_small"
+                android:layout_marginRight="@dimen/fragment_inner_spacing"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="questionnaire"
+            android:background="@color/colorAccent"
+            android:textSize="@dimen/text_h_4a"/>
+
+        <RelativeLayout
+            android:id="@+id/image_button_layout_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_weight="2">
+
+
+            <ImageView
+                android:id="@+id/image_button_right"
+                android:layout_width="@dimen/elem_radius_button_d"
+                android:layout_height="@dimen/elem_radius_button_d"
+                android:background="@drawable/checkbox_blank"
+                android:layout_marginTop="@dimen/dialog_spacing_small"
+                android:layout_marginLeft="@dimen/fragment_inner_spacing"
+
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        />
+
+</RelativeLayout>
