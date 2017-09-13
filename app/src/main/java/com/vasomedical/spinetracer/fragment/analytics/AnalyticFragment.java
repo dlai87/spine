@@ -1,5 +1,6 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,9 +9,11 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -42,6 +45,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.vasomedical.spinetracer.fragment.analytics.diagnosis.BaseCell;
 import com.vasomedical.spinetracer.fragment.analytics.diagnosis.MultiChoiceCell;
 import com.vasomedical.spinetracer.fragment.analytics.diagnosis.SurveyQuestionObject;
+import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
 import java.io.File;
@@ -95,7 +99,7 @@ public class AnalyticFragment extends BaseFragment {
             Log.e("show", "Exception " + e.getMessage());
         }
 
-
+        keyboardAdvance(view);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -326,4 +330,29 @@ public class AnalyticFragment extends BaseFragment {
     }
 
 
+    /**
+     *
+     * Enable dismiss keyboard when touch out-side of the edit box
+     *
+     * */
+    public void keyboardAdvance(View view) {
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    Util.hideSoftKeyboard((Activity) mContext);
+                    return false;
+                }
+
+            });
+        }
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                keyboardAdvance(innerView);
+            }
+        }
+    }
 }

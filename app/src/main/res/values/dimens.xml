@@ -152,4 +152,10 @@
     <dimen name="dialog_spacing_small">8dp</dimen>
     <dimen name="dialog_spacing_x_small">4dp</dimen>
 
+    <dimen name="bar_indicator_w">300dp</dimen>
+    <dimen name="bar_indicator_h">25dp</dimen>
+    <dimen name="arrow_indicator_w">15dp</dimen>
+    <dimen name="arrow_indicator_h">15dp</dimen>
+    <dimen name="comment_area_w">500dp</dimen>
+    <dimen name="comment_area_h">100dp</dimen>
 </resources>
