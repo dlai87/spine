@@ -12,6 +12,8 @@ import org.apache.commons.math3.fitting.WeightedObservedPoint;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by dehualai on 5/28/17.
@@ -112,8 +114,22 @@ public abstract class AlgorithmBase  {
             dataWithProcess.add(new Entry(temp.getY(), eulurDegree));
         }
 
+        int i = 0 ;
         for (Entry entry : dataWithProcess){
-            Log.e("show", "entry " + entry.toString());
+            Log.e("show", "entry " + entry.toString() + "==" + i);
+            i ++;
+        }
+
+
+
+        int minIndex = indexOfMinElement(dataWithProcess);
+        dataWithProcess = shift(dataWithProcess, minIndex); 
+        dataWithProcess = sortArrayBeforeMinIndex(dataWithProcess, minIndex);
+
+        i = 0 ;
+        for (Entry entry : dataWithProcess){
+            Log.e("show", "After sorting entry " + entry.toString() + "==" + i);
+            i ++;
         }
 
         if (preAnalyseData(dataWithProcess) == DATA_RESULT.illegal ){
@@ -202,9 +218,60 @@ public abstract class AlgorithmBase  {
             }
         }
         if (pureIncrease){
+            Log.e("temp", "DATA_RESULT.success ");
             return DATA_RESULT.success;
         }
         return DATA_RESULT.warning;
     }
 
+
+
+    protected int indexOfMinElement(ArrayList<Entry> data){
+        float minValue = Float.MAX_VALUE;
+        int minIndex = 0 ;
+        for(int i = 0 ; i < data.size(); i ++){
+            if (data.get(i).getX() < minValue){
+                minValue = data.get(i).getX();
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+
+
+    protected ArrayList<Entry> sortArrayBeforeMinIndex(ArrayList<Entry> data, int minIndex){
+
+        Log.e("show", "+++++ minIndex ++++++ " + minIndex);
+        ArrayList<Entry> arrayBeforeMinIndex = new ArrayList<Entry>(data.subList(0, minIndex+1)) ;
+        ArrayList<Entry> arrayAfterMinIndex = new ArrayList<Entry>(data.subList(minIndex+1, data.size()));
+
+        //sorting the array
+        for(int i=0; i < arrayBeforeMinIndex.size(); i++){
+            for(int j=1; j < arrayBeforeMinIndex.size()-i; j++){
+                if (arrayBeforeMinIndex.get(j-1).getX() > arrayBeforeMinIndex.get(j).getX()){
+                    Entry temp = arrayBeforeMinIndex.get(j-1);
+                    arrayBeforeMinIndex.set(j-1, arrayBeforeMinIndex.get(j));
+                    arrayBeforeMinIndex.set(j,temp);
+                }
+            }
+        }
+
+        ArrayList<Entry> sortList = new ArrayList<Entry>();
+        sortList.addAll(arrayBeforeMinIndex);
+        sortList.addAll(arrayAfterMinIndex);
+
+        return sortList;
+
+    }
+
+
+    protected ArrayList<Entry> shift(ArrayList<Entry> data, int minIndex){
+        float minValue = data.get(minIndex).getX();
+
+        for (int i = 0 ; i < data.size() ;i ++){
+            data.get(i).setX( data.get(i).getX() - minValue);
+        }
+
+        return data;
+    }
 }
