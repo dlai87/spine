@@ -7,6 +7,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
+import com.vasomedical.spinetracer.model.Pose;
 
 import java.security.SecureRandom;
 import java.text.DateFormat;
@@ -134,5 +136,29 @@ public class Util {
         return reuslt;
     }
 
+
+
+    /**
+     *
+     *
+     *
+     * */
+    public static  float valueOfCoordinate(Pose pose, AlgorithmBase.Coordinate c){
+        switch (c){
+            case x:
+                return pose.getX();
+            case y:
+                return pose.getY();
+            case z:
+                return pose.getZ();
+            case rx:
+                return pose.getEuler_x();
+            case ry:
+                return pose.getEuler_y();
+            case rz:
+                return pose.getEuler_z();
+        }
+        return -1;
+    }
 
 }

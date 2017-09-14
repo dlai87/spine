@@ -55,11 +55,21 @@ public class DetectingFragment extends BaseFragment {
     RelativeLayout angleRulerLayout;
     ImageView indicator;
 
+
+    public static final String REALTIME_DISPLAY_DEGREE = "REALTIME_DISPLAY_DEGREE";
+    int realtime_display_degree = 1;  // which degree to display in real time,
+                                      // 0 = rotation x;  1 = rotation y; 2 = rotation z
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
+        if (args!=null){
+            realtime_display_degree = args.getInt(REALTIME_DISPLAY_DEGREE, 1);
+        }
+
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -154,6 +164,9 @@ public class DetectingFragment extends BaseFragment {
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
 
         AnalyticFragment analyticFragment = new AnalyticFragment();
+        Bundle args = new Bundle();
+        args.putInt(AnalyticFragment.SCORE, algorithm.getScore());
+        analyticFragment.setArguments(args);
         analyticFragment.setDetectionData(processedData);
 
         fragmentUtil.showFragment(analyticFragment);
@@ -226,26 +239,15 @@ public class DetectingFragment extends BaseFragment {
      * @param pose the pose to log.
      */
     private void logPose(TangoPoseData pose) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
         final float translation[] = pose.getTranslationAsFloats();
-        stringBuilder.append("Position: " +
-                translation[0] + ", " + translation[1] + ", " + translation[2]);
-
         final float orientation[] = pose.getRotationAsFloats();
-        stringBuilder.append(". Orientation: " +
-                orientation[0] + ", " + orientation[1] + ", " +
-                orientation[2] + ", " + orientation[3]);
-
-
         final double[] euler = Util.quaternion2Euler(orientation[0], orientation[1], orientation[2],orientation[3]);
 
-        //Log.i(TAG, stringBuilder.toString());
         try{
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    float degree = Util.radianToDegree((float) euler[1]);
+                    float degree = Util.radianToDegree((float) euler[realtime_display_degree]);
                     realTimeDisplay.setText( Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
                     drawIndicator(degree);
                 }
@@ -253,7 +255,6 @@ public class DetectingFragment extends BaseFragment {
         }catch (Exception e){
 
         }
-
         poseLog.recordPoseData(pose);
     }
 

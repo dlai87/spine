@@ -18,9 +18,7 @@ public class AlgorithmOpt1 extends AlgorithmBase {
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
         int numSamples = 50;
-        //return createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
-
-        return createDataForChart(inputData, numSamples);
+        return createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
     }
 
 

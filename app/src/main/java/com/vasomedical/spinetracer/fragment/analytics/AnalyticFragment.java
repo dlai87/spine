@@ -14,37 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.parser.Line;
 import com.vasomedical.spinetracer.R;
-import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.vasomedical.spinetracer.fragment.analytics.diagnosis.BaseCell;
-import com.vasomedical.spinetracer.fragment.analytics.diagnosis.MultiChoiceCell;
-import com.vasomedical.spinetracer.fragment.analytics.diagnosis.SurveyQuestionObject;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
@@ -67,6 +56,13 @@ public class AnalyticFragment extends BaseFragment {
     LinearLayout invalidDetectionLayout;
     ScrollView validLayout;
 
+    ImageView arrowIndicator0;
+    ImageView arrowIndicator1;
+    ImageView arrowIndicator2;
+    ImageView arrowIndicator3;
+    ImageView arrowIndicator4;
+    ImageView arrowIndicator5;
+
     LinearLayout list1Layout;
     LinearLayout list2Layout;
     LinearLayout list3Layout;
@@ -78,6 +74,9 @@ public class AnalyticFragment extends BaseFragment {
     private ArrayList<Entry> detectionData;
     float yAxisRange = 10f;
 
+
+    public static final String SCORE = "SCORE";
+    private int score = -1;
 
     public void setDetectionData(ArrayList<Entry> data){
         detectionData = data;
@@ -91,6 +90,11 @@ public class AnalyticFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_analytic, container, false);
 
         setStepIndicator(2);
+
+        Bundle args = getArguments();
+        if (args!=null){
+            score = args.getInt(SCORE);
+        }
 
         try {
             assignViews();
@@ -113,6 +117,13 @@ public class AnalyticFragment extends BaseFragment {
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
+
+        arrowIndicator0 = (ImageView)view.findViewById(R.id.arrow_indicator_0);
+        arrowIndicator1 = (ImageView)view.findViewById(R.id.arrow_indicator_1);
+        arrowIndicator2 = (ImageView)view.findViewById(R.id.arrow_indicator_2);
+        arrowIndicator3 = (ImageView)view.findViewById(R.id.arrow_indicator_3);
+        arrowIndicator4 = (ImageView)view.findViewById(R.id.arrow_indicator_4);
+        arrowIndicator5 = (ImageView)view.findViewById(R.id.arrow_indicator_5);
 
         list1Layout = (LinearLayout)view.findViewById(R.id.list1);
         list2Layout = (LinearLayout)view.findViewById(R.id.list2);
@@ -217,6 +228,66 @@ public class AnalyticFragment extends BaseFragment {
                 createandDisplayPdf("Test");
             }
         });
+
+
+        switch (score){
+            case 0:
+                arrowIndicator0.setVisibility(View.VISIBLE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+            case 1:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.VISIBLE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+            case 2:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.VISIBLE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+            case 3:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.VISIBLE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+            case 4:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.VISIBLE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+            case 5:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.VISIBLE);
+                break;
+            default:
+                arrowIndicator0.setVisibility(View.GONE);
+                arrowIndicator1.setVisibility(View.GONE);
+                arrowIndicator2.setVisibility(View.GONE);
+                arrowIndicator3.setVisibility(View.GONE);
+                arrowIndicator4.setVisibility(View.GONE);
+                arrowIndicator5.setVisibility(View.GONE);
+                break;
+        }
     }
 
 
