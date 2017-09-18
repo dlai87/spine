@@ -118,12 +118,7 @@ public class AnalyticFragment extends BaseFragment {
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
 
-        arrowIndicator0 = (ImageView)view.findViewById(R.id.arrow_indicator_0);
-        arrowIndicator1 = (ImageView)view.findViewById(R.id.arrow_indicator_1);
-        arrowIndicator2 = (ImageView)view.findViewById(R.id.arrow_indicator_2);
-        arrowIndicator3 = (ImageView)view.findViewById(R.id.arrow_indicator_3);
-        arrowIndicator4 = (ImageView)view.findViewById(R.id.arrow_indicator_4);
-        arrowIndicator5 = (ImageView)view.findViewById(R.id.arrow_indicator_5);
+
 
         list1Layout = (LinearLayout)view.findViewById(R.id.list1);
         list2Layout = (LinearLayout)view.findViewById(R.id.list2);
