@@ -29,6 +29,7 @@ import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt1Fragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt2Fragment;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.angleRule.AngleRulerLayout;
@@ -165,7 +166,7 @@ public class DetectingFragment extends BaseFragment {
         AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_1);
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
 
-        AnalyticBaseFragment analyticFragment = new AnalyticOpt1Fragment();
+        AnalyticBaseFragment analyticFragment = new AnalyticOpt2Fragment();
         Bundle args = new Bundle();
         args.putInt(AnalyticFragment.SCORE, algorithm.getScore());
         analyticFragment.setArguments(args);

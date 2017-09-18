@@ -51,7 +51,6 @@ public class AnalyticFragment extends BaseFragment {
 
     private LineChart mChart;
 
-    Button saveButton;
     Button reTestButton;
     LinearLayout invalidDetectionLayout;
     ScrollView validLayout;
@@ -112,7 +111,6 @@ public class AnalyticFragment extends BaseFragment {
     @Override
     protected void assignViews() {
 
-        saveButton = (Button)view.findViewById(R.id.saveButton);
         mChart = (LineChart) view.findViewById(R.id.chart1);
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
@@ -212,6 +210,7 @@ public class AnalyticFragment extends BaseFragment {
     protected void addActionToViews() {
 
 
+        /*
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +223,7 @@ public class AnalyticFragment extends BaseFragment {
             }
         });
 
+*/
 
         switch (score){
             case 0:

@@ -41,8 +41,6 @@ public class AnalyticOpt1Fragment extends AnalyticBaseFragment{
 
     //Button saveButton;
 
-
-
     float yAxisRange = 10f;
 
 
