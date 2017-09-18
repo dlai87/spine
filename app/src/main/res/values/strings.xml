@@ -96,5 +96,7 @@
     <string name="accpet_detection_result">保存测量结果</string>
     <string name="accpet_and_sent_result">生成PDF报告</string>
 
+    <string name="save">保存</string>
+
 
 </resources>

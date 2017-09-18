@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
+import com.vasomedical.spinetracer.fragment.doctor.DoctorSettingsFragment;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.fragmentTransation.FragmentUtil;
 import com.vasomedical.spinetracer.util.fragmentTransation.IMainAppHandler;
@@ -258,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     // TODO
                     break;
                 case POS_DOCTOR_SETTINGS:
-                    // TODO
+                    fragment = new DoctorSettingsFragment();
                     break;
                 default:
                     fragment = ControlPanel.getFragment();
