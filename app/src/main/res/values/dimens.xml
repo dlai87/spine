@@ -28,7 +28,7 @@
     <dimen name="menu_option_img_w">25dp</dimen>
     <dimen name="menu_option_img_h">25dp</dimen>
 
-    <dimen name="text_h_huge">98dp</dimen>
+    <dimen name="text_h_huge">75dp</dimen>
     <dimen name="text_h_0">68dp</dimen>
     <dimen name="text_h_1">34dp</dimen>
     <dimen name="text_h_2">27dp</dimen>
@@ -98,6 +98,10 @@
     <dimen name="detect_bar_h">48dp</dimen>
     <dimen name="dialog_width">322dp</dimen>
 
+
+    <dimen name="layout_chart_w">680dp</dimen>
+    <dimen name="layout_chart_h">360dp</dimen>
+
     <dimen name="img_chart_w">640dp</dimen>
     <dimen name="img_chart_h">320dp</dimen>
 
@@ -122,5 +126,9 @@
     <dimen name="patient_info_dialog_h">380dp</dimen>
 
     <dimen name="step_indicator_w">400dp</dimen>
+
+    <dimen name="angle_rule_w">400dp</dimen>
+    <dimen name="angle_rule_h">200dp</dimen>
+    <dimen name="angle_indicator_r">20dp</dimen>
 
 </resources>

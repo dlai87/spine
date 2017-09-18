@@ -27,19 +27,29 @@
         android:layout_height="match_parent"
         android:layout_weight="8"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/bright_blue">
 
-        <com.vasomedical.spinetracer.util.widget.textView.NJTextView
-            android:id="@+id/real_time_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_1"
-            android:layout_marginBottom="@dimen/margin_1"
-            android:text="0°"
-            android:textSize="@dimen/text_h_huge"
-            android:textColor="@color/text_gray_dark"
-            android:textStyle="bold"
-            />
+        <RelativeLayout
+            android:layout_width="@dimen/angle_rule_w"
+            android:layout_height="@dimen/angle_rule_h"
+            android:background="@drawable/angle_rule">
+
+
+            <com.vasomedical.spinetracer.util.widget.textView.NJTextView
+                android:id="@+id/real_time_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginBottom="@dimen/margin_1"
+                android:text="0°"
+                android:textSize="@dimen/text_h_huge"
+                android:textColor="@color/text_gray_dark"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
 
         <com.vasomedical.spinetracer.util.widget.button.NJButton
             android:id="@+id/control_button"
