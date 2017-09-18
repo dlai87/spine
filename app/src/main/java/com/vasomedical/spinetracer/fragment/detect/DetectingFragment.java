@@ -1,7 +1,6 @@
 package com.vasomedical.spinetracer.fragment.detect;
 
 import android.os.Bundle;
-import android.os.DropBoxManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +26,10 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
-import com.vasomedical.spinetracer.util.widget.angleRule.AngleRulerLayout;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
-import com.vasomedical.spinetracer.util.widget.progressDialog.NJProgressDialog;
 
 import java.util.ArrayList;
 
@@ -41,19 +39,18 @@ import java.util.ArrayList;
 
 public class DetectingFragment extends BaseFragment {
 
-    String TAG = "DetectingFragment";
-    private Tango mTango;
-    private TangoConfig mConfig;
     public static PoseLog poseLog;
-
-    private boolean isDetctiong = false;
-
+    String TAG = "DetectingFragment";
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
     TextView realTimeDisplay;
     RelativeLayout angleRulerLayout;
     ImageView indicator;
+    PatientModel patient;
+    private Tango mTango;
+    private TangoConfig mConfig;
+    private boolean isDetctiong = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +61,9 @@ public class DetectingFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     @Override
     protected void assignViews(){
@@ -157,6 +157,7 @@ public class DetectingFragment extends BaseFragment {
         }
         AnalyticFragment analyticFragment = new AnalyticFragment();
         analyticFragment.setDetectionData(processedData);
+        analyticFragment.setPatient(patient);
 
         fragmentUtil.showFragment(analyticFragment);
 

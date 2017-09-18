@@ -2,10 +2,8 @@ package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,28 +12,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.itextpdf.text.Font;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
-
-
-import com.github.mikephil.charting.charts.LineChart;
+import com.vasomedical.spinetracer.model.PatientModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,21 +38,22 @@ import java.util.ArrayList;
 public class AnalyticFragment extends BaseFragment {
 
 
-    private LineChart mChart;
-
     Button saveButton;
     Button reTestButton;
     LinearLayout invalidDetectionLayout;
     ScrollView validLayout;
-    private ArrayList<Entry> detectionData;
     float yAxisRange = 10f;
-
+    PatientModel patient;
+    private LineChart mChart;
+    private ArrayList<Entry> detectionData;
 
     public void setDetectionData(ArrayList<Entry> data){
         detectionData = data;
     }
 
-
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

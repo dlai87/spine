@@ -88,6 +88,8 @@ public class PatientInfoFragment extends BaseFragment {
     LinearListView patientListView;
     BaseAdapter patientListViewAdapter;
 
+    PatientModel selectedPatient;
+
     private SQLiteDatabase database = DBAdapter.getDatabase(mContext);
     private TBPatient tbPatient = new TBPatient();
     private ArrayList<PatientModel> patientList = tbPatient.getPatientList(database);
@@ -168,18 +170,18 @@ public class PatientInfoFragment extends BaseFragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(LinearListView parent, View view, int position, long id) {
-                PatientModel patientModel = patientList.get(position);
+                selectedPatient = patientList.get(position);
 
-                String photoPath = patientModel.getPhoto();
-                Bitmap photoBitmap = loadImageFromStorage(patientModel.getPhoto());
+                String photoPath = selectedPatient.getPhoto();
+                Bitmap photoBitmap = loadImageFromStorage(selectedPatient.getPhoto());
                 if (photoBitmap != null) {
                     existingPatientAvatar.setImageBitmap(photoBitmap);
                 }
-                existingPatientNameEditText.setText(patientModel.getName());
-                existingPatientGenderEditText.setText(patientModel.getGender());
-                existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
-                existingPatientContactInfoEditText.setText(patientModel.getPhone());
-                existingPatientNoteEditText.setText(patientModel.getNote());
+                existingPatientNameEditText.setText(selectedPatient.getName());
+                existingPatientGenderEditText.setText(selectedPatient.getGender());
+                existingPatientDateOfBirthText.setText(selectedPatient.getDate_of_birth());
+                existingPatientContactInfoEditText.setText(selectedPatient.getPhone());
+                existingPatientNoteEditText.setText(selectedPatient.getNote());
 
                 setStatus(STATUS_EXIST_PATIENT_DETAILS);
             }
@@ -307,12 +309,13 @@ public class PatientInfoFragment extends BaseFragment {
         saveToInternalStorage(((BitmapDrawable) newPatientAvatar.getDrawable()).getBitmap(), photoFilename);
         patientBuilder.photo(photoFilename);
 
-        tbPatient.smartInsert(database, patientBuilder.build());
+        PatientModel patient = patientBuilder.build();
+        tbPatient.smartInsert(database, patient);
         patientListViewAdapter.notifyDataSetChanged(); // FIXME: seems not working. Needs to update list view data after adding a patient.
 
         fragmentUtil.showFragment(new DetectionOptionsFragment());
 
-
+        showDetectionOptions(patient);
     }
 
     /**
@@ -321,12 +324,18 @@ public class PatientInfoFragment extends BaseFragment {
     private void nextButtonPressOnExistPatientList(){
     }
 
+    private void showDetectionOptions(PatientModel patient) {
+        DetectionOptionsFragment fragment = new DetectionOptionsFragment();
+        fragment.setPatient(patient);
+        fragmentUtil.showFragment(new DetectionOptionsFragment());
+    }
+
 
     /**
      * Next Button : Existing patient details
      * */
-    private void nextButtonPressOnExistPatientDetails(){
-
+    private void nextButtonPressOnExistPatientDetails() {
+        showDetectionOptions(selectedPatient);
     }
 
     private void setStatus(int status){
