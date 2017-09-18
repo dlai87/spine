@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -23,8 +24,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
-import com.vasomedical.spinetracer.fragment.BaseFragment;
-import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,67 +32,48 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
- * Created by dehualai on 5/29/17.
+ * Created by dehualai on 9/17/17.
  */
 
-public class AnalyticFragment extends BaseFragment {
+public class AnalyticOpt1Fragment extends AnalyticBaseFragment{
 
-
-    Button saveButton;
-    Button reTestButton;
-    LinearLayout invalidDetectionLayout;
-    ScrollView validLayout;
-    float yAxisRange = 10f;
-    PatientModel patient;
     private LineChart mChart;
-    private ArrayList<Entry> detectionData;
 
-    public void setDetectionData(ArrayList<Entry> data){
-        detectionData = data;
-    }
+    //Button saveButton;
 
-    public void setPatient(PatientModel newPatient) {
-        patient = newPatient;
-    }
+    float yAxisRange = 10f;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        suggestion = new ArrayList<String>();
+        suggestion.add("Suggestion 1");
+        suggestion.add("Placeholder 2");
+        suggestion.add("some text 3");
+        suggestion.add("Suggestion 4");
+        suggestion.add("Suggestion 5");
+        suggestion.add("Suggestion 6");
+        suggestion.add("Suggestion 7");
+        suggestion.add("Suggestion 8");
+        suggestionInitFlag = true;
+
         view = inflater.inflate(R.layout.fragment_analytic, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
 
-        setStepIndicator(2);
+        assignViews();
+        addActionToViews();
 
-        try {
-            assignViews();
-            addActionToViews();
-        }catch (Exception e){
-            Log.e("show", "Exception " + e.getMessage());
-        }
-
-
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
 
     @Override
     protected void assignViews() {
 
-        saveButton = (Button)view.findViewById(R.id.saveButton);
+        super.assignViews();
+
         mChart = (LineChart) view.findViewById(R.id.chart1);
-        invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
-        validLayout = (ScrollView)view.findViewById(R.id.scrollView);
-        reTestButton = (Button)view.findViewById(R.id.re_test_button);
-
-
-        if(detectionData != null){
-
-            if (detectionData.size() <= 0){
-                // illegal detection data
-                invalidDetectionLayout.setVisibility(View.VISIBLE);
-                validLayout.setVisibility(View.GONE);
-                return;
-            }
 
             for (Entry e : detectionData){
                 float range = Math.abs(e.getY());
@@ -100,7 +81,7 @@ public class AnalyticFragment extends BaseFragment {
                     yAxisRange = range + 2;
                 }
             }
-        }
+
 
         mChart.setDrawGridBackground(false);
         mChart.getDescription().setEnabled(false);
@@ -117,6 +98,7 @@ public class AnalyticFragment extends BaseFragment {
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
+
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
@@ -138,17 +120,8 @@ public class AnalyticFragment extends BaseFragment {
     @Override
     protected void addActionToViews() {
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
-                boolean success = mChart.saveToPath("chart.jpg", "/Android/data/");
-                Log.e("show", "save to path success " + success );
-                success = mChart.saveToGallery("Chart.jpg",60);
-                Log.e("show", "save to gallery success " + success);
-                createandDisplayPdf("Test");
-            }
-        });
+        super.addActionToViews();
+
     }
 
 
@@ -199,67 +172,6 @@ public class AnalyticFragment extends BaseFragment {
 
 
 
-    private void screenShot(){
-
-        // image naming and path  to include sd card  appending name you choose for file
-        String mPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/screen.jpg";
-// create bitmap screen capture
-        Bitmap bitmap;
-
-        View scrollView = view.findViewById(R.id.scrollView);
-        scrollView.setDrawingCacheEnabled(true);
-        bitmap = Bitmap.createBitmap(scrollView.getDrawingCache());
-        scrollView.setDrawingCacheEnabled(false);
-
-        OutputStream fout = null;
-        File imageFile = new File(mPath);
-
-        try {
-            fout = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
-            fout.flush();
-            fout.close();
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void createandDisplayPdf(String text) {
-
-        Document doc = new Document();
-
-        try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
-
-            Log.e("show", "path " + path);
-            File dir = new File(path);
-            if(!dir.exists())
-                dir.mkdirs();
-
-            File file = new File(dir, "newFile.pdf");
-            FileOutputStream fOut = new FileOutputStream(file);
-
-            PdfWriter.getInstance(doc, fOut);
-
-            //open the document
-            doc.open();
-
-            Paragraph p1 = new Paragraph(text);
-            p1.setAlignment(Paragraph.ALIGN_CENTER);
-
-            //add paragraph to document
-            doc.add(p1);
-
-        } catch (Exception de) {
-            Log.e("PDFCreator", "DocumentException:" + de);
-        }
-        finally {
-            doc.close();
-        }
-
-    }
 
 
 }

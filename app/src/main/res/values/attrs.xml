@@ -57,4 +57,11 @@
         <item>"杜甫 男 1958-11-09"</item>
     </array>
 
+
+
+    <declare-styleable name="MultiChoiceUnit">
+        <attr name="answerOption" format="string"/>
+        <attr name="isNoneOfAbove" format="integer"/>
+    </declare-styleable>
+
 </resources>

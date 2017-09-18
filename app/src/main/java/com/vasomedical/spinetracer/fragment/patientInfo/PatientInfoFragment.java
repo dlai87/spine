@@ -304,10 +304,13 @@ public class PatientInfoFragment extends BaseFragment {
         PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(patientId, username, gender, birthOfDate);
         patientBuilder.phone(phone);
 
-        // Save the picture to disk.
-        String photoFilename = patientId + ".png";
-        saveToInternalStorage(((BitmapDrawable) newPatientAvatar.getDrawable()).getBitmap(), photoFilename);
-        patientBuilder.photo(photoFilename);
+        if(newPatientAvatar!=null && newPatientAvatar.getDrawable() != null){
+            // If patient has photo, Save the picture to disk.
+            String photoFilename = patientId + ".png";
+            saveToInternalStorage(((BitmapDrawable) newPatientAvatar.getDrawable()).getBitmap(), photoFilename);
+            patientBuilder.photo(photoFilename);
+        }
+
 
         PatientModel patient = patientBuilder.build();
         tbPatient.smartInsert(database, patient);

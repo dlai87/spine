@@ -52,11 +52,13 @@
     <string name="email_is_occupied">Email is occupied</string>
 
     <string name="please_select_detect_options">请选择测试项目</string>
-    <string name="detect_option_1">脊柱侧弯倾角</string>
-    <string name="detect_option_2">矢面旋转角</string>
-    <string name="detect_option_3">前倾／后伸</string>
-    <string name="detect_option_4">左倾／右倾</string>
-    <string name="detect_option_5">驼背角</string>
+    <string name="detect_option_1">躯干倾斜角</string>
+    <string name="detect_option_2">驼背角</string>
+    <string name="detect_option_3">脊柱弯曲Cobb角</string>
+    <string name="detect_option_4">脊柱左右侧弯倾角</string>
+    <string name="detect_option_5">前倾/后仰角</string>
+    <string name="detect_option_6">旋转角</string>
+    <string name="detect_option_7">身体平衡度</string>
     <string name="intro">详细介绍</string>
     <string name="next">下一步</string>
     <string name="start">开始测量</string>
@@ -98,5 +100,9 @@
 
     <string name="save">保存</string>
 
+
+    <string name="suggest_diagnosis">参考结论</string>
+    <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
+    <string name="please_write_diagnosis">医生备注</string>
 
 </resources>

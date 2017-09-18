@@ -1,10 +1,6 @@
 package com.vasomedical.spinetracer.fragment.controlPanel;
 
-import android.support.v4.app.Fragment;
-
 import com.vasomedical.spinetracer.fragment.BaseFragment;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
-import com.vasomedical.spinetracer.fragment.detect.DetectingFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
 import com.vasomedical.spinetracer.fragment.patientInfo.PatientInfoFragment;
 
@@ -26,7 +22,7 @@ public class ControlPanel {
                 fragment = new DetectionOptionsFragment();
                 break;
             case 2:
-                fragment = new AnalyticFragment();
+                //fragment = new AnalyticFragment();
                 break;
             default:
                 break;
