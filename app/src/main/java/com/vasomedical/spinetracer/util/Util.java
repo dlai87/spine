@@ -80,7 +80,10 @@ public class Util {
     }
 
     public static float radianToDegree(float radian){
-        float degree = (float) (radian / Math.PI * 180) ;
+
+        float degree = (float) Math.toDegrees(radian);
+
+        Log.d("temp", " radian "  + radian + " degree " + degree + " Math degree ");
         DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
         try {
             float normDegree = Float.valueOf(decimalFormat.format(degree));

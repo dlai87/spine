@@ -22,8 +22,9 @@ public class TBDoctor {
         DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getPhone());
+        DBUtil.smartPut(cv, DBGlobal.COL_EMAIL, model.getEmail());
+        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getHospital());
+        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getDepartment());
 
         db.insert(DBGlobal.TABLE_DOCTOR, null, cv);
     }
@@ -33,8 +34,9 @@ public class TBDoctor {
     //    DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getPhone());
+        DBUtil.smartPut(cv, DBGlobal.COL_EMAIL, model.getEmail());
+        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getHospital());
+        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getDepartment());
         String selection = DBGlobal.COL_ID + " =? ";
         String[] selectionArgs = {model.getId()};
         db.update(DBGlobal.TABLE_DOCTOR, cv, selection, selectionArgs);

@@ -1,12 +1,13 @@
 package com.vasomedical.spinetracer.fragment.detect;
 
 import android.os.Bundle;
-import android.os.DropBoxManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -25,10 +26,10 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
-import com.vasomedical.spinetracer.util.widget.progressDialog.NJProgressDialog;
 
 import java.util.ArrayList;
 
@@ -38,17 +39,18 @@ import java.util.ArrayList;
 
 public class DetectingFragment extends BaseFragment {
 
-    String TAG = "DetectingFragment";
-    private Tango mTango;
-    private TangoConfig mConfig;
     public static PoseLog poseLog;
-
-    private boolean isDetctiong = false;
-
+    String TAG = "DetectingFragment";
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
     TextView realTimeDisplay;
+    RelativeLayout angleRulerLayout;
+    ImageView indicator;
+    PatientModel patient;
+    private Tango mTango;
+    private TangoConfig mConfig;
+    private boolean isDetctiong = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +61,9 @@ public class DetectingFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     @Override
     protected void assignViews(){
@@ -66,6 +71,8 @@ public class DetectingFragment extends BaseFragment {
         nextButton = (Button)view.findViewById(R.id.next_button);
         previousButton = (Button)view.findViewById(R.id.previous_button);
         realTimeDisplay = (TextView)view.findViewById(R.id.real_time_display);
+        angleRulerLayout = (RelativeLayout)view.findViewById(R.id.angleRulerLayout);
+        indicator = (ImageView)view.findViewById(R.id.indicator);
 
     }
 
@@ -87,6 +94,17 @@ public class DetectingFragment extends BaseFragment {
 
             }
         });
+
+        try{
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    drawIndicator(0);
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
 
@@ -139,6 +157,8 @@ public class DetectingFragment extends BaseFragment {
         }
         AnalyticFragment analyticFragment = new AnalyticFragment();
         analyticFragment.setDetectionData(processedData);
+        analyticFragment.setPatient(patient);
+
         fragmentUtil.showFragment(analyticFragment);
 
     }
@@ -229,7 +249,8 @@ public class DetectingFragment extends BaseFragment {
                 @Override
                 public void run() {
                     float degree = Util.radianToDegree((float) euler[1]);
-                    realTimeDisplay.setText( degree + mContext.getResources().getString(R.string.degree_mark));
+                    realTimeDisplay.setText( Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
+                    drawIndicator(degree);
                 }
             });
         }catch (Exception e){
@@ -238,5 +259,29 @@ public class DetectingFragment extends BaseFragment {
 
         poseLog.recordPoseData(pose);
     }
+
+
+    private void drawIndicator(float degree){
+
+        float layoutW = angleRulerLayout.getWidth();
+        float layoutH = angleRulerLayout.getHeight();
+        float indicatorR = indicator.getWidth()/2;
+
+        float radius = layoutH - indicatorR;
+        float tempX =  (float) (Math.sin( Math.toRadians(Math.abs(degree)) ) * radius) ;
+
+        if (degree < 0 ){
+            indicator.setX( layoutW/2-tempX - indicatorR);
+        }else {
+            indicator.setX( layoutW/2+tempX - indicatorR);
+        }
+
+        float tempY =  (float) (Math.cos( Math.toRadians(Math.abs(degree)) ) * radius) ;
+
+        indicator.setY(tempY - indicatorR);
+
+    }
+
+
 
 }

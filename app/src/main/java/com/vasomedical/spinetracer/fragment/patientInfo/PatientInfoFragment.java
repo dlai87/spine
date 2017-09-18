@@ -1,11 +1,17 @@
 package com.vasomedical.spinetracer.fragment.patientInfo;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +35,11 @@ import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.ButtonActionHandler;
 import com.vasomedical.spinetracer.util.widget.dialog.DatePickerDialog;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,6 +78,7 @@ public class PatientInfoFragment extends BaseFragment {
     EditText newPatientContactInfoEditText;
     EditText newPatientNoteEditText;
 
+    ImageView existingPatientAvatar;
     EditText existingPatientNameEditText;
     EditText existingPatientGenderEditText;
     TextView existingPatientDateOfBirthText;
@@ -74,6 +86,9 @@ public class PatientInfoFragment extends BaseFragment {
     EditText existingPatientNoteEditText;
 
     LinearListView patientListView;
+    BaseAdapter patientListViewAdapter;
+
+    PatientModel selectedPatient;
 
     private SQLiteDatabase database = DBAdapter.getDatabase(mContext);
     private TBPatient tbPatient = new TBPatient();
@@ -120,7 +135,7 @@ public class PatientInfoFragment extends BaseFragment {
 
         // existPatientListLayout
         patientListView = (LinearListView) view.findViewById(R.id.list);
-        BaseAdapter adapter = new BaseAdapter() {
+        patientListViewAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return patientList.size();
@@ -150,16 +165,23 @@ public class PatientInfoFragment extends BaseFragment {
                 return view;
             }
         };
-        patientListView.setAdapter(adapter);
+        patientListView.setAdapter(patientListViewAdapter);
         LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(LinearListView parent, View view, int position, long id) {
-                PatientModel patientModel = patientList.get(position);
-                existingPatientNameEditText.setText(patientModel.getName());
-                existingPatientGenderEditText.setText(patientModel.getGender());
-                existingPatientDateOfBirthText.setText(patientModel.getDate_of_birth());
-                existingPatientContactInfoEditText.setText(patientModel.getPhone());
-                existingPatientNoteEditText.setText(patientModel.getNote());
+                selectedPatient = patientList.get(position);
+
+                String photoPath = selectedPatient.getPhoto();
+                Bitmap photoBitmap = loadImageFromStorage(selectedPatient.getPhoto());
+                if (photoBitmap != null) {
+                    existingPatientAvatar.setImageBitmap(photoBitmap);
+                }
+                existingPatientNameEditText.setText(selectedPatient.getName());
+                existingPatientGenderEditText.setText(selectedPatient.getGender());
+                existingPatientDateOfBirthText.setText(selectedPatient.getDate_of_birth());
+                existingPatientContactInfoEditText.setText(selectedPatient.getPhone());
+                existingPatientNoteEditText.setText(selectedPatient.getNote());
 
                 setStatus(STATUS_EXIST_PATIENT_DETAILS);
             }
@@ -167,7 +189,7 @@ public class PatientInfoFragment extends BaseFragment {
         patientListView.setOnItemClickListener(onItemClickListener);
 
         // existPatientDetailsLayout
-        // exisitngPatientAvatar = (ImageView)view.findViewById(R.id.exisiting_patient_avatar);
+        existingPatientAvatar = (ImageView) view.findViewById(R.id.existing_patient_avatar);
         existingPatientNameEditText = (EditText) view.findViewById(R.id.existing_patient_name);
         existingPatientGenderEditText = (EditText) view.findViewById(R.id.existing_patient_gender);
         existingPatientDateOfBirthText = (TextView) view.findViewById(R.id.existing_patient_date_of_birth_text);
@@ -274,17 +296,26 @@ public class PatientInfoFragment extends BaseFragment {
     private void nextButtonPressOnNewPatient(){
 
         String username = newPatientNameEditText.getText().toString().trim().replace(" ", "").toLowerCase();
+        String patientId = username;
         String gender = newPatientGenderEditText.getText().toString();
         String birthOfDate = newPatientDateOfBirthText.getText().toString();
         String phone = newPatientContactInfoEditText.getText().toString();
 
-        PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(username, username, gender, birthOfDate);
+        PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(patientId, username, gender, birthOfDate);
         patientBuilder.phone(phone);
-        tbPatient.smartInsert(database, patientBuilder.build());
+
+        // Save the picture to disk.
+        String photoFilename = patientId + ".png";
+        saveToInternalStorage(((BitmapDrawable) newPatientAvatar.getDrawable()).getBitmap(), photoFilename);
+        patientBuilder.photo(photoFilename);
+
+        PatientModel patient = patientBuilder.build();
+        tbPatient.smartInsert(database, patient);
+        patientListViewAdapter.notifyDataSetChanged(); // FIXME: seems not working. Needs to update list view data after adding a patient.
 
         fragmentUtil.showFragment(new DetectionOptionsFragment());
 
-
+        showDetectionOptions(patient);
     }
 
     /**
@@ -293,12 +324,18 @@ public class PatientInfoFragment extends BaseFragment {
     private void nextButtonPressOnExistPatientList(){
     }
 
+    private void showDetectionOptions(PatientModel patient) {
+        DetectionOptionsFragment fragment = new DetectionOptionsFragment();
+        fragment.setPatient(patient);
+        fragmentUtil.showFragment(new DetectionOptionsFragment());
+    }
+
 
     /**
      * Next Button : Existing patient details
      * */
-    private void nextButtonPressOnExistPatientDetails(){
-
+    private void nextButtonPressOnExistPatientDetails() {
+        showDetectionOptions(selectedPatient);
     }
 
     private void setStatus(int status){
@@ -357,6 +394,41 @@ public class PatientInfoFragment extends BaseFragment {
         }
     }
 
+    private String saveToInternalStorage(Bitmap bitmapImage, String filename) {
+        ContextWrapper cw = new ContextWrapper(mContext);
+        // path to /data/data/yourapp/app_data/photos
+        File directory = cw.getDir("photos", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath = new File(directory, filename);
 
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
+
+    private Bitmap loadImageFromStorage(String filename) {
+        try {
+            ContextWrapper cw = new ContextWrapper(mContext);
+            // path to /data/data/yourapp/app_data/photos
+            File directory = cw.getDir("photos", Context.MODE_PRIVATE);
+            File f = new File(directory, filename);
+            return BitmapFactory.decodeStream(new FileInputStream(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

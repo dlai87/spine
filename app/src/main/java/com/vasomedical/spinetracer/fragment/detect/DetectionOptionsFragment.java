@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
@@ -30,6 +31,8 @@ public class DetectionOptionsFragment extends BaseFragment {
     Button nextButton;
     Button introButton;
 
+    PatientModel patient;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -39,6 +42,9 @@ public class DetectionOptionsFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     @Override
     protected void assignViews(){
@@ -96,7 +102,9 @@ public class DetectionOptionsFragment extends BaseFragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentUtil.showFragment(new DetectingFragment());
+                DetectingFragment fragment = new DetectingFragment();
+                fragment.setPatient(patient);
+                fragmentUtil.showFragment(fragment);
             }
         });
 

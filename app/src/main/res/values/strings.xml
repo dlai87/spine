@@ -92,4 +92,11 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
 
+    <string name="cancel_detection_result">重新测量</string>
+    <string name="accpet_detection_result">保存测量结果</string>
+    <string name="accpet_and_sent_result">生成PDF报告</string>
+
+    <string name="save">保存</string>
+
+
 </resources>
