@@ -25,6 +25,9 @@ public class AlgorithmFactory {
             case DETECT_OPT_1:
                 return new AlgorithmOpt1();
 
+            case DETECT_OPT_2:
+                return new AlgorithmOpt2();
+
             default:
                 return new AlgorithmOpt1();
         }

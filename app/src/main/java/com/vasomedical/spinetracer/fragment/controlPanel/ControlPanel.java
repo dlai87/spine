@@ -22,7 +22,8 @@ public class ControlPanel {
                 fragment = new DetectionOptionsFragment();
                 break;
             case 2:
-                //fragment = new AnalyticFragment();
+
+                fragment = new PatientInfoFragment();
                 break;
             default:
                 break;

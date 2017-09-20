@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.FloatProperty;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -33,6 +34,8 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
     SurfaceView surfaceView ;
 
 
+    MyTans tansPoint1;
+    MyTans tansPoint2;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,25 +115,13 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
     private void draw(Canvas canvas, Paint paint){
 
-        int factor = 5;
-        ArrayList<Point> controlPoints = new ArrayList<Point>();
-        controlPoints.add(new Point(0*factor,90));
-        controlPoints.add(new Point(1*factor,100));
-        controlPoints.add(new Point(0*factor,145));
-        controlPoints.add(new Point(10*factor,150));
-        controlPoints.add(new Point(23*factor,155));
-        controlPoints.add(new Point(73*factor,108));
-        controlPoints.add(new Point(80*factor,120*factor));
-        controlPoints.add(new Point(86*factor,131*factor));
-        controlPoints.add(new Point(40*factor,210*factor));
-        controlPoints.add(new Point(50*factor,220*factor));
-        controlPoints.add(new Point(60*factor,230*factor));
-        controlPoints.add(new Point(148*factor,185*factor));
-        controlPoints.add(new Point(140*factor,180*factor));
-        controlPoints.add(new Point(131*factor,175*factor));
-        controlPoints.add(new Point(23*factor,188*factor));
-        controlPoints.add(new Point(0*factor,190*factor));
+        // draw white background
+        Paint paint2 = new Paint();
+        paint2.setColor(Color.WHITE);
+        paint2.setStyle(Paint.Style.FILL);
+        canvas.drawPaint(paint2);
 
+        ArrayList<Point> controlPoints = convertDataToPointList(detectionData, canvas.getWidth(), canvas.getHeight());
 
         paint.setColor(Color.BLUE);
 
@@ -141,7 +132,7 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
         Path curvePath = new Path();
         curvePath.moveTo(controlPoints.get(0).x, controlPoints.get(0).y);
-        for (int idx = 1; idx < controlPoints.size(); idx += 3) {
+        for (int idx = 1; idx < controlPoints.size()-3; idx += 3) {
             curvePath.cubicTo(controlPoints.get(idx).x,
                     controlPoints.get(idx).y, controlPoints.get(idx+1).x,
                     controlPoints.get(idx+1).y, controlPoints.get(idx+2).x,
@@ -149,11 +140,216 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
         }
 
         canvas.drawPath(curvePath, paint);
+
+        /*
+        for(int i=0; i < controlPoints.size()-1; i++){
+            drawLine(canvas, paint, controlPoints.get(i), controlPoints.get(i+1));
+        }
+        */
+
+
+        Log.e("tans", "tansPoint1 " + tansPoint1 + " tansPoint2 " + tansPoint2);
+
+
+        if (tansPoint1!=null){
+            drawLineWithExtern(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
+            drawVerticalLine(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
+        }
+        if (tansPoint2!=null){
+            drawLineWithExtern(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
+            drawVerticalLine(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
+        }
+
     }
 
 
     private ArrayList<Point> convertDataToPointList(ArrayList<Entry> data, int canvasWidth, int canvasHeight){
-        return null;
+
+
+        for(Entry p : data){
+            Log.d("temp", "Entry " + p);
+        }
+
+        Log.d("temp", "===========");
+        // find data range
+        float minDataX = Float.MAX_VALUE;
+        float minDataY = Float.MAX_VALUE;
+        float maxDataX = Float.MIN_VALUE;
+        float maxDataY = Float.MIN_VALUE;
+        for (Entry entry : data){
+            if (entry.getX() < minDataX) minDataX = entry.getX();
+            if (entry.getX() > maxDataX) maxDataX = entry.getX();
+            if (entry.getY() < minDataY) minDataY = entry.getY();
+            if (entry.getY() > maxDataY) maxDataY = entry.getY();
+        }
+
+        float dataHeight = maxDataY - minDataY;
+        float scaleFactor = dataHeight / canvasHeight;
+
+        ArrayList<Point> controlPoints = new ArrayList<Point>();
+
+        int shift = canvasWidth/3;
+        // scale and shift
+        for (Entry entry : data){
+            int x = (int)((entry.getX() - minDataX)/scaleFactor) + shift;
+            int y = (int)((entry.getY() - minDataY)/scaleFactor);
+                    controlPoints.add(new Point(x,y));
+        }
+
+        for(Point p : controlPoints){
+            Log.d("temp", "points " + p);
+        }
+
+        calTan(controlPoints);
+
+        return controlPoints;
     }
 
+
+    private ArrayList<MyTans> calTan(ArrayList<Point> points){
+        ArrayList<MyTans> tans = new ArrayList<MyTans>();
+        for(int i = 0 ; i < points.size()-1; i++){
+            tans.add(new MyTans(points.get(i), points.get(i+1)));
+        }
+
+        for (int i =0 ; i<tans.size(); i++){
+            Log.d("tans", i + " : " + tans.get(i));
+        }
+
+        analyze(tans);
+        return tans;
+    }
+
+    private void drawLine(Canvas canvas, Paint paint, Point p1 , Point p2){
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(2);
+        canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
+    }
+
+    private void drawLineWithExtern(Canvas canvas, Paint paint, Point p1 , Point p2){
+        paint.setColor(Color.GREEN);
+        paint.setStrokeWidth(2);
+
+        int extern = 50;
+        float t = (p1.y - p2.y)*1.0f/(p1.x-p2.x);
+
+        canvas.drawLine( p2.x-extern , p2.y - t*extern , p2.x + extern, p2.y + t*extern, paint);
+    }
+
+    private void drawVerticalLine(Canvas canvas, Paint paint, Point p1 , Point p2){
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(2);
+
+        float t = (p1.y - p2.y)*1.0f/(p1.x-p2.x);
+        int x = p2.x + 300;
+        int y = (int)(-300/t + p2.y);
+
+        canvas.drawLine(p2.x, p2.y, x, y, paint);
+    }
+
+
+    private void analyze(ArrayList<MyTans> tansList){
+        ArrayList<ArrayList<MyTans>> segments = new ArrayList<ArrayList<MyTans>>();
+
+        ArrayList<MyTans> tempSeg = new ArrayList<MyTans>();
+        // segmentation
+        for(int i= 0 ; i < tansList.size(); i++ ){
+
+            MyTans t = tansList.get(i);
+            if(tempSeg.isEmpty()){
+                tempSeg.add(t);
+            }else{
+                // same positive or negative
+                if(t.getTans() * tempSeg.get(tempSeg.size()-1).getTans() > 0){
+                    tempSeg.add(t);
+                }else{
+                    segments.add(tempSeg);
+                    tempSeg = new ArrayList<MyTans>();
+                    tempSeg.add(t);
+                }
+            }
+            // add last segment
+            if (i == tansList.size()-1){
+                segments.add(tempSeg);
+            }
+        }
+        // remove short segment
+        for(int i=0; i < segments.size(); i++){
+            int length = segments.get(i).size();
+            Log.e("tans", "length  " + length);
+            if (length < 4) {
+                segments.remove(i);
+
+            }
+        }
+
+        // find min points in each segment
+        ArrayList<MyTans> minTansList = new ArrayList<MyTans>();
+        for(int i = 0 ; i < segments.size(); i++){
+            minTansList.add(minTansInList(segments.get(i)));
+        }
+
+
+        for (MyTans m : minTansList){
+            if (tansPoint1==null){
+                tansPoint1 = m;
+            }else if(tansPoint2==null){
+                tansPoint2 = m ;
+            }
+            Log.e("tans", "min tans " + m);
+        }
+        // draw line
+
+        // calculate cobb's angle
+    }
+
+
+    private MyTans minTansInList(ArrayList<MyTans> segment){
+        int i = 0 ;
+        float minTan = Float.MAX_VALUE;
+        for(int j=0; j < segment.size(); j++){
+            if ( Math.abs(segment.get(j).getTans()) < minTan){
+                minTan = Math.abs(segment.get(j).getTans());
+                i = j;
+            }
+        }
+
+        return segment.get(i);
+    }
+
+    class MyTans{
+        Point p1;
+        Point p2;
+        float tans;
+        public MyTans(Point p1, Point p2){
+            this.p1 = p1;
+            this.p2 = p2;
+            if (p1.x - p2.x != 0){
+                tans = (p1.y - p2.y)*1.0f/(p1.x - p2.x);
+            }else{
+                tans = Float.MAX_VALUE;
+            }
+        }
+
+        public float getTans(){
+            return tans;
+        }
+
+        public Point getPoint1(){
+            return p1;
+        }
+
+        public Point getPoint2(){
+            return p2;
+        }
+
+        public void setTans(float tans){
+            this.tans = tans;
+        }
+
+        public String toString(){
+            return "Tans " + tans + " P1 " + p1 + " P2 " + p2;
+        }
+
+    }
 }

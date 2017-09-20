@@ -43,7 +43,7 @@ public abstract class AlgorithmBase  {
      *
      *   create data for Chart with 2 Coordinates -- discrete method ; using raw data
      *
-     *   c2 is the function of c1:   c2 = f(c1)
+     *   c2 is the function of c1:   c2 = f(c1)    c1 position value , c2 degree value
      *
      * */
     protected ArrayList<Entry> createDataForChart(ArrayList<Pose> inputData,
@@ -91,7 +91,37 @@ public abstract class AlgorithmBase  {
 
 
 
+    /**
+     *
+     *   create data for Chart with 2 Coordinates -- discrete method ; using raw data
+     *
+     *   c2 is the function of c1:   c2 = f(c1)    c1 position value , c2 position value
+     *
+     * */
+    protected ArrayList<Entry> createDataForChartPositionVsPosition(ArrayList<Pose> inputData,
+                                                  Coordinate c1 ,
+                                                  Coordinate c2,
+                                                  int numSamples){
 
+        ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
+        int step = inputData.size() / numSamples;
+        Log.e("show", "++++ step length ++++" + step);
+        for (int i = 0 ; i < inputData.size(); i+=step ){
+            Pose temp = inputData.get(i);
+            dataWithProcess.add(new
+                    Entry(
+                    Util.valueOfCoordinate(temp, c1) ,
+                    Util.valueOfCoordinate(temp, c2)));
+        }
+
+        int i = 0 ;
+        for (Entry entry : dataWithProcess){
+            Log.e("show", "entry " + entry.toString() + "==" + i);
+            i ++;
+        }
+
+        return dataWithProcess;
+    }
 
 
 

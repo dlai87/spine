@@ -47,9 +47,11 @@
             <!-- chart -->
 
             <SurfaceView
+                android:layout_marginTop="@dimen/margin_1"
                 android:id="@+id/surface"
                 android:layout_width="@dimen/layout_chart_w"
-                android:layout_height="@dimen/layout_chart_h" />
+                android:layout_height="@dimen/layout_chart_h"
+                />
 
             <!-- diagnosis -->
 

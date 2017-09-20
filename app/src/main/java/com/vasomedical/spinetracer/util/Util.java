@@ -95,6 +95,18 @@ public class Util {
         }
     }
 
+
+    public static float positionToDisplay(float value){
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.###"); // output is one digital after point
+        try {
+            float normDegree = Float.valueOf(decimalFormat.format(value));
+            return normDegree ;
+        }catch (Exception e){
+            return -99999;
+        }
+    }
+
     ///////////////////////// Test code  ////////
 
     public static double[] quaternion2Euler(double rotation_w,

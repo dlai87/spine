@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,15 +49,27 @@ public class DetectingFragment extends BaseFragment {
     TextView realTimeDisplay;
     RelativeLayout angleRulerLayout;
     ImageView indicator;
+
+    LinearLayout movementLayout;
+    TextView verticalMoveText;
+    TextView horizontalMoveText;
+
+
     PatientModel patient;
     private Tango mTango;
     private TangoConfig mConfig;
     private boolean isDetctiong = false;
 
 
+    public static final String REALTIME_DISPLAY_MODE = "REALTIME_DISPLAY_MODE";
+    int realtime_display_mode = 1;  // 0 = angle mode ;  1 = position mode
+
     public static final String REALTIME_DISPLAY_DEGREE = "REALTIME_DISPLAY_DEGREE";
     int realtime_display_degree = 1;  // which degree to display in real time,
-                                      // 0 = rotation x;  1 = rotation y; 2 = rotation z
+    // 0 = rotation x;  1 = rotation y; 2 = rotation z
+
+    public static final String REALTIME_DISPLAY_HORIZONTAL_AXIS = "REALTIME_DISPLAY_HORIZONTAL_AXIS";
+    int realtime_display_horizontal_axis = 1; // 0 = x Axis; 1 = y Axis
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,8 +77,10 @@ public class DetectingFragment extends BaseFragment {
 
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
-        if (args!=null){
+        if (args != null) {
             realtime_display_degree = args.getInt(REALTIME_DISPLAY_DEGREE, 1);
+            realtime_display_mode = args.getInt(REALTIME_DISPLAY_MODE, 1);
+            realtime_display_horizontal_axis = args.getInt(REALTIME_DISPLAY_HORIZONTAL_AXIS, 1);
         }
 
 
@@ -77,13 +92,16 @@ public class DetectingFragment extends BaseFragment {
     }
 
     @Override
-    protected void assignViews(){
-        controlButton = (NJButton)view.findViewById(R.id.control_button);
-        nextButton = (Button)view.findViewById(R.id.next_button);
-        previousButton = (Button)view.findViewById(R.id.previous_button);
-        realTimeDisplay = (TextView)view.findViewById(R.id.real_time_display);
-        angleRulerLayout = (RelativeLayout)view.findViewById(R.id.angleRulerLayout);
-        indicator = (ImageView)view.findViewById(R.id.indicator);
+    protected void assignViews() {
+        controlButton = (NJButton) view.findViewById(R.id.control_button);
+        nextButton = (Button) view.findViewById(R.id.next_button);
+        previousButton = (Button) view.findViewById(R.id.previous_button);
+        realTimeDisplay = (TextView) view.findViewById(R.id.real_time_display);
+        angleRulerLayout = (RelativeLayout) view.findViewById(R.id.angleRulerLayout);
+        indicator = (ImageView) view.findViewById(R.id.indicator);
+        movementLayout = (LinearLayout) view.findViewById(R.id.movementLayout);
+        verticalMoveText = (TextView) view.findViewById(R.id.vertical_move_text);
+        horizontalMoveText = (TextView) view.findViewById(R.id.horizontal_move_text);
 
     }
 
@@ -92,12 +110,12 @@ public class DetectingFragment extends BaseFragment {
         controlButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDetctiong){
+                if (!isDetctiong) {
                     isDetctiong = true;
                     start();
                     controlButton.setText(mContext.getResources().getString(R.string.stop));
-                 //   NJProgressDialog.showDialog(mContext);
-                }else {
+                    //   NJProgressDialog.showDialog(mContext);
+                } else {
                     isDetctiong = false;
                     stop();
                     controlButton.setText(mContext.getResources().getString(R.string.start));
@@ -106,22 +124,46 @@ public class DetectingFragment extends BaseFragment {
             }
         });
 
-        try{
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    drawIndicator(0);
-                }
-            });
-        }catch (Exception e){
+        switch (realtime_display_mode) {
+            case 0: {
+                try {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            angleRulerLayout.setVisibility(View.VISIBLE);
+                            movementLayout.setVisibility(View.GONE);
+                            drawIndicator(0);
+                        }
+                    });
+                } catch (Exception e) {
 
+                }
+            }
+            break;
+            case 1: {
+                try {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            angleRulerLayout.setVisibility(View.GONE);
+                            movementLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+            }
+            break;
+            default:
+                break;
         }
+
     }
 
 
     ////  Tango
 
-    private void start(){
+    private void start() {
         // Initialize Tango Service as a normal Android Service. Since we call mTango.disconnect()
         // in onPause, this will unbind Tango Service, so every time onResume gets called we
         // should create a new Tango object.
@@ -151,7 +193,7 @@ public class DetectingFragment extends BaseFragment {
     }
 
 
-    private void stop(){
+    private void stop() {
         synchronized (this) {
             try {
                 mTango.disconnect();
@@ -161,7 +203,7 @@ public class DetectingFragment extends BaseFragment {
         }
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
-        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_1);
+        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_2);
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
 
         AnalyticBaseFragment analyticFragment = new AnalyticOpt2Fragment();
@@ -209,7 +251,7 @@ public class DetectingFragment extends BaseFragment {
         mTango.connectListener(framePairs, new Tango.OnTangoUpdateListener() {
             @Override
             public void onPoseAvailable(final TangoPoseData pose) {
-               // NJProgressDialog.dismiss();
+                // NJProgressDialog.dismiss();
                 logPose(pose);
             }
 
@@ -243,45 +285,55 @@ public class DetectingFragment extends BaseFragment {
     private void logPose(TangoPoseData pose) {
         final float translation[] = pose.getTranslationAsFloats();
         final float orientation[] = pose.getRotationAsFloats();
-        final double[] euler = Util.quaternion2Euler(orientation[0], orientation[1], orientation[2],orientation[3]);
+        final double[] euler = Util.quaternion2Euler(orientation[0], orientation[1], orientation[2], orientation[3]);
 
-        try{
+        try {
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    float degree = Util.radianToDegree((float) euler[realtime_display_degree]);
-                    realTimeDisplay.setText( Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
-                    drawIndicator(degree);
+                    switch (realtime_display_mode){
+                        case 0:{
+                            float degree = Util.radianToDegree((float) euler[realtime_display_degree]);
+                            realTimeDisplay.setText(Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
+                            drawIndicator(degree);
+                        }break;
+                        case 1:{
+                            verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + ":" + Util.positionToDisplay(-translation[2]));
+                            horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + ":" +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]));
+                        }break;
+                        default:
+                            break;
+                    }
+
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         poseLog.recordPoseData(pose);
     }
 
 
-    private void drawIndicator(float degree){
+    private void drawIndicator(float degree) {
 
         float layoutW = angleRulerLayout.getWidth();
         float layoutH = angleRulerLayout.getHeight();
-        float indicatorR = indicator.getWidth()/2;
+        float indicatorR = indicator.getWidth() / 2;
 
         float radius = layoutH - indicatorR;
-        float tempX =  (float) (Math.sin( Math.toRadians(Math.abs(degree)) ) * radius) ;
+        float tempX = (float) (Math.sin(Math.toRadians(Math.abs(degree))) * radius);
 
-        if (degree < 0 ){
-            indicator.setX( layoutW/2-tempX - indicatorR);
-        }else {
-            indicator.setX( layoutW/2+tempX - indicatorR);
+        if (degree < 0) {
+            indicator.setX(layoutW / 2 - tempX - indicatorR);
+        } else {
+            indicator.setX(layoutW / 2 + tempX - indicatorR);
         }
 
-        float tempY =  (float) (Math.cos( Math.toRadians(Math.abs(degree)) ) * radius) ;
+        float tempY = (float) (Math.cos(Math.toRadians(Math.abs(degree))) * radius);
 
         indicator.setY(tempY - indicatorR);
 
     }
-
 
 
 }

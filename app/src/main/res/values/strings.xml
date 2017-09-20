@@ -105,4 +105,8 @@
     <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
     <string name="please_write_diagnosis">医生备注</string>
 
+
+    <string name="vertical_move">竖直移动</string>
+    <string name="horizontal_move">水平移动</string>
+
 </resources>
