@@ -108,7 +108,7 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             }
         });
-        
+
     }
 
 

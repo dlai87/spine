@@ -81,6 +81,21 @@ public class Util {
         return matcher.find();
     }
 
+
+    public static float radianToDegree(float radian, int offset, boolean reverse){
+        float degree = (float) Math.toDegrees(radian);
+        degree += offset;
+        if (reverse) degree = -degree;
+        Log.d("temp", " radian "  + radian + " degree " + degree + " Math degree ");
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
+        try {
+            float normDegree = Float.valueOf(decimalFormat.format(degree));
+            return normDegree ;
+        }catch (Exception e){
+            return -99999;
+        }
+    }
+
     public static float radianToDegree(float radian){
 
         float degree = (float) Math.toDegrees(radian);

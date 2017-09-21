@@ -109,4 +109,14 @@
     <string name="vertical_move">竖直移动</string>
     <string name="horizontal_move">水平移动</string>
 
+
+    <string name="analytic_label_left_right_1">左侧弯角度</string>
+    <string name="analytic_label_left_right_2">右侧弯角度</string>
+    <string name="analytic_label_forward_back_1">后仰角度</string>
+    <string name="analytic_label_forward_back_2">前倾角度</string>
+    <string name="analytic_label_rotate_1">左转角度</string>
+    <string name="analytic_label_rotate_2">右转角度</string>
+    <string name="analytic_label_balance_1">左侧倾斜</string>
+    <string name="analytic_label_balance_2">右侧倾斜</string>
+
 </resources>

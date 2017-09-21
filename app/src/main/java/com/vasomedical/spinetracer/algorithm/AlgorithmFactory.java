@@ -1,11 +1,5 @@
 package com.vasomedical.spinetracer.algorithm;
 
-import android.util.Log;
-
-import com.vasomedical.spinetracer.model.Pose;
-
-import java.util.ArrayList;
-
 /**
  * Created by dehualai on 5/14/17.
  */
@@ -32,6 +26,18 @@ public class AlgorithmFactory {
 
             case DETECT_OPT_3:
                 return new AlgorithmOpt3();
+
+            case DETECT_OPT_4:
+                return new AlgorithmOptLeftRight();
+
+            case DETECT_OPT_5:
+                return new AlgorithmOptForwardBack();
+
+            case DETECT_OPT_6:
+                return new AlgorithmOptRoatate();
+
+            case DETECT_OPT_7:
+                return new AlgorithmOptBalance();
 
             default:
                 return new AlgorithmOpt1();

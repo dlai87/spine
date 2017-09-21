@@ -56,7 +56,22 @@ public abstract class AlgorithmBase  {
         Log.e("show", "++++ step length ++++" + step);
         for (int i = 0 ; i < inputData.size(); i+=step ){
             Pose temp = inputData.get(i);
-            float eulurDegree =  Util.radianToDegree(Util.valueOfCoordinate(temp, c2));
+
+            int offset = 0 ;
+            switch (c2){
+                case rx:
+                    offset = -90;
+                    break;
+                case ry:
+                    offset = 0 ;
+                    break;
+                case rz:
+                    offset = 90 ;
+                    break;
+            }
+
+            float eulurDegree =  Util.radianToDegree(Util.valueOfCoordinate(temp, c2), offset, c2==Coordinate.rz);
+            Log.e("show", "++++ eulurDegree ++++" + eulurDegree);
             dataWithProcess.add(new Entry( Util.valueOfCoordinate(temp, c1) , eulurDegree));
         }
 

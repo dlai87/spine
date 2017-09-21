@@ -28,6 +28,11 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt1Fragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt3Fragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt2Fragment;
 import com.vasomedical.spinetracer.model.PoseLog;
@@ -94,16 +99,25 @@ public class DetectingFragment extends BaseFragment {
 
             }break;
             case AlgorithmFactory.DETECT_OPT_4:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptLeftRightFragment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_5:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 0;
+                analyticFragment = new AnalyticOptForwardBackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_6:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 2;
+                analyticFragment = new AnalyticOptRotateFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_7:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptBalanceFragment();
             }break;
             default:{
 
@@ -319,7 +333,19 @@ public class DetectingFragment extends BaseFragment {
                 public void run() {
                     switch (realtime_display_mode){
                         case 0:{
-                            float degree = Util.radianToDegree((float) euler[realtime_display_degree]);
+                            int offset = 0 ;
+                            switch (realtime_display_degree){
+                                case 0:
+                                    offset = -90;
+                                    break;
+                                case 1:
+                                    offset = 0 ;
+                                    break;
+                                case 2:
+                                    offset = 90 ;
+                                    break;
+                            }
+                            float degree = Util.radianToDegree((float) euler[realtime_display_degree], offset, realtime_display_degree==2);
                             realTimeDisplay.setText(Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
                             drawIndicator(degree);
                         }break;

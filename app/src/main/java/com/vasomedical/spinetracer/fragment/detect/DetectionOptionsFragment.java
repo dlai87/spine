@@ -148,6 +148,8 @@ public class DetectionOptionsFragment extends BaseFragment {
         optionButton3.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton4.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton5.setButtonTheme(NJButton.THEME_DEFAULT);
+        optionButton6.setButtonTheme(NJButton.THEME_DEFAULT);
+        optionButton7.setButtonTheme(NJButton.THEME_DEFAULT);
 
         switch (AlgorithmFactory.detectionOption){
             case AlgorithmFactory.DETECT_OPT_1:
@@ -164,6 +166,12 @@ public class DetectionOptionsFragment extends BaseFragment {
                 break;
             case AlgorithmFactory.DETECT_OPT_5:
                 optionButton5.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
+                break;
+            case AlgorithmFactory.DETECT_OPT_6:
+                optionButton6.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
+                break;
+            case AlgorithmFactory.DETECT_OPT_7:
+                optionButton7.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
                 break;
         }
 
