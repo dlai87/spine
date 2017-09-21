@@ -30,12 +30,8 @@ import java.util.ArrayList;
 
 public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
-
     SurfaceView surfaceView ;
 
-
-    MyTans tansPoint1;
-    MyTans tansPoint2;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,8 +108,7 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             }
         });
-
-
+        
     }
 
 
@@ -197,161 +192,5 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
 
 
-    private ArrayList<MyTans> calTan(ArrayList<Point> points){
-        ArrayList<MyTans> tans = new ArrayList<MyTans>();
-        for(int i = 0 ; i < points.size()-1; i++){
-            tans.add(new MyTans(points.get(i), points.get(i+1)));
-        }
 
-        for (int i =0 ; i<tans.size(); i++){
-            Log.d("tans", i + " : " + tans.get(i));
-        }
-
-        analyze(tans);
-        return tans;
-    }
-
-
-
-    private void drawLineWithExtern(Canvas canvas, Paint paint, Point p1 , Point p2){
-        paint.setColor(Color.GREEN);
-        paint.setStrokeWidth(2);
-
-        int extern = 50;
-        float t = (p1.y - p2.y)*1.0f/(p1.x-p2.x);
-
-        canvas.drawLine( p2.x-extern , p2.y - t*extern , p2.x + extern, p2.y + t*extern, paint);
-    }
-
-    private void drawVerticalLine(Canvas canvas, Paint paint, Point p1 , Point p2){
-        paint.setColor(Color.GRAY);
-        paint.setStrokeWidth(2);
-
-        float t = (p1.y - p2.y)*1.0f/(p1.x-p2.x);
-        int x = p2.x + 300;
-        int y = (int)(-300/t + p2.y);
-
-        canvas.drawLine(p2.x, p2.y, x, y, paint);
-    }
-
-
-    private void analyze(ArrayList<MyTans> tansList){
-        ArrayList<ArrayList<MyTans>> segments = new ArrayList<ArrayList<MyTans>>();
-
-        ArrayList<MyTans> tempSeg = new ArrayList<MyTans>();
-        // segmentation
-        for(int i= 0 ; i < tansList.size(); i++ ){
-
-            MyTans t = tansList.get(i);
-            if(tempSeg.isEmpty()){
-                tempSeg.add(t);
-            }else{
-                // same positive or negative
-                if(t.getTans() * tempSeg.get(tempSeg.size()-1).getTans() > 0){
-                    tempSeg.add(t);
-                }else{
-                    segments.add(tempSeg);
-                    tempSeg = new ArrayList<MyTans>();
-                    tempSeg.add(t);
-                }
-            }
-            // add last segment
-            if (i == tansList.size()-1){
-                segments.add(tempSeg);
-            }
-        }
-        // remove short segment
-        for(int i=0; i < segments.size(); i++){
-            int length = segments.get(i).size();
-            Log.e("tans", "length  " + length);
-            if (length < 4) {
-                segments.remove(i);
-
-            }
-        }
-
-        // find min points in each segment
-        ArrayList<MyTans> minTansList = new ArrayList<MyTans>();
-        for(int i = 0 ; i < segments.size(); i++){
-            minTansList.add(minTansInList(segments.get(i)));
-        }
-
-
-        for (MyTans m : minTansList){
-            if (tansPoint1==null){
-                tansPoint1 = m;
-            }else if(tansPoint2==null){
-                tansPoint2 = m ;
-            }
-            Log.e("tans", "min tans " + m);
-        }
-        // draw line
-
-        // calculate cobb's angle
-    }
-
-
-    private MyTans minTansInList(ArrayList<MyTans> segment){
-        int i = 0 ;
-        float minTan = Float.MAX_VALUE;
-        for(int j=0; j < segment.size(); j++){
-            if ( Math.abs(segment.get(j).getTans()) < minTan){
-                minTan = Math.abs(segment.get(j).getTans());
-                i = j;
-            }
-        }
-
-        return segment.get(i);
-    }
-
-
-    class Segment{
-        ArrayList<MyTans> pieces;
-        public Segment(){
-            pieces = new ArrayList<MyTans>();
-        }
-
-        public void addOnePiece(){
-
-        }
-
-        public void addSegment(){
-
-        }
-    }
-    class MyTans{
-        Point p1;
-        Point p2;
-        float tans;
-        public MyTans(Point p1, Point p2){
-            this.p1 = p1;
-            this.p2 = p2;
-            if (p1.x - p2.x != 0){
-                tans = (p1.y - p2.y)*1.0f/(p1.x - p2.x);
-            }else{
-                tans = Float.MAX_VALUE;
-            }
-        }
-
-        public float getTans(){
-            return tans;
-        }
-
-        public Point getPoint1(){
-            return p1;
-        }
-
-        public Point getPoint2(){
-            return p2;
-        }
-
-        public void setTans(float tans){
-            this.tans = tans;
-        }
-
-        public String toString(){
-            return "Tans " + tans + " P1 " + p1 + " P2 " + p2;
-        }
-
-    }
 }
