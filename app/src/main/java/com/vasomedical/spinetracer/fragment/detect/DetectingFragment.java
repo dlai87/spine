@@ -27,6 +27,7 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt1Fragment;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt2Fragment;
 import com.vasomedical.spinetracer.model.PoseLog;
@@ -61,26 +62,52 @@ public class DetectingFragment extends BaseFragment {
     private boolean isDetctiong = false;
 
 
-    public static final String REALTIME_DISPLAY_MODE = "REALTIME_DISPLAY_MODE";
     int realtime_display_mode = 1;  // 0 = angle mode ;  1 = position mode
-
-    public static final String REALTIME_DISPLAY_DEGREE = "REALTIME_DISPLAY_DEGREE";
     int realtime_display_degree = 1;  // which degree to display in real time,
     // 0 = rotation x;  1 = rotation y; 2 = rotation z
-
-    public static final String REALTIME_DISPLAY_HORIZONTAL_AXIS = "REALTIME_DISPLAY_HORIZONTAL_AXIS";
     int realtime_display_horizontal_axis = 1; // 0 = x Axis; 1 = y Axis
 
+    AnalyticBaseFragment analyticFragment;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
-        if (args != null) {
-            realtime_display_degree = args.getInt(REALTIME_DISPLAY_DEGREE, 1);
-            realtime_display_mode = args.getInt(REALTIME_DISPLAY_MODE, 1);
-            realtime_display_horizontal_axis = args.getInt(REALTIME_DISPLAY_HORIZONTAL_AXIS, 1);
+
+
+        switch (AlgorithmFactory.detectionOption){
+            case AlgorithmFactory.DETECT_OPT_1:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOpt1Fragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_2:{
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 1;
+                analyticFragment = new AnalyticOpt2Fragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_3:{
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 0;
+                analyticFragment = new AnalyticOpt2Fragment();
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_4:{
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_5:{
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_6:{
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_7:{
+
+            }break;
+            default:{
+
+            }break;
         }
 
 
@@ -203,10 +230,9 @@ public class DetectingFragment extends BaseFragment {
         }
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
-        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_2);
+        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.detectionOption);
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
 
-        AnalyticBaseFragment analyticFragment = new AnalyticOpt2Fragment();
         Bundle args = new Bundle();
         args.putInt(AnalyticBaseFragment.SCORE, algorithm.getScore());
         analyticFragment.setArguments(args);

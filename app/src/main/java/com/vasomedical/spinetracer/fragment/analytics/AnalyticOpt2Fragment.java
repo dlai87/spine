@@ -79,23 +79,27 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 // Do some drawing when surface is ready
-                Canvas canvas = holder.lockCanvas();
-
-                // draw on canvas
-                Paint paint = new Paint();
-                paint.setColor(Color.RED);
-                paint.setDither(false);
-                paint.setStrokeWidth(30);
-                paint.setDither(true);                    // set the dither to true
-                paint.setStyle(Paint.Style.STROKE);       // set to STOKE
-                paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
-                paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too
-                paint.setPathEffect(new CornerPathEffect(10) );   // set the path effect when they join.
-                paint.setAntiAlias(true);
+                final Canvas canvas = holder.lockCanvas();
 
 
 
-                draw(canvas, paint);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // draw on canvas
+                        Paint paint = new Paint();
+                        paint.setStrokeWidth(30);
+                        paint.setDither(true);                    // set the dither to true
+                        paint.setStyle(Paint.Style.STROKE);       // set to STOKE
+                        paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
+                        paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too
+                        paint.setPathEffect(new CornerPathEffect(10) );   // set the path effect when they join.
+                        paint.setAntiAlias(true);
+
+                        draw(canvas, paint);
+
+                    }
+                });
 
                 holder.unlockCanvasAndPost(canvas);
             }
@@ -141,23 +145,12 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
         canvas.drawPath(curvePath, paint);
 
-        /*
-        for(int i=0; i < controlPoints.size()-1; i++){
-            drawLine(canvas, paint, controlPoints.get(i), controlPoints.get(i+1));
-        }
-        */
+        AnalyticUtil util = new AnalyticUtil();
 
-
-        Log.e("tans", "tansPoint1 " + tansPoint1 + " tansPoint2 " + tansPoint2);
-
-
-        if (tansPoint1!=null){
-            drawLineWithExtern(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
-            drawVerticalLine(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
-        }
-        if (tansPoint2!=null){
-            drawLineWithExtern(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
-            drawVerticalLine(canvas, paint, tansPoint1.getPoint1(), tansPoint1.getPoint2());
+        ArrayList<SpinePiece> pieces = util.findPieceOfInterested(controlPoints);
+        for (SpinePiece piece : pieces){
+            piece.drawLines(canvas);
+            piece.drawPoints(canvas);
         }
 
     }
@@ -165,11 +158,9 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
 
     private ArrayList<Point> convertDataToPointList(ArrayList<Entry> data, int canvasWidth, int canvasHeight){
 
-
         for(Entry p : data){
             Log.d("temp", "Entry " + p);
         }
-
         Log.d("temp", "===========");
         // find data range
         float minDataX = Float.MAX_VALUE;
@@ -200,10 +191,10 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
             Log.d("temp", "points " + p);
         }
 
-        calTan(controlPoints);
-
         return controlPoints;
     }
+
+
 
 
     private ArrayList<MyTans> calTan(ArrayList<Point> points){
@@ -220,11 +211,7 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
         return tans;
     }
 
-    private void drawLine(Canvas canvas, Paint paint, Point p1 , Point p2){
-        paint.setColor(Color.GRAY);
-        paint.setStrokeWidth(2);
-        canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
-    }
+
 
     private void drawLineWithExtern(Canvas canvas, Paint paint, Point p1 , Point p2){
         paint.setColor(Color.GREEN);
@@ -317,6 +304,21 @@ public class AnalyticOpt2Fragment extends AnalyticBaseFragment {
         return segment.get(i);
     }
 
+
+    class Segment{
+        ArrayList<MyTans> pieces;
+        public Segment(){
+            pieces = new ArrayList<MyTans>();
+        }
+
+        public void addOnePiece(){
+
+        }
+
+        public void addSegment(){
+
+        }
+    }
     class MyTans{
         Point p1;
         Point p2;

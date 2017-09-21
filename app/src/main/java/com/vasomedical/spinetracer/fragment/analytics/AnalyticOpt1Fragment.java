@@ -1,17 +1,10 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -20,15 +13,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
-import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +44,7 @@ public class AnalyticOpt1Fragment extends AnalyticBaseFragment{
         suggestion.add("Suggestion 8");
         suggestionInitFlag = true;
 
-        view = inflater.inflate(R.layout.fragment_analytic, container, false);
+        view = inflater.inflate(R.layout.fragment_analytic_opt1, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
 
         assignViews();

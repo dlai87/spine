@@ -125,6 +125,9 @@ public abstract class AlgorithmBase  {
 
 
 
+
+
+
     protected DATA_RESULT preAnalyseData(ArrayList<Entry> data){
 
         float firstValue = data.get(0).getX();

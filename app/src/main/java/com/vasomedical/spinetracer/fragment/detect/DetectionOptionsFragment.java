@@ -19,14 +19,14 @@ import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
 public class DetectionOptionsFragment extends BaseFragment {
 
-
-
-
     NJButton optionButton1;
     NJButton optionButton2;
     NJButton optionButton3;
     NJButton optionButton4;
     NJButton optionButton5;
+    NJButton optionButton6;
+    NJButton optionButton7;
+
 
     Button nextButton;
     Button introButton;
@@ -53,6 +53,8 @@ public class DetectionOptionsFragment extends BaseFragment {
         optionButton3 = (NJButton)view.findViewById(R.id.option_button_3);
         optionButton4 = (NJButton)view.findViewById(R.id.option_button_4);
         optionButton5 = (NJButton)view.findViewById(R.id.option_button_5);
+        optionButton6 = (NJButton)view.findViewById(R.id.option_button_6);
+        optionButton7 = (NJButton)view.findViewById(R.id.option_button_7);
         nextButton = (Button)view.findViewById(R.id.next_button);
         introButton = (Button)view.findViewById(R.id.intro_button);
     }
@@ -98,6 +100,23 @@ public class DetectionOptionsFragment extends BaseFragment {
                 refresh();
             }
         });
+
+        optionButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_6;
+                refresh();
+            }
+        });
+
+        optionButton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_7;
+                refresh();
+            }
+        });
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
