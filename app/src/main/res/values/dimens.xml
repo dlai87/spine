@@ -159,4 +159,7 @@
     <dimen name="arrow_indicator_h">15dp</dimen>
     <dimen name="comment_area_w">500dp</dimen>
     <dimen name="comment_area_h">100dp</dimen>
+
+    <dimen name="score_chart_w">380dp</dimen>
+    <dimen name="score_chart_h">380dp</dimen>
 </resources>

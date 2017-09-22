@@ -94,16 +94,18 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
 
-    <string name="cancel_detection_result">重新测量</string>
-    <string name="accpet_detection_result">保存测量结果</string>
-    <string name="accpet_and_sent_result">生成PDF报告</string>
+    <string name="cancel_detection_result">不保存，重新测量</string>
+    <string name="accpet_detection_result">保存结果</string>
+    <string name="accpet_and_sent_result">保存，并生成PDF</string>
 
     <string name="save">保存</string>
 
 
+    <string name="result_score">测量结果评级</string>
+    <string name="doctor_comment">医生诊断（可多选）</string>
     <string name="suggest_diagnosis">参考结论</string>
     <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
-    <string name="please_write_diagnosis">医生备注</string>
+    <string name="please_write_diagnosis">备注（选填）</string>
 
 
     <string name="vertical_move">竖直移动</string>
@@ -118,5 +120,11 @@
     <string name="analytic_label_rotate_2">右转角度</string>
     <string name="analytic_label_balance_1">左侧倾斜</string>
     <string name="analytic_label_balance_2">右侧倾斜</string>
+
+
+    <string name="result_score_0">健康</string>
+    <string name="result_score_1">较健康</string>
+    <string name="result_score_2">需警惕</string>
+    <string name="result_score_3">需治疗</string>
 
 </resources>

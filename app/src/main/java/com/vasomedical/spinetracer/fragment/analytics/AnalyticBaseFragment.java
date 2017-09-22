@@ -1,8 +1,14 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,7 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -34,6 +46,8 @@ import java.util.ArrayList;
 
 public abstract class AnalyticBaseFragment extends BaseFragment {
 
+
+
     protected ArrayList<Entry> detectionData;
     public static final String SCORE = "SCORE";
     protected int score = -1;
@@ -45,13 +59,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     protected ScrollView validLayout;
     Button reTestButton;
 
-    // indicator
-    protected ImageView arrowIndicator0;
-    protected ImageView arrowIndicator1;
-    protected ImageView arrowIndicator2;
-    protected ImageView arrowIndicator3;
-    protected ImageView arrowIndicator4;
-    protected ImageView arrowIndicator5;
+    // score chart
+    protected PieChart mScoreChart;
+
+
     // doctor suggestion
     protected ArrayList<String> suggestion;
     protected boolean suggestionInitFlag ;
@@ -95,6 +106,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
 
 
+        mScoreChart = (PieChart) view.findViewById(R.id.scoreChart);
+
         if (detectionData == null){
             // illegal detection data
             invalidDetectionLayout.setVisibility(View.VISIBLE);
@@ -109,12 +122,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             return;
         }
 
-        arrowIndicator0 = (ImageView)view.findViewById(R.id.arrow_indicator_0);
-        arrowIndicator1 = (ImageView)view.findViewById(R.id.arrow_indicator_1);
-        arrowIndicator2 = (ImageView)view.findViewById(R.id.arrow_indicator_2);
-        arrowIndicator3 = (ImageView)view.findViewById(R.id.arrow_indicator_3);
-        arrowIndicator4 = (ImageView)view.findViewById(R.id.arrow_indicator_4);
-        arrowIndicator5 = (ImageView)view.findViewById(R.id.arrow_indicator_5);
 
         list1Layout = (LinearLayout)view.findViewById(R.id.list1);
         list2Layout = (LinearLayout)view.findViewById(R.id.list2);
@@ -128,7 +135,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     protected void addActionToViews(){
 
-        displayScore();
+        displayScoreChart();
 
         if (suggestionInitFlag){
             suggestionInitFlag = false;
@@ -192,69 +199,80 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         });
     }
 
-    protected void displayScore(){
-        switch (score){
-            case 0:
-                arrowIndicator0.setVisibility(View.VISIBLE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
-            case 1:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.VISIBLE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
-            case 2:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.VISIBLE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
-            case 3:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.VISIBLE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
-            case 4:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.VISIBLE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
-            case 5:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.VISIBLE);
-                break;
-            default:
-                arrowIndicator0.setVisibility(View.GONE);
-                arrowIndicator1.setVisibility(View.GONE);
-                arrowIndicator2.setVisibility(View.GONE);
-                arrowIndicator3.setVisibility(View.GONE);
-                arrowIndicator4.setVisibility(View.GONE);
-                arrowIndicator5.setVisibility(View.GONE);
-                break;
+
+    void displayScoreChart(){
+
+        int count = 4;
+        String[] mLabels = {mContext.getResources().getString(R.string.result_score_0),
+                mContext.getResources().getString(R.string.result_score_1),
+                mContext.getResources().getString(R.string.result_score_2),
+                mContext.getResources().getString(R.string.result_score_3)
+        };
+
+        ArrayList<int[]> colorSets = new ArrayList<int[]>();
+        colorSets.add(new int[]{argb("#ff22ff00"),argb("#23cccc10"),argb("#23ff8000"),argb("#23cc0000")});
+        colorSets.add(new int[]{argb("#2322ff00"),argb("#ffcccc10"),argb("#23ff8000"),argb("#23cc0000")});
+        colorSets.add(new int[]{argb("#2322ff00"),argb("#23cccc10"),argb("#ffff8000"),argb("#23cc0000")});
+        colorSets.add(new int[]{argb("#2322ff00"),argb("#23cccc10"),argb("#23ff8000"),argb("#ffcc0000")});
+
+        mScoreChart.setBackgroundColor(Color.WHITE);
+
+        mScoreChart.setUsePercentValues(true);
+        mScoreChart.getDescription().setEnabled(false);
+        mScoreChart.setCenterText(generateCenterSpannableText());
+
+        mScoreChart.setDrawHoleEnabled(true);
+        mScoreChart.setHoleColor(Color.WHITE);
+
+        mScoreChart.setTransparentCircleColor(Color.WHITE);
+        mScoreChart.setTransparentCircleAlpha(110);
+
+        mScoreChart.setHoleRadius(58f);
+        mScoreChart.setTransparentCircleRadius(61f);
+
+        mScoreChart.setDrawCenterText(true);
+
+        mScoreChart.setRotationEnabled(false);
+        mScoreChart.setHighlightPerTapEnabled(false);
+
+        mScoreChart.setMaxAngle(180f); // HALF CHART
+        mScoreChart.setRotationAngle(180f);
+        mScoreChart.setCenterTextOffset(0, -20);
+
+
+        ArrayList<PieEntry> values = new ArrayList<PieEntry>();
+        for (int i = 0; i < count; i++) {
+            values.add(new PieEntry(25, mLabels[i % mLabels.length]));
         }
+        PieDataSet dataSet = new PieDataSet(values, "Election Results");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+
+        dataSet.setColors(colorSets.get(score % colorSets.size()));
+        //dataSet.setSelectionShift(0f);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(false);
+        mScoreChart.setData(data);
+
+        mScoreChart.invalidate();
+
+        mScoreChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+        mScoreChart.getLegend().setEnabled(false);
+
+        // entry label styling
+        mScoreChart.setEntryLabelColor(Color.WHITE);
+        mScoreChart.setEntryLabelTextSize(18f);
     }
 
 
+    private SpannableString generateCenterSpannableText() {
 
+        SpannableString s = new SpannableString(mContext.getResources().getString(R.string.result_score));
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, s.length(), 0);
+        return s;
+    }
     /**
      *
      * Enable dismiss keyboard when touch out-side of the edit box
@@ -316,5 +334,15 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             doc.close();
         }
 
+    }
+
+
+    static int argb(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int a = (color >> 24) & 0xFF;
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;
+        return Color.argb(a, r, g, b);
     }
 }
