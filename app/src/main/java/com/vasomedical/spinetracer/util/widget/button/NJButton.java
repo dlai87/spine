@@ -40,6 +40,7 @@ public class NJButton extends AppCompatButton {
     public final static int THEME_WHITE = 2;
     public final static int THEME_WHITE_OUTLINE = 3;
     public final static int THEME_SEMI_WHITE = 4;
+    public final static int THEME_RED = 5;
     public final static int THEME_INVERSE_DEFAULT = 999;
 
 
@@ -185,6 +186,10 @@ public class NJButton extends AppCompatButton {
                 backgroundColor = context.getResources().getColor(R.color.semi_white);
                 backgroundColorPressed = context.getResources().getColor(R.color.njbutton_lightgray);
                 break;
+            case THEME_RED:
+                borderColor = context.getResources().getColor(R.color.njbutton_cherry_red);
+                backgroundColor = context.getResources().getColor(R.color.njbutton_cherry_red);
+                backgroundColorPressed = context.getResources().getColor(R.color.njbutton_red_pressed);
             default:
                 borderColor = context.getResources().getColor(R.color.theme_minor_color);
                 backgroundColor = context.getResources().getColor(R.color.theme_minor_color);

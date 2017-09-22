@@ -169,7 +169,8 @@
                     android:layout_marginRight="@dimen/margin_1"
                     android:text="@string/cancel_detection_result"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_h_5" />
+                    android:textSize="@dimen/text_h_5"
+                    />
 
                 <com.vasomedical.spinetracer.util.widget.button.NJButton
                     android:id="@+id/save_button"

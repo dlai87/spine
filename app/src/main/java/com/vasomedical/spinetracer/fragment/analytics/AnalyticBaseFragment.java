@@ -34,6 +34,7 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.util.Util;
+import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     LinearLayout list2Layout;
     LinearLayout list3Layout;
     // control buttons
-    Button cancelButton;
+    NJButton cancelButton;
     Button saveButton;
     Button pdfButton;
 
@@ -127,9 +128,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         list2Layout = (LinearLayout)view.findViewById(R.id.list2);
         list3Layout = (LinearLayout)view.findViewById(R.id.list3);
 
-        cancelButton = (Button)view.findViewById(R.id.cancel_button);
-        saveButton = (Button)view.findViewById(R.id.save_button);
-        pdfButton = (Button)view.findViewById(R.id.pdf_button);
+        cancelButton = (NJButton)view.findViewById(R.id.cancel_button);
+        saveButton = (NJButton)view.findViewById(R.id.save_button);
+        pdfButton = (NJButton)view.findViewById(R.id.pdf_button);
 
     }
 
@@ -176,7 +177,11 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             }
         });
 
-
+        cancelButton.updateTheme(
+                mContext.getResources().getColor(R.color.njbutton_cherry_red),
+                mContext.getResources().getColor(R.color.njbutton_cherry_red),
+                mContext.getResources().getColor(R.color.njbutton_red_pressed)
+               );
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
