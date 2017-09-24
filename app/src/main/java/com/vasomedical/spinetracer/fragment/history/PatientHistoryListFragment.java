@@ -10,16 +10,15 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 
 /**
- * Created by Zhitao on 9/24/2017.
+ * Created by home on 9/24/2017.
  */
 
-public class HistoryListFragment extends BaseFragment {
-
-    LinearListView historyListView;
+public class PatientHistoryListFragment extends BaseFragment {
+    LinearListView patientHistoryListView;
 
     @Override
     protected void assignViews() {
-        historyListView = (LinearListView) view.findViewById(R.id.history_patient_list);
+        patientHistoryListView = (LinearListView) view.findViewById(R.id.patient_history_list);
     }
 
     @Override
@@ -27,15 +26,15 @@ public class HistoryListFragment extends BaseFragment {
         LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
             @Override
             public void onItemClick(LinearListView parent, View view, int position, long id) {
-                fragmentUtil.showFragment(new PatientHistoryListFragment());
+                fragmentUtil.showFragment(new RecordDetailFragment());
             }
         };
-        historyListView.setOnItemClickListener(onItemClickListener);
+        patientHistoryListView.setOnItemClickListener(onItemClickListener);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_history_list, container, false);
+        view = inflater.inflate(R.layout.fragment_patient_history_list, container, false);
         Bundle args = getArguments();
 
         return super.onCreateView(inflater, container, savedInstanceState);
