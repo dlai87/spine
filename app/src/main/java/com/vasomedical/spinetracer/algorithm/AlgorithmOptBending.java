@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by dehualai on 9/19/17.
  */
 
-public class AlgorithmOpt3 extends AlgorithmBase {
+public class AlgorithmOptBending extends AlgorithmBase {
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
@@ -21,5 +21,10 @@ public class AlgorithmOpt3 extends AlgorithmBase {
         return data;
     }
 
-
+    /**
+     * 可自定义评分规则
+     * */
+    protected void calScore(ArrayList<Entry> data){
+        score = 1; // temp
+    }
 }

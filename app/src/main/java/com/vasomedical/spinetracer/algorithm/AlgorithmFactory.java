@@ -19,13 +19,13 @@ public class AlgorithmFactory {
     public AlgorithmBase getAlgorithm(int option){
         switch (option){
             case DETECT_OPT_1:
-                return new AlgorithmOpt1();
+                return new AlgorithmOptSlant();
 
             case DETECT_OPT_2:
-                return new AlgorithmOpt2();
+                return new AlgorithmOptHumpback();
 
             case DETECT_OPT_3:
-                return new AlgorithmOpt3();
+                return new AlgorithmOptBending();
 
             case DETECT_OPT_4:
                 return new AlgorithmOptLeftRight();
@@ -40,7 +40,7 @@ public class AlgorithmFactory {
                 return new AlgorithmOptBalance();
 
             default:
-                return new AlgorithmOpt1();
+                return new AlgorithmOptSlant();
         }
     }
 

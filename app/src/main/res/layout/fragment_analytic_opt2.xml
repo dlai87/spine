@@ -46,12 +46,40 @@
 
             <!-- chart -->
 
-            <SurfaceView
-                android:layout_marginTop="@dimen/margin_1"
-                android:id="@+id/surface"
+            <LinearLayout
                 android:layout_width="@dimen/layout_chart_w"
                 android:layout_height="@dimen/layout_chart_h"
-                />
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_1"
+                >
+
+                <SurfaceView
+                    android:id="@+id/surface"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@color/colorAccent">
+
+                    <TextView
+                        android:id="@+id/cobbs_angle_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cobbs angle"/>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
             <!-- score START -->
 

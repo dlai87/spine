@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by dehualai on 9/18/17.
  */
 
-public class AlgorithmOpt2 extends AlgorithmBase {
+public class AlgorithmOptHumpback extends AlgorithmBase {
 
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
@@ -52,4 +52,11 @@ public class AlgorithmOpt2 extends AlgorithmBase {
     }
 
 
+
+    /**
+     * 可自定义评分规则
+     * */
+    protected void calScore(ArrayList<Entry> data){
+        score = 1; // temp
+    }
 }

@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * Created by dehualai on 9/20/17.
  */
 
-public class AnalyticOpt3Fragment extends AnalyticAngleRangeFragment {
+public class AnalyticOptBendingFragment extends AnalyticAngleRangeFragment {
 
 
     @Override

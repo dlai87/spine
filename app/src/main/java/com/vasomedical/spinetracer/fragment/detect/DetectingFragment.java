@@ -27,14 +27,13 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt1Fragment;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt3Fragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticOpt2Fragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
@@ -85,17 +84,17 @@ public class DetectingFragment extends BaseFragment {
             case AlgorithmFactory.DETECT_OPT_1:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-                analyticFragment = new AnalyticOpt1Fragment();
+                analyticFragment = new AnalyticOptSlantFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_2:{
                 realtime_display_mode = 1;
                 realtime_display_horizontal_axis = 1;
-                analyticFragment = new AnalyticOpt2Fragment();
+                analyticFragment = new AnalyticOptHumpbackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_3:{
                 realtime_display_mode = 1;
                 realtime_display_horizontal_axis = 0;
-                analyticFragment = new AnalyticOpt2Fragment();
+                analyticFragment = new AnalyticOptHumpbackFragment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_4:{

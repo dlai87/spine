@@ -40,9 +40,11 @@ public class AnalyticUtil {
                 }
             }
         }
+
+        ArrayList<SpinePiece> removedSingularSpinePieceList = new ArrayList<SpinePiece>();
         for(SpinePiece spinePiece: spinePieceList){
-            if (spinePiece.isSingluarPoint()){
-                spinePieceList.remove(spinePiece);
+            if (!spinePiece.isSingluarPoint()){
+                removedSingularSpinePieceList.add(spinePiece);
             }
         }
 
@@ -52,8 +54,8 @@ public class AnalyticUtil {
         ArrayList<SpineSegment> segments = new ArrayList<SpineSegment>();
 
         SpineSegment tempSeg = new SpineSegment();
-        for(int i= 0 ; i < spinePieceList.size(); i++ ){
-            SpinePiece t = spinePieceList.get(i);
+        for(int i= 0 ; i < removedSingularSpinePieceList.size(); i++ ){
+            SpinePiece t = removedSingularSpinePieceList.get(i);
             if(tempSeg.isEmpty()){
                 tempSeg.addOnePiece(t);
             }else{
@@ -67,7 +69,7 @@ public class AnalyticUtil {
                 }
             }
             // add last segment
-            if (i == spinePieceList.size()-1){
+            if (i == removedSingularSpinePieceList.size()-1){
                 segments.add(tempSeg);
             }
         }

@@ -51,7 +51,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     protected ArrayList<Entry> detectionData;
     public static final String SCORE = "SCORE";
-    protected int score = -1;
+    protected int score = 0;
 
     // UI elements
     protected View view;
