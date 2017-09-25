@@ -17,10 +17,15 @@ import java.util.ArrayList;
 public class DBAdapter extends SQLiteOpenHelper {
 
     private static DBAdapter mInstance = null;
-    private String TAG = "DBAdapter";
     private static SQLiteDatabase db = null;
     private static String name ;
+    private String TAG = "DBAdapter";
 
+
+    private DBAdapter(Context context, String name) {
+        super(context, name, null, DBGlobal.DB_VERSION);
+        Log.d(TAG, name);
+    }
 
     public static String getDatabaseName(Context ctx) {
         if (DBGlobal.DB_ON_SDCARD == false){
@@ -34,11 +39,6 @@ public class DBAdapter extends SQLiteOpenHelper {
             }
         }
         return name;
-    }
-
-    private DBAdapter(Context context, String name) {
-        super(context,name ,null, DBGlobal.DB_VERSION);
-        Log.d(TAG,name);
     }
 
     /** Get a readable and writable from here.
@@ -198,6 +198,7 @@ public class DBAdapter extends SQLiteOpenHelper {
         keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_DETECTION_TYPE, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_SAVE_CHART_PATH, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_POSE_DATA, "TEXT"});
 
         String SPEC = generateCreationSpec( DBGlobal.TABLE_DETECTION, keyValuePair);
         db.execSQL(SPEC);
