@@ -1,5 +1,6 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
+import android.content.Context;
 import android.graphics.Point;
 
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ public class AnalyticUtil {
 
 
 
-    public ArrayList<SpinePiece> findPieceOfInterested(ArrayList<Point> points){
+    public ArrayList<SpinePiece> findPieceOfInterested( ArrayList<Point> points){
         // build Spine Piece list
         ArrayList<SpinePiece> spinePieceList = new ArrayList<SpinePiece>();
         for(int i = 0 ; i < points.size()-1; i++){
-            spinePieceList.add(new SpinePiece(points.get(i), points.get(i+1)));
+            spinePieceList.add(new SpinePiece( points.get(i), points.get(i+1)));
         }
 
         // remove singluar point piece
