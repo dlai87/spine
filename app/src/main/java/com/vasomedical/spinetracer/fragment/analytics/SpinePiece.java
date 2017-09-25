@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
 /**
@@ -25,6 +26,7 @@ public class SpinePiece {
     boolean isSingluarPoint = false;
     String label = "";
     OnOffButton button;
+    float absAngle;
 
     public SpinePiece(Point p1, Point p2){
         this.p1 = p1;
@@ -35,6 +37,11 @@ public class SpinePiece {
             tans = Float.MAX_VALUE;
         }
 
+        absAngle = Util.radianToDegree((float) Math.atan(Math.abs(tans)));
+    }
+
+    public float getAbsAngle() {
+        return absAngle;
     }
 
     public String getLabel() {

@@ -38,6 +38,9 @@ public abstract class AnalyticPositionPositionFragment
     ArrayList<OnOffButton> piecesButtons = new ArrayList<OnOffButton>();
     LinearLayout pointsButtonLayout;
     TextView pointsText;
+    TextView cobbsAngleText;
+
+    protected Float cobbsAngle = null;
     boolean pointsLayoutFlag = false;
 
 
@@ -79,6 +82,7 @@ public abstract class AnalyticPositionPositionFragment
         surfaceView = (SurfaceView) view.findViewById(R.id.surface);
         pointsText = (TextView) view.findViewById(R.id.points_button_text);
         pointsButtonLayout = (LinearLayout) view.findViewById(R.id.points_button_layout);
+        cobbsAngleText = (TextView) view.findViewById(R.id.cobbs_angle_text);
     }
 
     @Override
@@ -102,7 +106,7 @@ public abstract class AnalyticPositionPositionFragment
 
                 drawGrid(canvas);
                 draw(canvas);
-                createPointButtons(canvas);
+                createPointButtons();
 
 
                 holder.unlockCanvasAndPost(canvas);
@@ -199,7 +203,7 @@ public abstract class AnalyticPositionPositionFragment
 
         for (int i = 0; i < piecesInterested.size(); i++) {
             SpinePiece piece = piecesInterested.get(i);
-            // piece.drawLines(canvas);
+            piece.drawLines(canvas);
             piece.drawPoints(canvas);
             piece.setLabel("P" + (i + 1));
             piece.drawText(canvas);
@@ -242,7 +246,7 @@ public abstract class AnalyticPositionPositionFragment
     }
 
 
-    private void createPointButtons(final Canvas canvas) {
+    private void createPointButtons() {
         if (piecesInterested != null) {
             if (!pointsLayoutFlag) {
                 pointsText.setVisibility(View.VISIBLE);
@@ -277,11 +281,9 @@ public abstract class AnalyticPositionPositionFragment
 
                             }
 
-                          //  for(SpinePiece p : piecesInterested){
-                          //      if(buttonQueue.contains(p.getLabel() )){
-                          //          p.drawLines(canvas);
-                          //      }
-                          //  }
+
+                            calculateCobbs();
+
                         }
                     });
                     piecesButtons.add(button);
@@ -296,4 +298,27 @@ public abstract class AnalyticPositionPositionFragment
     }
 
 
+
+    private void calculateCobbs(){
+        Object[] selectPoints = buttonQueue.toArray();
+        if (selectPoints!=null && selectPoints.length == 2 && !selectPoints[0].equals(selectPoints[1])){
+            float angle1 = 0 ;
+            float angle2 = 0 ;
+            for (SpinePiece s : piecesInterested){
+                if (s.getLabel().equals(selectPoints[0]))
+                    angle1 = s.getAbsAngle();
+                if (s.getLabel().equals(selectPoints[1]))
+                    angle2 = s.getAbsAngle();
+            }
+            cobbsAngle = 180 - (angle1+angle2);
+            Log.d("show", "angle1 " + angle1 + " angle2 " + angle2 + " cobbs " + cobbsAngle) ;
+
+            cobbsAngleText.setText(mContext.getResources().getString(R.string.cobbs_angle)
+                    + ":" + String.format("%.1f", cobbsAngle)
+            + mContext.getResources().getString(R.string.degree_mark));
+        }else{
+            cobbsAngle = null;
+            cobbsAngleText.setText(mContext.getResources().getString(R.string.cobbs_angle) + ":" + "NaN");
+        }
+    }
 }
