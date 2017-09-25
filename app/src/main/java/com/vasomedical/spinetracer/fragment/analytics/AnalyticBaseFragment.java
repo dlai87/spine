@@ -1,14 +1,12 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -26,13 +23,17 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.database.table.TBDetection;
+import com.vasomedical.spinetracer.database.table.TBDoctor;
+import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
@@ -49,24 +50,21 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
 
 
-    protected ArrayList<Entry> detectionData;
     public static final String SCORE = "SCORE";
-    protected int score = 0;
+    protected ArrayList<Entry> detectionData;
+    protected int score = -1;
 
     // UI elements
     protected View view;
     // the whole scroll view
     protected LinearLayout invalidDetectionLayout;
     protected ScrollView validLayout;
-    Button reTestButton;
-
     // score chart
     protected PieChart mScoreChart;
-
-
     // doctor suggestion
     protected ArrayList<String> suggestion;
     protected boolean suggestionInitFlag ;
+    Button reTestButton;
     ArrayList<OnOffButton> selectButtonArray = new ArrayList<OnOffButton>();
     LinearLayout list1Layout;
     LinearLayout list2Layout;
@@ -79,6 +77,14 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     PatientModel patient;
 
+    static int argb(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int a = (color >> 24) & 0xFF;
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;
+        return Color.argb(a, r, g, b);
+    }
 
     public void setDetectionData(ArrayList<Entry> data){
         detectionData = data;
@@ -192,7 +198,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                saveToDatabase();
             }
         });
 
@@ -204,6 +210,18 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         });
     }
 
+    void saveToDatabase() {
+        SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+        TBDetection tbDetection = new TBDetection();
+        Long tsLong = System.currentTimeMillis() / 1000;
+        String timestamp = tsLong.toString();
+        // TEMP: Use first doctor in the table as current logged in doctor.
+        TBDoctor tbDoctor = new TBDoctor();
+        DoctorModel doctor = tbDoctor.getDoctorList(database).get(0);
+        // TEMP: Use empty data
+        ArrayList<Pose> poseData = new ArrayList<Pose>();
+        tbDetection.smartInsert(database, timestamp, patient, doctor, poseData);
+    }
 
     void displayScoreChart(){
 
@@ -271,13 +289,13 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         mScoreChart.setEntryLabelTextSize(18f);
     }
 
-
     private SpannableString generateCenterSpannableText() {
 
         SpannableString s = new SpannableString(mContext.getResources().getString(R.string.result_score));
         s.setSpan(new RelativeSizeSpan(1.7f), 0, s.length(), 0);
         return s;
     }
+
     /**
      *
      * Enable dismiss keyboard when touch out-side of the edit box
@@ -303,8 +321,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             }
         }
     }
-
-
 
     public void createandDisplayPdf(String text) {
 
@@ -339,15 +355,5 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             doc.close();
         }
 
-    }
-
-
-    static int argb(String hex) {
-        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
-        int a = (color >> 24) & 0xFF;
-        int r = (color >> 16) & 0xFF;
-        int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
-        return Color.argb(a, r, g, b);
     }
 }

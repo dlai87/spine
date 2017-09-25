@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +26,7 @@ import com.badoualy.stepperindicator.StepperIndicator;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
 import com.vasomedical.spinetracer.fragment.doctor.DoctorSettingsFragment;
+import com.vasomedical.spinetracer.fragment.history.HistoryListFragment;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.fragmentTransation.FragmentUtil;
 import com.vasomedical.spinetracer.util.fragmentTransation.IMainAppHandler;
@@ -136,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_WRITE_STORAGE: {
                 if (grantResults.length == 0
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 } else {
                     Log.i(TAG, "Permission has been granted by user");
                 }
-                return;
+                break;
             }
             case REQUEST_READ_STORAGE: {
                 if (grantResults.length == 0
@@ -156,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 } else {
                     Log.i(TAG, "Permission has been granted by user");
                 }
-                return;
+                break;
             }
             case REQUEST_CAMERA: {
                 if (grantResults.length == 0
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 } else {
                     Log.i(TAG, "Permission has been granted by user");
                 }
-                return;
+                break;
             }
         }
     }
@@ -250,19 +253,22 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             mContext.startActivity(targetIntent);
         } else {
-            BaseFragment fragment = ControlPanel.getFragment();
+            BaseFragment fragment;
             switch (position) {
                 case POS_PATIENT_INFO:
                     fragment = ControlPanel.getFragment();
                     break;
                 case POS_HISTORY:
-                    // TODO
+                    fragment = new HistoryListFragment();
                     break;
                 case POS_DOCTOR_SETTINGS:
                     fragment = new DoctorSettingsFragment();
                     break;
                 default:
                     fragment = ControlPanel.getFragment();
+            }
+            if (null != stepperIndicatLayout) {
+                stepperIndicatLayout.setVisibility(position == POS_PATIENT_INFO ? View.VISIBLE : View.INVISIBLE);
             }
             fragmentUtil.showFragment(fragment);
 
