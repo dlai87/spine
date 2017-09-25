@@ -33,9 +33,6 @@ public class IntroDialog {
 
 
 
-
-
-
     public IntroDialog(Context context) {
         mContext = context;
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -97,7 +94,7 @@ public class IntroDialog {
                 url = "https://www.quora.com/";
                 break;
             default:
-                url = "https://www.google.com/";
+                url = "https://www.4chan.org/";
         }
         webView.loadUrl(url);
     }

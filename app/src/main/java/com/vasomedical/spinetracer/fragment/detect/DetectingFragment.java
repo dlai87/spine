@@ -349,8 +349,8 @@ public class DetectingFragment extends BaseFragment {
                             drawIndicator(degree);
                         }break;
                         case 1:{
-                            verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + ":" + Util.positionToDisplay(-translation[2]));
-                            horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + ":" +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]));
+                            verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] ) + "cm");
+                            horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]) + "cm");
                         }break;
                         default:
                             break;

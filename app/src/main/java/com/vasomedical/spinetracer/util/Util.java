@@ -113,10 +113,10 @@ public class Util {
 
     public static float positionToDisplay(float value){
 
-        DecimalFormat decimalFormat = new DecimalFormat("#.###"); // output is one digital after point
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
         try {
-            float normDegree = Float.valueOf(decimalFormat.format(value));
-            return normDegree ;
+            float normPosition = Float.valueOf(decimalFormat.format(value*100));
+            return normPosition ;
         }catch (Exception e){
             return -99999;
         }
