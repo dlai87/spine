@@ -61,6 +61,8 @@
     <string name="detect_option_7">身体平衡度</string>
     <string name="intro">详细介绍</string>
     <string name="next">下一步</string>
+    <string name="please_calibrate">请缓慢运动设备，当看到读数较稳定合理后，按"开始测量"。</string>
+    <string name="calibrate">设备校准</string>
     <string name="start">开始测量</string>
     <string name="stop">结束测量</string>
     <string name="degree_mark">°</string>

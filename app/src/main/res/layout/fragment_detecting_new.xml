@@ -55,6 +55,18 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/instruction_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_h_4"
+            android:textColor="@color/red"
+            android:text="@string/please_calibrate"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/margin_2"
+            android:layout_marginRight="@dimen/margin_2"
+            />
+
 
         <!-- angleRulerLayout START -->
         <RelativeLayout
@@ -88,6 +100,8 @@
 
         <!-- angleRulerLayout END -->
 
+
+        <!-- movementLayout START -->
         <LinearLayout
             android:id="@+id/movementLayout"
             android:layout_width="@dimen/angle_rule_w"
@@ -120,7 +134,7 @@
 
 
         </LinearLayout>
-
+        <!-- movementLayout END -->
 
 
 
