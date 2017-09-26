@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
+import com.vasomedical.spinetracer.util.Global;
 
 /**
  * Created by dehualai on 8/10/17.
@@ -79,22 +80,28 @@ public class IntroDialog {
         String url;
         switch (AlgorithmFactory.detectionOption) {
             case AlgorithmFactory.DETECT_OPT_1:
-                url = "https://www.reddit.com/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
                 break;
             case AlgorithmFactory.DETECT_OPT_2:
-                url = "https://www.4chan.org/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
                 break;
             case AlgorithmFactory.DETECT_OPT_3:
-                url = "https://www.facebook.com/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
                 break;
             case AlgorithmFactory.DETECT_OPT_4:
-                url = "https://www.instagram.com/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
                 break;
             case AlgorithmFactory.DETECT_OPT_5:
-                url = "https://www.quora.com/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_6:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_7:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
                 break;
             default:
-                url = "https://www.4chan.org/";
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
         }
         webView.loadUrl(url);
     }

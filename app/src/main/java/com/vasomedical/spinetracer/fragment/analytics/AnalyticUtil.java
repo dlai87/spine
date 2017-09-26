@@ -3,6 +3,8 @@ package com.vasomedical.spinetracer.fragment.analytics;
 import android.content.Context;
 import android.graphics.Point;
 
+import com.github.mikephil.charting.formatter.IFillFormatter;
+
 import java.util.ArrayList;
 
 /**
@@ -79,7 +81,9 @@ public class AnalyticUtil {
         ArrayList<SpinePiece> interestedPieces =  new ArrayList<SpinePiece>();
 
         for(SpineSegment seg : segments){
-            interestedPieces.add(seg.getInterestedPiece());
+            if (seg.getSegmentLength() >= SpineSegment.MIN_LENGTH_REQUIREMENT){
+                interestedPieces.add(seg.getInterestedPiece());
+            }
         }
 
         return interestedPieces;

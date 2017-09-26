@@ -107,7 +107,7 @@ public abstract class AnalyticPositionPositionFragment
                 drawGrid(canvas);
                 draw(canvas);
                 createPointButtons();
-
+                calculateCobbs();
 
                 holder.unlockCanvasAndPost(canvas);
             }
