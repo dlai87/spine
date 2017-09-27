@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vasomedical.spinetracer.database.util.DBGlobal;
 import com.vasomedical.spinetracer.database.util.DBUtil;
+import com.vasomedical.spinetracer.model.DoctorModel;
+import com.vasomedical.spinetracer.model.PatientModel;
 
 import java.util.ArrayList;
 
@@ -15,18 +17,22 @@ import java.util.ArrayList;
 
 public class TBDetection {
 
-    public void insert(SQLiteDatabase db, String detectionId, String timestamp) {
+    public void insert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, detectionId);
         DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, timestamp);
+        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, doctor.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, patient.getId());
 
         db.insert(DBGlobal.TABLE_POSE, null, cv);
     }
 
-    public void update(SQLiteDatabase db, String detectionId, String timestamp) {
+    public void update(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, detectionId);
         DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, timestamp);
+        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, doctor.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, patient.getId());
 
         String selection = DBGlobal.COL_DETECTION_ID + " =? "; // TEMP use timestamp to compare
         String[] selectionArgs = {detectionId};
@@ -68,7 +74,7 @@ public class TBDetection {
         return queryResult;
     }
 
-    public void smartInsert(SQLiteDatabase db, String detectionId, String timestamp) {
+    public void smartInsert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
         ArrayList<String> detectionIds = getDetectionIdList(db);
         boolean exist = false;
         for (String id : detectionIds) {
@@ -78,9 +84,9 @@ public class TBDetection {
         }
 
         if (exist) {
-            update(db, detectionId, timestamp);
+            update(db, detectionId, timestamp, doctor, patient);
         } else {
-            insert(db, detectionId, timestamp);
+            insert(db, detectionId, timestamp, doctor, patient);
         }
     }
 
