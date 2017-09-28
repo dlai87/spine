@@ -1,6 +1,9 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
+import android.content.Context;
 import android.graphics.Point;
+
+import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import java.util.ArrayList;
 
@@ -12,11 +15,11 @@ public class AnalyticUtil {
 
 
 
-    public ArrayList<SpinePiece> findPieceOfInterested(ArrayList<Point> points){
+    public ArrayList<SpinePiece> findPieceOfInterested( ArrayList<Point> points){
         // build Spine Piece list
         ArrayList<SpinePiece> spinePieceList = new ArrayList<SpinePiece>();
         for(int i = 0 ; i < points.size()-1; i++){
-            spinePieceList.add(new SpinePiece(points.get(i), points.get(i+1)));
+            spinePieceList.add(new SpinePiece( points.get(i), points.get(i+1)));
         }
 
         // remove singluar point piece
@@ -78,7 +81,9 @@ public class AnalyticUtil {
         ArrayList<SpinePiece> interestedPieces =  new ArrayList<SpinePiece>();
 
         for(SpineSegment seg : segments){
-            interestedPieces.add(seg.getInterestedPiece());
+            if (seg.getSegmentLength() >= SpineSegment.MIN_LENGTH_REQUIREMENT){
+                interestedPieces.add(seg.getInterestedPiece());
+            }
         }
 
         return interestedPieces;

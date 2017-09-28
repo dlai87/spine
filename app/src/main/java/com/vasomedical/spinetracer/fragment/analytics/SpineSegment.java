@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class SpineSegment {
 
+    public static final int MIN_LENGTH_REQUIREMENT = 8;
     ArrayList<SpinePiece> pieces;
 
     public SpineSegment(){
@@ -39,5 +40,11 @@ public class SpineSegment {
             }
         }
         return pieces.get(i);
+    }
+
+    public int getSegmentLength(){
+        if (pieces==null)
+            return 0;
+        return pieces.size();
     }
 }

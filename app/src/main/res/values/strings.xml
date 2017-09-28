@@ -61,6 +61,8 @@
     <string name="detect_option_7">身体平衡度</string>
     <string name="intro">详细介绍</string>
     <string name="next">下一步</string>
+    <string name="please_calibrate">请缓慢运动设备，当看到读数较稳定合理后，按"开始测量"。</string>
+    <string name="calibrate">设备校准</string>
     <string name="start">开始测量</string>
     <string name="stop">结束测量</string>
     <string name="degree_mark">°</string>
@@ -110,7 +112,8 @@
 
     <string name="vertical_move">竖直移动</string>
     <string name="horizontal_move">水平移动</string>
-
+    <string name="please_select_correct_points">请选择脊柱弯曲相应起始点和结束点，以计算Cobb\'s角</string>
+    <string name="cobbs_angle">Cobb\'s角</string>
 
     <string name="analytic_label_left_right_1">左侧弯角度</string>
     <string name="analytic_label_left_right_2">右侧弯角度</string>

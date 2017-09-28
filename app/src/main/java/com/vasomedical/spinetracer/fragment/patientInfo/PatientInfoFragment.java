@@ -166,27 +166,6 @@ public class PatientInfoFragment extends BaseFragment {
             }
         };
         patientListView.setAdapter(patientListViewAdapter);
-        LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(LinearListView parent, View view, int position, long id) {
-                selectedPatient = patientList.get(position);
-
-                String photoPath = selectedPatient.getPhoto();
-                Bitmap photoBitmap = loadImageFromStorage(selectedPatient.getPhoto());
-                if (photoBitmap != null) {
-                    existingPatientAvatar.setImageBitmap(photoBitmap);
-                }
-                existingPatientNameEditText.setText(selectedPatient.getName());
-                existingPatientGenderEditText.setText(selectedPatient.getGender());
-                existingPatientDateOfBirthText.setText(selectedPatient.getDate_of_birth());
-                existingPatientContactInfoEditText.setText(selectedPatient.getPhone());
-                existingPatientNoteEditText.setText(selectedPatient.getNote());
-
-                setStatus(STATUS_EXIST_PATIENT_DETAILS);
-            }
-        };
-        patientListView.setOnItemClickListener(onItemClickListener);
 
         // existPatientDetailsLayout
         existingPatientAvatar = (ImageView) view.findViewById(R.id.existing_patient_avatar);
@@ -276,7 +255,27 @@ public class PatientInfoFragment extends BaseFragment {
             }
         });
 
+        LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemClick(LinearListView parent, View view, int position, long id) {
+                selectedPatient = patientList.get(position);
 
+                String photoPath = selectedPatient.getPhoto();
+                Bitmap photoBitmap = loadImageFromStorage(selectedPatient.getPhoto());
+                if (photoBitmap != null) {
+                    existingPatientAvatar.setImageBitmap(photoBitmap);
+                }
+                existingPatientNameEditText.setText(selectedPatient.getName());
+                existingPatientGenderEditText.setText(selectedPatient.getGender());
+                existingPatientDateOfBirthText.setText(selectedPatient.getDate_of_birth());
+                existingPatientContactInfoEditText.setText(selectedPatient.getPhone());
+                existingPatientNoteEditText.setText(selectedPatient.getNote());
+
+                setStatus(STATUS_EXIST_PATIENT_DETAILS);
+            }
+        };
+        patientListView.setOnItemClickListener(onItemClickListener);
     }
 
     @Override

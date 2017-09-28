@@ -4,10 +4,16 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.database.util.DBGlobal;
 import com.vasomedical.spinetracer.database.util.DBUtil;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.Pose;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -93,4 +99,5 @@ public class TBDetection {
     public void clean(SQLiteDatabase db) {
         db.delete(DBGlobal.TABLE_DETECTION, null, null);
     }
+
 }

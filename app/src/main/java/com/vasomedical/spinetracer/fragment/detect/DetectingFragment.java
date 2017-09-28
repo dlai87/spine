@@ -34,6 +34,7 @@ import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragme
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
+import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
@@ -46,11 +47,20 @@ import java.util.ArrayList;
 
 public class DetectingFragment extends BaseFragment {
 
+
+    enum DETECTION_STATUS{
+        Init,
+        Calibrating,
+        Start
+    }
+
     public static PoseLog poseLog;
     String TAG = "DetectingFragment";
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
+
+    TextView instructionText;
     TextView realTimeDisplay;
     RelativeLayout angleRulerLayout;
     ImageView indicator;
@@ -60,10 +70,13 @@ public class DetectingFragment extends BaseFragment {
     TextView horizontalMoveText;
 
 
+
     PatientModel patient;
     private Tango mTango;
     private TangoConfig mConfig;
-    private boolean isDetctiong = false;
+    //private boolean isDetctiong = false;
+
+    DETECTION_STATUS detectionStatus = DETECTION_STATUS.Init;
 
 
     int realtime_display_mode = 1;  // 0 = angle mode ;  1 = position mode
@@ -127,6 +140,27 @@ public class DetectingFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+
+    private void updateUI(){
+        switch (detectionStatus){
+            case Init:
+                controlButton.setText(mContext.getResources().getString(R.string.calibrate));
+                instructionText.setVisibility(View.GONE);
+                break;
+            case Calibrating:
+                controlButton.setText(mContext.getResources().getString(R.string.start));
+                instructionText.setVisibility(View.VISIBLE);
+                break;
+            case Start:
+                controlButton.setText(mContext.getResources().getString(R.string.stop));
+                instructionText.setVisibility(View.GONE);
+                break;
+
+        }
+    }
+
+
+
     public void setPatient(PatientModel newPatient) {
         patient = newPatient;
     }
@@ -142,24 +176,40 @@ public class DetectingFragment extends BaseFragment {
         movementLayout = (LinearLayout) view.findViewById(R.id.movementLayout);
         verticalMoveText = (TextView) view.findViewById(R.id.vertical_move_text);
         horizontalMoveText = (TextView) view.findViewById(R.id.horizontal_move_text);
-
+        instructionText = (TextView)view.findViewById(R.id.instruction_text);
     }
 
     @Override
     protected void addActionToViews() {
+
+        updateUI();
+
         controlButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDetctiong) {
-                    isDetctiong = true;
-                    start();
-                    controlButton.setText(mContext.getResources().getString(R.string.stop));
-                    //   NJProgressDialog.showDialog(mContext);
-                } else {
-                    isDetctiong = false;
-                    stop();
-                    controlButton.setText(mContext.getResources().getString(R.string.start));
+
+                switch (detectionStatus){
+                    case Init:
+                        if (AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_2
+                                ||AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_3)
+                        {
+                            detectionStatus = DETECTION_STATUS.Calibrating;
+                        }else {
+                            detectionStatus = DETECTION_STATUS.Start;
+                        }
+                        start();
+                        break;
+                    case Calibrating:
+                        detectionStatus = DETECTION_STATUS.Start;
+                        break;
+                    case Start:
+                        detectionStatus = DETECTION_STATUS.Init;
+                        stop();
+                        break;
+
                 }
+
+               updateUI();
 
             }
         });
@@ -322,46 +372,56 @@ public class DetectingFragment extends BaseFragment {
      * @param pose the pose to log.
      */
     private void logPose(TangoPoseData pose) {
-        final float translation[] = pose.getTranslationAsFloats();
-        final float orientation[] = pose.getRotationAsFloats();
-        final double[] euler = Util.quaternion2Euler(orientation[0], orientation[1], orientation[2], orientation[3]);
 
-        try {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    switch (realtime_display_mode){
-                        case 0:{
-                            int offset = 0 ;
-                            switch (realtime_display_degree){
-                                case 0:
-                                    offset = -90;
-                                    break;
-                                case 1:
-                                    offset = 0 ;
-                                    break;
-                                case 2:
-                                    offset = 90 ;
-                                    break;
-                            }
-                            float degree = Util.radianToDegree((float) euler[realtime_display_degree], offset, realtime_display_degree==2);
-                            realTimeDisplay.setText(Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
-                            drawIndicator(degree);
-                        }break;
-                        case 1:{
-                            verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + ":" + Util.positionToDisplay(-translation[2]));
-                            horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + ":" +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]));
-                        }break;
-                        default:
-                            break;
+            final float translation[] = pose.getTranslationAsFloats();
+            final float orientation[] = pose.getRotationAsFloats();
+
+            final double[] euler = Util.quaternion2Euler(
+                    orientation[0],
+                    orientation[1],
+                    orientation[2],
+                    orientation[3]);
+
+            try {
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (realtime_display_mode){
+                            case 0:{
+                                int offset = 0 ;
+                                switch (realtime_display_degree){
+                                    case 0:
+                                        offset = -90;
+                                        break;
+                                    case 1:
+                                        offset = 0 ;
+                                        break;
+                                    case 2:
+                                        offset = 90 ;
+                                        break;
+                                }
+                                float degree = Util.radianToDegree((float) euler[realtime_display_degree], offset, realtime_display_degree==2);
+                                realTimeDisplay.setText(Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
+                                drawIndicator(degree);
+                            }break;
+                            case 1:{
+                                verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] ) + "cm");
+                                horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]) + "cm");
+                            }break;
+                            default:
+                                break;
+                        }
+
                     }
+                });
+            } catch (Exception e) {
 
-                }
-            });
-        } catch (Exception e) {
+            }
 
+        if (detectionStatus == DETECTION_STATUS.Start){
+            poseLog.recordPoseData(pose, null);
         }
-        poseLog.recordPoseData(pose);
+
     }
 
 

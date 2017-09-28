@@ -54,7 +54,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     public static final String SCORE = "SCORE";
     protected ArrayList<Entry> detectionData;
-    protected int score = 0;
+    protected int score = -1;
 
     // UI elements
     protected View view;
@@ -200,22 +200,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TEMP: use timestamp as detection id
-                Long tsLong = System.currentTimeMillis() / 1000;
-                String detectionId = tsLong.toString();
-                TBPose tbPose = new TBPose();
-                SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-                ArrayList<Pose> poses = DetectFragment.poseLog.getPoseList();
-                for (Pose pose : poses) {
-                    tbPose.smartInsert(database, pose, detectionId);
-                }
-
-                TBDetection tbDetection = new TBDetection();
-                // TEMP: Use first doctor in the table as current logged in doctor
-                TBDoctor tbDoctor = new TBDoctor();
-                ArrayList<DoctorModel> doctors = tbDoctor.getDoctorList(database);
-                DoctorModel doctor = doctors.get(0);
-                tbDetection.smartInsert(database, detectionId, detectionId, doctor, patient);
+                saveToDatabase();
             }
         });
 
@@ -225,6 +210,25 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
             }
         });
+    }
+
+    void saveToDatabase() {
+        // TEMP: use timestamp as detection id
+        Long tsLong = System.currentTimeMillis() / 1000;
+        String detectionId = tsLong.toString();
+        TBPose tbPose = new TBPose();
+        SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+        ArrayList<Pose> poses = DetectFragment.poseLog.getPoseList();
+        for (Pose pose : poses) {
+            tbPose.smartInsert(database, pose, detectionId);
+        }
+
+        TBDetection tbDetection = new TBDetection();
+        // TEMP: Use first doctor in the table as current logged in doctor
+        TBDoctor tbDoctor = new TBDoctor();
+        ArrayList<DoctorModel> doctors = tbDoctor.getDoctorList(database);
+        DoctorModel doctor = doctors.get(0);
+        tbDetection.smartInsert(database, detectionId, detectionId, doctor, patient);
     }
 
     void displayScoreChart(){

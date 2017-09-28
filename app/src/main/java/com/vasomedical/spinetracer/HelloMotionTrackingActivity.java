@@ -261,7 +261,7 @@ public class HelloMotionTrackingActivity extends Activity {
         }catch (Exception e){
 
         }
-        poseLog.recordPoseData(pose);
+        poseLog.recordPoseData(pose, null);
     }
 
     /**

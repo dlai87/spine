@@ -57,7 +57,7 @@ public class DBGlobal {
     public static String COL_MOTION_ID = "motion_id";
     public static String COL_DETECTION_TYPE = "detection_type";
     public static String COL_SAVE_CHART_PATH = "save_chart_path";
-
+    public static String COL_POSE_DATA = "pose_data";
 
     public static String TABLE_POSE = "pose";
     public static String COL_DETECTION_ID = "detection_id";
