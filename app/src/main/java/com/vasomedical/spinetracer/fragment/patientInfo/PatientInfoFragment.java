@@ -30,8 +30,10 @@ import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
+import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
 import com.vasomedical.spinetracer.util.widget.dialog.ButtonActionHandler;
 import com.vasomedical.spinetracer.util.widget.dialog.DatePickerDialog;
 
@@ -181,18 +183,27 @@ public class PatientInfoFragment extends BaseFragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean success = false;
                 switch (currentStatus){
                     case STATUS_NEW_PATIENT:
-                        nextButtonPressOnNewPatient();
+                        success = nextButtonPressOnNewPatient();
                         break;
                     case STATUS_EXIST_PATIENT_LIST:
-                        nextButtonPressOnExistPatientList();
+                        success = nextButtonPressOnExistPatientList();
                         break;
                     case STATUS_EXIST_PATIENT_DETAILS:
-                        nextButtonPressOnExistPatientDetails();
+                        success = nextButtonPressOnExistPatientDetails();
                         break;
                     default:
                         break;
+                }
+
+                if (!success){
+                    AlertDialog alertDialog = new AlertDialog(mContext);
+                    alertDialog.setTitleView("alert");
+                    alertDialog.setMessageView("patient information not valid");
+                    alertDialog.setButtons("ok", null, null);
+                    alertDialog.showDialog();
                 }
                 /*
                 setStepIndicator(1);
@@ -295,13 +306,17 @@ public class PatientInfoFragment extends BaseFragment {
     /**
      * Next Button  : New Patient
      * */
-    private void nextButtonPressOnNewPatient(){
+    private boolean nextButtonPressOnNewPatient(){
 
         String username = newPatientNameEditText.getText().toString().trim().replace(" ", "").toLowerCase();
         String patientId = username;
         String gender = newPatientGenderEditText.getText().toString();
         String birthOfDate = newPatientDateOfBirthText.getText().toString();
         String phone = newPatientContactInfoEditText.getText().toString();
+
+        if (username==null || username.equals("") ){
+            return false;
+        }
 
         PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(patientId, username, gender, birthOfDate);
         patientBuilder.phone(phone);
@@ -321,26 +336,33 @@ public class PatientInfoFragment extends BaseFragment {
         fragmentUtil.showFragment(new DetectionOptionsFragment());
 
         showDetectionOptions(patient);
+
+        return true;
     }
 
     /**
      * Next Button  : Existing patient list
      * */
-    private void nextButtonPressOnExistPatientList(){
+    private boolean nextButtonPressOnExistPatientList(){
+        return false;
     }
 
-    private void showDetectionOptions(PatientModel patient) {
+    private boolean showDetectionOptions(PatientModel patient) {
+        if (patient == null){
+            return false;
+        }
         DetectionOptionsFragment fragment = new DetectionOptionsFragment();
         fragment.setPatient(patient);
-        fragmentUtil.showFragment(fragment); // bug fix.
+        fragmentUtil.showFragment(fragment);
+        return true;
     }
 
 
     /**
      * Next Button : Existing patient details
      * */
-    private void nextButtonPressOnExistPatientDetails() {
-        showDetectionOptions(selectedPatient);
+    private boolean nextButtonPressOnExistPatientDetails() {
+        return showDetectionOptions(selectedPatient);
     }
 
     private void setStatus(int status){

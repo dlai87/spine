@@ -61,7 +61,6 @@ public class PdfManager {
     }
 
     public boolean generatePDF(PatientModel patientModel,
-                               DoctorModel doctorModel,
                                View chartView,
                                String scoreText,
                                String doctorComment){

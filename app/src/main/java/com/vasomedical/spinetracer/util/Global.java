@@ -9,6 +9,9 @@ import android.os.Environment;
 
 public class Global {
 
+
+    public static boolean DEMO_MODE = true;
+
     public final static String APP_FONT =  "fonts/Roboto-Regular.ttf"; //"fonts/FZPWJW.TTF"; //"fonts/han_yi_zong_yi.ttf"; //
     public final static String ASSET_FOLDER = "file:///android_asset/";
     public final static String INTRO_HTML_PATH = ASSET_FOLDER + "message/";
