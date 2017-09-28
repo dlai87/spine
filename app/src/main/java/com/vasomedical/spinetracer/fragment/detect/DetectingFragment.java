@@ -74,6 +74,11 @@ public class DetectingFragment extends BaseFragment {
     PatientModel patient;
     private Tango mTango;
     private TangoConfig mConfig;
+
+
+    TangoPoseData initPose = null;
+    float translationInit[] = new float[3];
+    float orientationInit[] = new float[4];
     //private boolean isDetctiong = false;
 
     DETECTION_STATUS detectionStatus = DETECTION_STATUS.Init;
@@ -204,6 +209,14 @@ public class DetectingFragment extends BaseFragment {
                         break;
                     case Start:
                         detectionStatus = DETECTION_STATUS.Init;
+                        initPose = null;
+                        translationInit[0] = 0;
+                        translationInit[1] = 0;
+                        translationInit[2] = 0;
+                        orientationInit[0] = 0;
+                        orientationInit[1] = 0;
+                        orientationInit[2] = 0;
+                        orientationInit[3] = 0;
                         stop();
                         break;
 
@@ -373,6 +386,7 @@ public class DetectingFragment extends BaseFragment {
      */
     private void logPose(TangoPoseData pose) {
 
+
             final float translation[] = pose.getTranslationAsFloats();
             final float orientation[] = pose.getRotationAsFloats();
 
@@ -405,8 +419,8 @@ public class DetectingFragment extends BaseFragment {
                                 drawIndicator(degree);
                             }break;
                             case 1:{
-                                verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] ) + "cm");
-                                horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis]) + "cm");
+                                verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] - (-translationInit[2]) ) + "cm");
+                                horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis] - translationInit[realtime_display_horizontal_axis]) + "cm");
                             }break;
                             default:
                                 break;
@@ -418,7 +432,23 @@ public class DetectingFragment extends BaseFragment {
 
             }
 
+
+
+
+
         if (detectionStatus == DETECTION_STATUS.Start){
+            if (initPose==null){
+                initPose = pose;
+                float arrTrans[] = initPose.getTranslationAsFloats();
+                float arrOrient[] = initPose.getRotationAsFloats();
+                translationInit[0] = arrTrans[0];
+                translationInit[1] = arrTrans[1];
+                translationInit[2] = arrTrans[2];
+                orientationInit[0] = arrOrient[0];
+                orientationInit[1] = arrOrient[1];
+                orientationInit[2] = arrOrient[2];
+                orientationInit[3] = arrOrient[3];
+            }
             poseLog.recordPoseData(pose, null);
         }
 
