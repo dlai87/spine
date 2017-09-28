@@ -75,7 +75,7 @@ public class PdfViewFragment extends BaseFragment {
                     .defaultPage(0)
                     .enableAnnotationRendering(true)
                     .spacing(10) // in dp
-                    .load();;
+                    .load();
         }
 
     }
