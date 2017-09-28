@@ -1,6 +1,7 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,18 +25,17 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectFragment;
+import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
@@ -213,7 +213,12 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         pdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createandDisplayPdf();
+                Fragment pdfViewFragment = new PdfViewFragment();
+                Bundle args = new Bundle();
+                args.putString(PdfViewFragment.FILE_NAME, "Dehua.pdf");
+                pdfViewFragment.setArguments(args);
+                fragmentUtil.showFragment(pdfViewFragment);
+                //createandDisplayPdf();
             }
         });
     }

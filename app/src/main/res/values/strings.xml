@@ -131,5 +131,7 @@
     <string name="result_score_3">需治疗</string>
 
     <string name="generate_report_time">打印报告时间</string>
+    <string name="email_report">发送至邮箱</string>
+    <string name="back">返回</string>
 
 </resources>

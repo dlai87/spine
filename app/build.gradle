@@ -51,8 +51,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 
     testCompile 'junit:junit:4.12'
 
@@ -65,8 +65,13 @@ dependencies {
     // Chart Library
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
-    // pdf
-    compile 'com.itextpdf:itextpdf:5.5.10'
+    // pdf ; give up iText PDF lib because it is not supporting Chinese well
+    // use android native PdfDocument instead.
+    // compile 'com.itextpdf:itextpdf:5.5.10'
+
+    // pdf viewer
+    compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
+
 
     // side menu drawer
     compile 'com.yarolegovich:sliding-root-nav:1.0.2'
