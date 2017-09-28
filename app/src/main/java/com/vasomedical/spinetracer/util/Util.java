@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.Pose;
 
 import java.security.SecureRandom;
@@ -26,12 +27,19 @@ import java.util.regex.Pattern;
 
 public class Util {
 
-    static String TAG = "Util";
-
     public static String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
     public static String FORMAT_DATE = "yyyy-MM-dd";
     public static String FORMAT_TIME = "HH:mm:ss";
+    static String TAG = "Util";
+    private static DoctorModel currentDoctor;
 
+    public static DoctorModel getCurrentDoctor() {
+        return currentDoctor;
+    }
+
+    public static void setCurrentDoctor(DoctorModel currentDoctor) {
+        Util.currentDoctor = currentDoctor;
+    }
 
     public static String generateUniqueID(int len){
         final String STR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

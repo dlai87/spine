@@ -31,8 +31,6 @@ public class DoctorSettingsFragment extends BaseFragment {
     EditText doctorDepartmentEditText;
     NJButton saveButton;
 
-    DoctorModel doctor;
-
     @Override
     protected void assignViews() {
         doctorNameEditText = (EditText) view.findViewById(R.id.doctor_name);
@@ -48,9 +46,10 @@ public class DoctorSettingsFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DoctorModel doctor = Util.getCurrentDoctor();
                 DoctorModel.DoctorBuilder doctorBuilder = new DoctorModel.DoctorBuilder(
-                        doctorNameEditText.getText().toString(),
-                        doctorNameEditText.getText().toString()); // FIXME: temply use name as id
+                        doctor.getId(),
+                        doctorNameEditText.getText().toString());
                 doctorBuilder.phone(doctorPhoneEditText.getText().toString());
                 doctorBuilder.email(doctorEmailEditText.getText().toString());
                 doctorBuilder.hospital(doctorHospitalEditText.getText().toString());
@@ -73,7 +72,7 @@ public class DoctorSettingsFragment extends BaseFragment {
         TBDoctor tbDoctor = new TBDoctor();
         ArrayList<DoctorModel> doctorList = tbDoctor.getDoctorList(database);
         if (doctorList.size() > 0) {
-            doctor = doctorList.get(0); // FIXME: should get current logged in doctor
+            DoctorModel doctor = Util.getCurrentDoctor();
 
             doctorNameEditText.setText(doctor.getName());
             doctorPhoneEditText.setText(doctor.getPhone());

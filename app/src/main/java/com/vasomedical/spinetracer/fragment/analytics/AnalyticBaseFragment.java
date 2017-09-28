@@ -28,7 +28,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.database.table.TBDetection;
-import com.vasomedical.spinetracer.database.table.TBDoctor;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
@@ -224,10 +223,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         }
 
         TBDetection tbDetection = new TBDetection();
-        // TEMP: Use first doctor in the table as current logged in doctor
-        TBDoctor tbDoctor = new TBDoctor();
-        ArrayList<DoctorModel> doctors = tbDoctor.getDoctorList(database);
-        DoctorModel doctor = doctors.get(0);
+        DoctorModel doctor = Util.getCurrentDoctor();
         tbDetection.smartInsert(database, detectionId, detectionId, doctor, patient);
     }
 
