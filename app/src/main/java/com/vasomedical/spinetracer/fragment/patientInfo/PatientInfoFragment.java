@@ -329,7 +329,7 @@ public class PatientInfoFragment extends BaseFragment {
     private void showDetectionOptions(PatientModel patient) {
         DetectionOptionsFragment fragment = new DetectionOptionsFragment();
         fragment.setPatient(patient);
-        fragmentUtil.showFragment(new DetectionOptionsFragment());
+        fragmentUtil.showFragment(fragment); // bug fix.
     }
 
 

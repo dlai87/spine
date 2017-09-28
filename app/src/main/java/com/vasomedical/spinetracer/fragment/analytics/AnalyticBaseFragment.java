@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -35,6 +36,7 @@ import com.vasomedical.spinetracer.fragment.detect.DetectFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
@@ -65,6 +67,11 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     // doctor suggestion
     protected ArrayList<String> suggestion;
     protected boolean suggestionInitFlag ;
+
+
+    protected RelativeLayout chartView;
+
+
     Button reTestButton;
     ArrayList<OnOffButton> selectButtonArray = new ArrayList<OnOffButton>();
     LinearLayout list1Layout;
@@ -112,7 +119,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
-
+        chartView = (RelativeLayout) view.findViewById(R.id.chartView);
 
         mScoreChart = (PieChart) view.findViewById(R.id.scoreChart);
 
@@ -206,7 +213,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         pdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                createandDisplayPdf();
             }
         });
     }
@@ -326,38 +333,17 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         }
     }
 
-    public void createandDisplayPdf(String text) {
 
-        Document doc = new Document();
 
-        try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
 
-            Log.e("show", "path " + path);
-            File dir = new File(path);
-            if(!dir.exists())
-                dir.mkdirs();
 
-            File file = new File(dir, "newFile.pdf");
-            FileOutputStream fOut = new FileOutputStream(file);
+    public void createandDisplayPdf() {
 
-            PdfWriter.getInstance(doc, fOut);
-
-            //open the document
-            doc.open();
-
-            Paragraph p1 = new Paragraph(text);
-            p1.setAlignment(Paragraph.ALIGN_CENTER);
-
-            //add paragraph to document
-            doc.add(p1);
-
-        } catch (Exception de) {
-            Log.e("PDFCreator", "DocumentException:" + de);
-        }
-        finally {
-            doc.close();
-        }
+        PdfManager pdfManager = new PdfManager(mActivity);
+        pdfManager.generatePDF(patient,
+                chartView,
+                "",
+                "");
 
     }
 }

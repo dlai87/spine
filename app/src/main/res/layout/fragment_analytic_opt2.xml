@@ -46,26 +46,28 @@
 
             <!-- chart -->
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/chartView"
                 android:layout_width="@dimen/layout_chart_w"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/margin_1"
                 >
 
                 <SurfaceView
                     android:id="@+id/surface"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/layout_chart_w1"
                     android:layout_height="@dimen/layout_chart_h"
-                    android:layout_weight="2"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
                     />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/layout_chart_w2"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true">
 
 
                         <LinearLayout
@@ -104,7 +106,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
 
