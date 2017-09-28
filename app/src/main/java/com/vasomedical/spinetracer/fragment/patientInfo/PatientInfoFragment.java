@@ -262,10 +262,13 @@ public class PatientInfoFragment extends BaseFragment {
                 selectedPatient = patientList.get(position);
 
                 String photoPath = selectedPatient.getPhoto();
-                Bitmap photoBitmap = loadImageFromStorage(selectedPatient.getPhoto());
-                if (photoBitmap != null) {
-                    existingPatientAvatar.setImageBitmap(photoBitmap);
+                if (photoPath!=null){
+                    Bitmap photoBitmap = loadImageFromStorage(photoPath);
+                    if (photoBitmap != null) {
+                        existingPatientAvatar.setImageBitmap(photoBitmap);
+                    }
                 }
+
                 existingPatientNameEditText.setText(selectedPatient.getName());
                 existingPatientGenderEditText.setText(selectedPatient.getGender());
                 existingPatientDateOfBirthText.setText(selectedPatient.getDate_of_birth());
