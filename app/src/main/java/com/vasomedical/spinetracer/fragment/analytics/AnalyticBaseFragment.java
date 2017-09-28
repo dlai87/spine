@@ -34,6 +34,7 @@ import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
@@ -205,7 +206,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         pdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                createandDisplayPdf();
             }
         });
     }
@@ -322,38 +323,14 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         }
     }
 
-    public void createandDisplayPdf(String text) {
 
-        Document doc = new Document();
 
-        try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
 
-            Log.e("show", "path " + path);
-            File dir = new File(path);
-            if(!dir.exists())
-                dir.mkdirs();
 
-            File file = new File(dir, "newFile.pdf");
-            FileOutputStream fOut = new FileOutputStream(file);
+    public void createandDisplayPdf() {
 
-            PdfWriter.getInstance(doc, fOut);
-
-            //open the document
-            doc.open();
-
-            Paragraph p1 = new Paragraph(text);
-            p1.setAlignment(Paragraph.ALIGN_CENTER);
-
-            //add paragraph to document
-            doc.add(p1);
-
-        } catch (Exception de) {
-            Log.e("PDFCreator", "DocumentException:" + de);
-        }
-        finally {
-            doc.close();
-        }
+        PdfManager pdfManager = new PdfManager(mActivity);
+        pdfManager.generatePDF(patient);
 
     }
 }

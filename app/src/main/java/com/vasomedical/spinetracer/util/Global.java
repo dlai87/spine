@@ -16,6 +16,7 @@ public class Global {
     public final static String FOLDER_APP_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Android/data/com.vasomed.spinetracker/";
     public final static String FOLDER_CHART = FOLDER_APP_ROOT + "chart/";
     public final static String FOLDER_AVATAR_IMG = FOLDER_APP_ROOT + "avatar/";
+    public final static String FOLDER_PDF = FOLDER_APP_ROOT + "pdf/";
 
     public static boolean login = false;
 

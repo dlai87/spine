@@ -1,5 +1,9 @@
 package com.vasomedical.spinetracer.model;
 
+import android.content.Context;
+
+import com.vasomedical.spinetracer.R;
+
 /**
  * Created by dehualai on 5/13/17.
  */
@@ -131,5 +135,16 @@ public class PatientModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getStringForPdf(Context context){
+        StringBuffer buf = new StringBuffer();
+        buf.append(context.getResources().getString(R.string.patient_info) + "\n");
+        buf.append(context.getResources().getString(R.string.patient_name) + ":" + name + "\n");
+        buf.append(context.getResources().getString(R.string.patient_gender) + ":" + gender + "\n");
+        buf.append(context.getResources().getString(R.string.patient_date_of_birth) + ":" + date_of_birth + "\n");
+        buf.append(context.getResources().getString(R.string.patient_phone) + ":" + phone + "\n");
+        buf.append(context.getResources().getString(R.string.patient_email) + ":" + email + "\n");
+        return buf.toString();
     }
 }
