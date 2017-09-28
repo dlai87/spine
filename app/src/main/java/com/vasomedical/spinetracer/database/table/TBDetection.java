@@ -4,16 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.database.util.DBGlobal;
 import com.vasomedical.spinetracer.database.util.DBUtil;
 import com.vasomedical.spinetracer.model.DoctorModel;
+import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
-import com.vasomedical.spinetracer.model.Pose;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -64,27 +59,27 @@ public class TBDetection {
         db.update(DBGlobal.TABLE_DETECTION, cv, null, null);
     }
 
-    public ArrayList<String> getDetectionIdList(SQLiteDatabase db) {
-        ArrayList<String> queryResult = new ArrayList<>();
+    public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db) {
+        ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, null, null, null, null, null);
-        if (result.getCount() > 0) {
-            result.moveToFirst();
-            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
-
-            queryResult.add(result.getString(col_detection_id));
-            while (result.moveToNext()) {
-                queryResult.add(result.getString(col_detection_id));
-            }
-        }
+//        if (result.getCount() > 0) {
+//            result.moveToFirst();
+//            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+//
+//            queryResult.add(result.getString(col_detection_id));
+//            while (result.moveToNext()) {
+//                queryResult.add(result.getString(col_detection_id));
+//            }
+//        }
         result.close();
         return queryResult;
     }
 
     public void smartInsert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
-        ArrayList<String> detectionIds = getDetectionIdList(db);
+        ArrayList<InspectionRecord> detectionList = getDetectionList(db);
         boolean exist = false;
-        for (String id : detectionIds) {
-            if (id.equals(detectionId)) {
+        for (InspectionRecord record : detectionList) {
+            if (record.getTimestamp().equals(timestamp)) { // TEMP: compare timestamp
                 exist = true;
             }
         }
