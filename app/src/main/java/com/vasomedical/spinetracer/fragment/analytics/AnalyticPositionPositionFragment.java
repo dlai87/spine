@@ -106,8 +106,13 @@ public abstract class AnalyticPositionPositionFragment
 
                 drawGrid(canvas);
                 draw(canvas);
-                createPointButtons();
-                calculateCobbs();
+                int numPoints = createPointButtons();
+                if (numPoints == 2){
+                    calculateCobbsTwoPoints();
+                }else if (numPoints > 2){
+                    calculateCobbs();
+                }
+
 
                 holder.unlockCanvasAndPost(canvas);
             }
@@ -246,54 +251,68 @@ public abstract class AnalyticPositionPositionFragment
     }
 
 
-    private void createPointButtons() {
+    private int createPointButtons() {
         if (piecesInterested != null) {
-            if (!pointsLayoutFlag) {
-                pointsText.setVisibility(View.VISIBLE);
-                pointsLayoutFlag = true;
 
-                for (final SpinePiece piece : piecesInterested) {
-                    final OnOffButton button = new OnOffButton(mContext);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 30);
-                    params.setMargins(10, 5, 10, 5);
-                    button.setLayoutParams(params);
-                    button.setBackground(mContext.getResources().getDrawable(R.drawable.grey_round_rect));
-                    button.setText(piece.getLabel());
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            button.onClick();
-                            button.setBackground(button.isOn() ?
-                                    mContext.getResources().getDrawable(R.drawable.green_round_rect) :
-                                    mContext.getResources().getDrawable(R.drawable.grey_round_rect));
+            if(piecesInterested.size() <= 1){  // 1 point or less
+                invalidDetectionLayout.setVisibility(View.VISIBLE);
+                validLayout.setVisibility(View.GONE);
+            }
+            else if (piecesInterested.size() == 2){  // total 2 points
+                calculateCobbsTwoPoints();
+            }
+            else{   // total  2+ points
+                if (!pointsLayoutFlag) {
+                    pointsText.setVisibility(View.VISIBLE);
+                    pointsLayoutFlag = true;
 
-                            if (buttonQueue.remainingCapacity() <= 0) {
-                                buttonQueue.poll();
-                            }
-                            buttonQueue.offer(piece.getLabel());
-
-
-                            for (Button b : piecesButtons) {
-                                String str = String.valueOf(b.getText());
-                                b.setBackground(buttonQueue.contains(str) ?
+                    for (final SpinePiece piece : piecesInterested) {
+                        final OnOffButton button = new OnOffButton(mContext);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 30);
+                        params.setMargins(10, 5, 10, 5);
+                        button.setLayoutParams(params);
+                        button.setBackground(mContext.getResources().getDrawable(R.drawable.grey_round_rect));
+                        button.setText(piece.getLabel());
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                button.onClick();
+                                button.setBackground(button.isOn() ?
                                         mContext.getResources().getDrawable(R.drawable.green_round_rect) :
                                         mContext.getResources().getDrawable(R.drawable.grey_round_rect));
 
+                                if (buttonQueue.remainingCapacity() <= 0) {
+                                    buttonQueue.poll();
+                                }
+                                buttonQueue.offer(piece.getLabel());
+
+
+                                for (Button b : piecesButtons) {
+                                    String str = String.valueOf(b.getText());
+                                    b.setBackground(buttonQueue.contains(str) ?
+                                            mContext.getResources().getDrawable(R.drawable.green_round_rect) :
+                                            mContext.getResources().getDrawable(R.drawable.grey_round_rect));
+
+                                }
+
+
+                                calculateCobbs();
+
                             }
-
-
-                            calculateCobbs();
-
-                        }
-                    });
-                    piecesButtons.add(button);
+                        });
+                        piecesButtons.add(button);
+                    }
+                    for (OnOffButton button : piecesButtons) {
+                        pointsButtonLayout.addView(button);
+                    }
                 }
-
-                for (OnOffButton button : piecesButtons) {
-                    pointsButtonLayout.addView(button);
-                }
-
             }
+            return piecesInterested.size();
+        }else{
+            // illegal
+            invalidDetectionLayout.setVisibility(View.VISIBLE);
+            validLayout.setVisibility(View.GONE);
+            return 0;
         }
     }
 
@@ -320,5 +339,21 @@ public abstract class AnalyticPositionPositionFragment
             cobbsAngle = null;
             cobbsAngleText.setText(mContext.getResources().getString(R.string.cobbs_angle) + ":" + "NaN");
         }
+    }
+
+
+    private void calculateCobbsTwoPoints(){
+        float angle1 = 0 ;
+        float angle2 = 0 ;
+        for (SpinePiece s : piecesInterested){
+            angle1 = s.getAbsAngle();
+            angle2 = s.getAbsAngle();
+        }
+        cobbsAngle = 180 - (angle1+angle2);
+        Log.d("show", "angle1 " + angle1 + " angle2 " + angle2 + " cobbs " + cobbsAngle) ;
+
+        cobbsAngleText.setText(mContext.getResources().getString(R.string.cobbs_angle)
+                + ":" + String.format("%.1f", cobbsAngle)
+                + mContext.getResources().getString(R.string.degree_mark));
     }
 }
