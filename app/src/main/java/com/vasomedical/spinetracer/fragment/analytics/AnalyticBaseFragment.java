@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -65,6 +66,11 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     // doctor suggestion
     protected ArrayList<String> suggestion;
     protected boolean suggestionInitFlag ;
+
+
+    protected RelativeLayout chartView;
+
+
     Button reTestButton;
     ArrayList<OnOffButton> selectButtonArray = new ArrayList<OnOffButton>();
     LinearLayout list1Layout;
@@ -112,7 +118,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
-
+        chartView = (RelativeLayout) view.findViewById(R.id.chartView);
 
         mScoreChart = (PieChart) view.findViewById(R.id.scoreChart);
 
@@ -330,7 +336,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     public void createandDisplayPdf() {
 
         PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(patient);
+        pdfManager.generatePDF(patient,
+                chartView,
+                "",
+                "");
 
     }
 }

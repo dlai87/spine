@@ -130,4 +130,6 @@
     <string name="result_score_2">需警惕</string>
     <string name="result_score_3">需治疗</string>
 
+    <string name="generate_report_time">打印报告时间</string>
+
 </resources>

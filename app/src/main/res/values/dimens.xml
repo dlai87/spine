@@ -100,6 +100,8 @@
 
 
     <dimen name="layout_chart_w">680dp</dimen>
+    <dimen name="layout_chart_w1">450dp</dimen>
+    <dimen name="layout_chart_w2">230dp</dimen>
     <dimen name="layout_chart_h">360dp</dimen>
 
     <dimen name="img_chart_w">640dp</dimen>

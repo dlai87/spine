@@ -46,6 +46,7 @@
 
             <!-- chart -->
             <RelativeLayout
+                android:id="@+id/chartView"
                 android:layout_width="@dimen/layout_chart_w"
                 android:layout_height="@dimen/layout_chart_h">
 
