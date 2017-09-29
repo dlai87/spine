@@ -25,15 +25,15 @@ public class InspectionRecord {
     };
 
     String timestamp;
-    String patientId;
-    String doctorId;
+    PatientModel patient;
+    DoctorModel doctor;
     String type;
     ArrayList<Pose> inspectionData;
 
     public InspectionRecord(InspectionRecordBuilder builder) {
         timestamp = builder.timestamp;
-        patientId = builder.patientId;
-        doctorId = builder.doctorId;
+        patient = builder.patient;
+        doctor = builder.doctor;
         type = builder.type;
         inspectionData = builder.inspectionData;
     }
@@ -46,20 +46,20 @@ public class InspectionRecord {
         this.timestamp = timestamp;
     }
 
-    public String getPatientId() {
-        return patientId;
+    public PatientModel getPatient() {
+        return patient;
     }
 
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+    public void setPatient(PatientModel patient) {
+        this.patient = patient;
     }
 
-    public String getDoctorId() {
-        return doctorId;
+    public DoctorModel getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(DoctorModel doctor) {
+        this.doctor = doctor;
     }
 
     public String getType() {
@@ -81,19 +81,19 @@ public class InspectionRecord {
     public static class InspectionRecordBuilder {
 
         String timestamp;
-        String patientId;
-        String doctorId;
+        PatientModel patient;
+        DoctorModel doctor;
         String type;
         ArrayList<Pose> inspectionData;
 
         public InspectionRecordBuilder(String timestamp,
-                                       String patientId,
-                                       String doctorId,
+                                       PatientModel patient,
+                                       DoctorModel doctor,
                                        int detect_opt,
                                        ArrayList<Pose> inspectionData) {
             this.timestamp = timestamp;
-            this.patientId = patientId;
-            this.doctorId = doctorId;
+            this.patient = patient;
+            this.doctor = doctor;
             this.type = TypeTable.get(detect_opt);
             this.inspectionData = inspectionData;
         }

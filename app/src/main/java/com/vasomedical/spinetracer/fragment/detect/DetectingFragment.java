@@ -27,19 +27,21 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
+import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
-import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by dehualai on 5/17/17.
@@ -48,48 +50,31 @@ import java.util.ArrayList;
 public class DetectingFragment extends BaseFragment {
 
 
-    enum DETECTION_STATUS{
-        Init,
-        Calibrating,
-        Start
-    }
-
     public static PoseLog poseLog;
     String TAG = "DetectingFragment";
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
-
     TextView instructionText;
     TextView realTimeDisplay;
     RelativeLayout angleRulerLayout;
     ImageView indicator;
-
     LinearLayout movementLayout;
     TextView verticalMoveText;
     TextView horizontalMoveText;
-
-
-
     PatientModel patient;
-    private Tango mTango;
-    private TangoConfig mConfig;
-
-
     TangoPoseData initPose = null;
     float translationInit[] = new float[3];
     float orientationInit[] = new float[4];
-    //private boolean isDetctiong = false;
-
     DETECTION_STATUS detectionStatus = DETECTION_STATUS.Init;
-
-
     int realtime_display_mode = 1;  // 0 = angle mode ;  1 = position mode
     int realtime_display_degree = 1;  // which degree to display in real time,
+    //private boolean isDetctiong = false;
     // 0 = rotation x;  1 = rotation y; 2 = rotation z
     int realtime_display_horizontal_axis = 1; // 0 = x Axis; 1 = y Axis
-
     AnalyticBaseFragment analyticFragment;
+    private Tango mTango;
+    private TangoConfig mConfig;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -145,7 +130,6 @@ public class DetectingFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
     private void updateUI(){
         switch (detectionStatus){
             case Init:
@@ -163,8 +147,6 @@ public class DetectingFragment extends BaseFragment {
 
         }
     }
-
-
 
     public void setPatient(PatientModel newPatient) {
         patient = newPatient;
@@ -263,9 +245,6 @@ public class DetectingFragment extends BaseFragment {
 
     }
 
-
-    ////  Tango
-
     private void start() {
         // Initialize Tango Service as a normal Android Service. Since we call mTango.disconnect()
         // in onPause, this will unbind Tango Service, so every time onResume gets called we
@@ -296,6 +275,8 @@ public class DetectingFragment extends BaseFragment {
     }
 
 
+    ////  Tango
+
     private void stop() {
         synchronized (this) {
             try {
@@ -312,13 +293,18 @@ public class DetectingFragment extends BaseFragment {
         Bundle args = new Bundle();
         args.putInt(AnalyticBaseFragment.SCORE, algorithm.getScore());
         analyticFragment.setArguments(args);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp,
+                patient,
+                Util.getCurrentDoctor(),
+                AlgorithmFactory.detectionOption,
+                poseLog.getPoseList());
         analyticFragment.setDetectionData(processedData);
-        analyticFragment.setPatient(patient);
+        analyticFragment.setRecord(builder.build());
 
         fragmentUtil.showFragment(analyticFragment);
 
     }
-
 
     /**
      * Sets up the tango configuration object. Make sure mTango object is initialized before
@@ -333,7 +319,6 @@ public class DetectingFragment extends BaseFragment {
         config.putBoolean(TangoConfig.KEY_BOOLEAN_AUTORECOVERY, true);
         return config;
     }
-
 
     /**
      * Set up the callback listeners for the Tango Service and obtain other parameters required
@@ -454,7 +439,6 @@ public class DetectingFragment extends BaseFragment {
 
     }
 
-
     private void drawIndicator(float degree) {
 
         float layoutW = angleRulerLayout.getWidth();
@@ -474,6 +458,13 @@ public class DetectingFragment extends BaseFragment {
 
         indicator.setY(tempY - indicatorR);
 
+    }
+
+
+    enum DETECTION_STATUS {
+        Init,
+        Calibrating,
+        Start
     }
 
 

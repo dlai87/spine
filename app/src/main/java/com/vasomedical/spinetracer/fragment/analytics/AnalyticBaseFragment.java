@@ -5,10 +5,8 @@ import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,16 +31,13 @@ import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectFragment;
 import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
-import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
-import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -83,7 +78,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     Button pdfButton;
 
 
-    PatientModel patient;
+    InspectionRecord record;
 
     static int argb(String hex) {
         int color = (int) Long.parseLong(hex.replace("#", ""), 16);
@@ -98,8 +93,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         detectionData = data;
     }
 
-    public void setPatient(PatientModel newPatient) {
-        patient = newPatient;
+    public void setRecord(InspectionRecord newRecord) {
+        record = newRecord;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -236,7 +231,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
         TBDetection tbDetection = new TBDetection();
         DoctorModel doctor = Util.getCurrentDoctor();
-        tbDetection.smartInsert(database, detectionId, detectionId, doctor, patient);
+        tbDetection.smartInsert(database, detectionId, detectionId, doctor, record.getPatient());
     }
 
     void displayScoreChart(){
@@ -345,7 +340,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     public void createandDisplayPdf() {
 
         PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(patient,
+        pdfManager.generatePDF(record.getPatient(),
                 chartView,
                 "",
                 "");

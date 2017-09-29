@@ -59,8 +59,8 @@ public class PatientHistoryListFragment extends BaseFragment {
                 TextView descriptionTextView = (TextView) view.findViewById(R.id.patient_line_sidehead);
                 ImageView avatarImageView = (ImageView) view.findViewById(R.id.patient_line_avatar);
                 InspectionRecord record = (InspectionRecord) getItem(i);
-                nameTextView.setText(record.getTimestamp()); // TEMP
-                descriptionTextView.setText(record.getDoctorId()); // TEMP
+                nameTextView.setText(record.getTimestamp());
+                descriptionTextView.setText(record.getDoctor().getName());
                 return view;
             }
         };
