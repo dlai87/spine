@@ -98,12 +98,9 @@ public abstract class AnalyticPositionPositionFragment
                 // Do some drawing when surface is ready
                 final Canvas canvas = holder.lockCanvas();
 
-
                 // generate control points
                 controlPoints = convertDataToPointList(detectionData, canvas.getWidth(), canvas.getHeight());
-
                 // draw on canvas
-
                 drawGrid(canvas);
                 draw(canvas);
                 int numPoints = createPointButtons();

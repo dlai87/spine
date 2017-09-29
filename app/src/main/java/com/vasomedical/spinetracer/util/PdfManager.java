@@ -60,7 +60,8 @@ public class PdfManager {
         Log.e("show", "screen W " + pageW + "x" + pageH);
     }
 
-    public boolean generatePDF(PatientModel patientModel,
+    public boolean generatePDF(String filename,
+                               PatientModel patientModel,
                                View chartView,
                                String scoreText,
                                String doctorComment){
@@ -70,7 +71,7 @@ public class PdfManager {
             if(!dir.exists())
                 dir.mkdirs();
 
-            File file = new File(dir, "Dehua.pdf");
+            File file = new File(dir, filename);
             FileOutputStream outputStream = new FileOutputStream(file);
 
             PrintedPdfDocument document = new PrintedPdfDocument(mActivity,

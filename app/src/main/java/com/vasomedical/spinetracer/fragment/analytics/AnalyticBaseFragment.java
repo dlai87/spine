@@ -213,12 +213,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         pdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment pdfViewFragment = new PdfViewFragment();
-                Bundle args = new Bundle();
-                args.putString(PdfViewFragment.FILE_NAME, "Dehua.pdf");
-                pdfViewFragment.setArguments(args);
-                fragmentUtil.showFragment(pdfViewFragment);
-                //createandDisplayPdf();
+
+                createandDisplayPdf();
             }
         });
     }
@@ -344,11 +340,19 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     public void createandDisplayPdf() {
 
+        String filename = "test_" + System.currentTimeMillis() + ".pdf";
         PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(patient,
+        pdfManager.generatePDF(filename, patient,
                 chartView,
                 "",
                 "");
+
+
+        Fragment pdfViewFragment = new PdfViewFragment();
+        Bundle args = new Bundle();
+        args.putString(PdfViewFragment.FILE_NAME, filename);
+        pdfViewFragment.setArguments(args);
+        fragmentUtil.showFragment(pdfViewFragment);
 
     }
 }
