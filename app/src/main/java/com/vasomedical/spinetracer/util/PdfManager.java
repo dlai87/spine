@@ -42,8 +42,8 @@ public class PdfManager {
     int chartTop = 600;
 
 
-    PatientModel patientModel;
-    DoctorModel doctorModel;
+ //   PatientModel patientModel;
+ //   DoctorModel doctorModel;
     InspectionRecord inspectionRecord;
 
     public PdfManager(Activity activity){
@@ -60,17 +60,19 @@ public class PdfManager {
         Log.e("show", "screen W " + pageW + "x" + pageH);
     }
 
-    public boolean generatePDF(PatientModel patientModel,
-                               View chartView,
-                               String scoreText,
-                               String doctorComment){
+    public boolean generatePDF(String filename,
+                               InspectionRecord record,
+                               View chartView
+    ){
+
+        this.inspectionRecord = record;
 
         try {
             File dir = new File(Global.FOLDER_PDF);
             if(!dir.exists())
                 dir.mkdirs();
 
-            File file = new File(dir, "Dehua.pdf");
+            File file = new File(dir, filename);
             FileOutputStream outputStream = new FileOutputStream(file);
 
             PrintedPdfDocument document = new PrintedPdfDocument(mActivity,
@@ -83,20 +85,25 @@ public class PdfManager {
 
             // patient info
             drawMultiLineText(canvas,
-                    patientModel.getStringForPdf(mActivity), 17,
+                    inspectionRecord.getPatient().getStringForPdf(mActivity), 17,
                     marginVertical,marginHorizontal);
+
+            // detection info
+            drawMultiLineText( canvas,
+                    inspectionRecord.getStringForPdf(mActivity), 17,
+                    marginVertical, pageW/2);
+
             // chart
-            drawViewAtPosition(canvas, chartView, chartTop, marginVertical);
-            // score
+            drawViewAtPosition(canvas, chartView, chartTop, 20);
 
-            // doctor comments
-
+            // score & doctor comments
+            drawMultiLineText( canvas,
+                    inspectionRecord.getComments(mActivity), 17,
+                    chartTop + chartView.getHeight() + marginVertical, marginHorizontal);
 
             // time stamp
-            Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             drawMultiLineText(canvas,
-                    mActivity.getResources().getString(R.string.generate_report_time) + " : `" + dateFormat.format(date),
+                    mActivity.getResources().getString(R.string.generate_report_time) + " : " + Util.convertTimeToString(new Date(),"yyyy-MM-dd HH:mm" ),
                     17,
                     pageH - marginVertical,
                     marginHorizontal

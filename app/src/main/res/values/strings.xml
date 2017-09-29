@@ -104,7 +104,8 @@
 
 
     <string name="result_score">测量结果评级</string>
-    <string name="doctor_comment">医生诊断（可多选）</string>
+    <string name="doctor_comment_multi_option">医生诊断（可多选）</string>
+    <string name="doctor_comment">医生诊断</string>
     <string name="suggest_diagnosis">参考结论</string>
     <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
     <string name="please_write_diagnosis">备注（选填）</string>
@@ -133,5 +134,7 @@
     <string name="generate_report_time">打印报告时间</string>
     <string name="email_report">发送至邮箱</string>
     <string name="back">返回</string>
-
+    <string name="inspection_type">测量类型</string>
+    <string name="inspection_time">测量时间</string>
+    <string name="doctor">医生</string>
 </resources>

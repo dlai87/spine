@@ -72,6 +72,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     LinearLayout list1Layout;
     LinearLayout list2Layout;
     LinearLayout list3Layout;
+    EditText diagnosisEditText;
     // control buttons
     NJButton cancelButton;
     Button saveButton;
@@ -136,6 +137,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         list1Layout = (LinearLayout)view.findViewById(R.id.list1);
         list2Layout = (LinearLayout)view.findViewById(R.id.list2);
         list3Layout = (LinearLayout)view.findViewById(R.id.list3);
+        diagnosisEditText = (EditText)view.findViewById(R.id.diagnosis_edittext);
+
 
         cancelButton = (NJButton)view.findViewById(R.id.cancel_button);
         saveButton = (NJButton)view.findViewById(R.id.save_button);
@@ -201,6 +204,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                record.setDoctorComments(getDoctorComment());
                 saveToDatabase();
             }
         });
@@ -208,12 +212,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         pdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment pdfViewFragment = new PdfViewFragment();
-                Bundle args = new Bundle();
-                args.putString(PdfViewFragment.FILE_NAME, "Dehua.pdf");
-                pdfViewFragment.setArguments(args);
-                fragmentUtil.showFragment(pdfViewFragment);
-                //createandDisplayPdf();
+
+                record.setDoctorComments(getDoctorComment());
+                createandDisplayPdf();
             }
         });
     }
@@ -337,13 +338,35 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
 
 
-    public void createandDisplayPdf() {
+    private void createandDisplayPdf() {
 
+        String filename = "test_" + System.currentTimeMillis() + ".pdf";
         PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(record.getPatient(),
-                chartView,
-                "",
-                "");
+        pdfManager.generatePDF(filename,
+                record,
+                chartView);
+
+        Fragment pdfViewFragment = new PdfViewFragment();
+        Bundle args = new Bundle();
+        args.putString(PdfViewFragment.FILE_NAME, filename);
+        pdfViewFragment.setArguments(args);
+        fragmentUtil.showFragment(pdfViewFragment);
 
     }
+
+
+    private String getDoctorComment(){
+        StringBuffer buffer = new StringBuffer();
+        for (OnOffButton button: selectButtonArray){
+            if (button.isOn()){
+                buffer.append(button.getText() + ";\n");
+            }
+        }
+        if (diagnosisEditText.getText()!=null){
+            buffer.append(diagnosisEditText.getText() + ";\n");
+        }
+
+        return buffer.toString();
+    }
+
 }

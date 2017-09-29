@@ -41,6 +41,11 @@ public class Util {
         Util.currentDoctor = currentDoctor;
     }
 
+
+
+
+
+
     public static String generateUniqueID(int len){
         final String STR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();

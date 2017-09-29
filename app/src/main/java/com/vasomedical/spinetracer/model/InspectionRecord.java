@@ -1,8 +1,13 @@
 package com.vasomedical.spinetracer.model;
 
+import android.content.Context;
+
+import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
+import com.vasomedical.spinetracer.util.Util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -10,6 +15,8 @@ import java.util.HashMap;
  */
 
 public class InspectionRecord {
+
+    // FixMe :  InspectionRecord also need following information:  type ; score ; doctorComments
 
 
     public final static HashMap<Integer,String> TypeTable = new HashMap<Integer,String>() {
@@ -24,10 +31,16 @@ public class InspectionRecord {
         }
     };
 
+
+
     String timestamp;
     PatientModel patient;
     DoctorModel doctor;
     String type;
+    int score;
+    String doctorComments;
+
+
     ArrayList<Pose> inspectionData;
 
     public InspectionRecord(InspectionRecordBuilder builder) {
@@ -70,6 +83,22 @@ public class InspectionRecord {
         this.type = type;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getDoctorComments() {
+        return doctorComments;
+    }
+
+    public void setDoctorComments(String doctorComments) {
+        this.doctorComments = doctorComments;
+    }
+
     public ArrayList<Pose> getInspectionData() {
         return inspectionData;
     }
@@ -104,5 +133,63 @@ public class InspectionRecord {
     }
 
 
+    public String getStringForPdf(Context context){
+
+        StringBuffer buffer = new StringBuffer();
+        String typeName = "";
+        if ("slant".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_1);
+        }else if("humpback".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_2);
+        }else if("bending".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_3);
+        }else if("left_right".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_4);
+        }else if("forward_back".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_5);
+        }else if("rotate".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_6);
+        }else if("balance".equals(type)){
+            typeName = context.getResources().getString(R.string.detect_option_7);
+        }
+
+
+        buffer.append(context.getResources().getString(R.string.inspection_type) + " : " + typeName + "\n");
+
+
+        Date time = Util.convertStringToTime(timestamp, "yyyyMMdd_HHmmss");
+        buffer.append(context.getResources().getString(R.string.inspection_time) + " : " +
+                Util.convertTimeToString(time, "yyyy-MM-dd HH:mm") + "\n");
+
+        buffer.append(context.getResources().getString(R.string.doctor) + " : " + doctor.getName() + "\n");
+
+        return buffer.toString();
+    }
+
+
+
+    public String getComments(Context context){
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(context.getResources().getString(R.string.result_score) + " : ");
+        switch (score%4){
+            case 0:
+                buffer.append(context.getResources().getString(R.string.result_score_0) + "\n\n");
+                break;
+            case 1:
+                buffer.append(context.getResources().getString(R.string.result_score_1) + "\n\n");
+                break;
+            case 2:
+                buffer.append(context.getResources().getString(R.string.result_score_2) + "\n\n");
+                break;
+            case 3:
+                buffer.append(context.getResources().getString(R.string.result_score_3) + "\n\n");
+                break;
+        }
+
+        buffer.append(context.getResources().getString(R.string.doctor_comment) + " :\n" );
+        buffer.append(doctorComments);
+        return buffer.toString();
+    }
 
 }

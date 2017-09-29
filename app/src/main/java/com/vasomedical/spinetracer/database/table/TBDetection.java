@@ -18,6 +18,10 @@ import java.util.ArrayList;
 
 public class TBDetection {
 
+
+    // FixMe :  detection table also need following information: detection_type ; score ; doctor_comments
+
+
     public void insert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, detectionId);

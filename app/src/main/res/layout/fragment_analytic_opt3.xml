@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/doctor_comment"
+                android:text="@string/doctor_comment_multi_option"
                 android:textSize="@dimen/text_h_4a"
                 android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/margin_1"/>
