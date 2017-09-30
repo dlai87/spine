@@ -300,6 +300,7 @@ public class DetectingFragment extends BaseFragment {
                 AlgorithmFactory.detectionOption,
                 poseLog.getPoseList());
         analyticFragment.setDetectionData(processedData);
+        analyticFragment.setPoseData(poseLog.getPoseList());
         analyticFragment.setRecord(builder.build());
 
         fragmentUtil.showFragment(analyticFragment);

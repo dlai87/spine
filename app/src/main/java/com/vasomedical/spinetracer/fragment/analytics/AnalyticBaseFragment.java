@@ -28,7 +28,6 @@ import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
-import com.vasomedical.spinetracer.fragment.detect.DetectFragment;
 import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
@@ -37,6 +36,7 @@ import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
+import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -50,6 +50,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     public static final String SCORE = "SCORE";
     protected ArrayList<Entry> detectionData;
+
+    protected ArrayList<Pose> poseData;
     protected int score = -1;
 
     // UI elements
@@ -92,6 +94,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     public void setDetectionData(ArrayList<Entry> data){
         detectionData = data;
+    }
+
+    public void setPoseData(ArrayList<Pose> poseData) {
+        this.poseData = poseData;
     }
 
     public void setRecord(InspectionRecord newRecord) {
@@ -225,14 +231,19 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         String detectionId = tsLong.toString();
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-        ArrayList<Pose> poses = DetectFragment.poseLog.getPoseList();
-        for (Pose pose : poses) {
+        for (Pose pose : poseData) {
             tbPose.smartInsert(database, pose, detectionId);
         }
 
         TBDetection tbDetection = new TBDetection();
         DoctorModel doctor = Util.getCurrentDoctor();
         tbDetection.smartInsert(database, detectionId, detectionId, doctor, record.getPatient());
+
+        AlertDialog alertDialog = new AlertDialog(mContext);
+        alertDialog.setTitleView("成功");
+        alertDialog.setMessageView("测量数据已保存");
+        alertDialog.setButtons("好", null, null);
+        alertDialog.showDialog();
     }
 
     void displayScoreChart(){

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class HistoryListFragment extends BaseFragment {
 
     LinearListView historyListView;
+    ArrayList<PatientModel> patientList;
 
     @Override
     protected void assignViews() {
@@ -32,17 +33,11 @@ public class HistoryListFragment extends BaseFragment {
         BaseAdapter historyListViewAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                TBPatient tbPatient = new TBPatient();
-                SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-                ArrayList<PatientModel> patientList = tbPatient.getPatientList(database);
                 return patientList.size();
             }
 
             @Override
             public Object getItem(int i) {
-                TBPatient tbPatient = new TBPatient();
-                SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-                ArrayList<PatientModel> patientList = tbPatient.getPatientList(database);
                 return patientList.get(i);
             }
 
@@ -73,7 +68,9 @@ public class HistoryListFragment extends BaseFragment {
         LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
             @Override
             public void onItemClick(LinearListView parent, View view, int position, long id) {
-                fragmentUtil.showFragment(new PatientHistoryListFragment());
+                PatientHistoryListFragment fragment = new PatientHistoryListFragment();
+                fragment.setPatient(patientList.get(position));
+                fragmentUtil.showFragment(fragment);
             }
         };
         historyListView.setOnItemClickListener(onItemClickListener);
@@ -82,7 +79,10 @@ public class HistoryListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_history_list, container, false);
-        Bundle args = getArguments();
+
+        TBPatient tbPatient = new TBPatient();
+        SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+        patientList = tbPatient.getPatientList(database);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }

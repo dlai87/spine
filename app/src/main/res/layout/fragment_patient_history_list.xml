@@ -7,7 +7,7 @@
         android:id="@+id/patient_history_list_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/patient_info_dialog_h"
-        android:background="@drawable/grey_round_rect"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:divider="@color/text_gray_dark"
                 android:dividerPadding="2dp"
-                android:entries="@array/patient_list"
                 android:orientation="vertical"
                 android:showDividers="middle"
                 app:dividerThickness="2dp" />

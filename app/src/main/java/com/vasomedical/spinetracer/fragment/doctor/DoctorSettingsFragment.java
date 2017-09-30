@@ -16,6 +16,7 @@ import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
+import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,12 @@ public class DoctorSettingsFragment extends BaseFragment {
                 final SQLiteDatabase database = DBAdapter.getDatabase(mContext);
                 TBDoctor tbDoctor = new TBDoctor();
                 tbDoctor.smartInsert(database, doctorBuilder.build());
+
+                AlertDialog alertDialog = new AlertDialog(mContext);
+                alertDialog.setTitleView("成功");
+                alertDialog.setMessageView("医生设备已保存");
+                alertDialog.setButtons("好", null, null);
+                alertDialog.showDialog();
             }
         });
     }

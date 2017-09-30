@@ -66,6 +66,7 @@ public class TBDetection {
     public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db) {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, null, null, null, null, null);
+        // TODO
 //        if (result.getCount() > 0) {
 //            result.moveToFirst();
 //            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
@@ -76,6 +77,13 @@ public class TBDetection {
 //            }
 //        }
         result.close();
+        return queryResult;
+    }
+
+    public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db, PatientModel patient) {
+        ArrayList<InspectionRecord> queryResult = new ArrayList<>();
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, null, null, null, null, null);
+        // TODO
         return queryResult;
     }
 

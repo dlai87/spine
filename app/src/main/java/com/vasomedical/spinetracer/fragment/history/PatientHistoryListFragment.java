@@ -15,6 +15,7 @@ import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
+import com.vasomedical.spinetracer.model.PatientModel;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,12 @@ import java.util.ArrayList;
 
 public class PatientHistoryListFragment extends BaseFragment {
     LinearListView patientHistoryListView;
+    ArrayList<InspectionRecord> recordList;
+    PatientModel patient;
+
+    public void setPatient(PatientModel patient) {
+        this.patient = patient;
+    }
 
     @Override
     protected void assignViews() {
@@ -31,17 +38,11 @@ public class PatientHistoryListFragment extends BaseFragment {
         BaseAdapter patientHistoryListViewAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                TBDetection tbDetection = new TBDetection();
-                SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-                ArrayList<InspectionRecord> recordList = tbDetection.getDetectionList(database);
                 return recordList.size();
             }
 
             @Override
             public Object getItem(int i) {
-                TBDetection tbDetection = new TBDetection();
-                SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-                ArrayList<InspectionRecord> recordList = tbDetection.getDetectionList(database);
                 return recordList.get(i);
             }
 
@@ -81,7 +82,10 @@ public class PatientHistoryListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_patient_history_list, container, false);
-        Bundle args = getArguments();
+
+        TBDetection tbDetection = new TBDetection();
+        SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+        recordList = tbDetection.getDetectionList(database, patient);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
