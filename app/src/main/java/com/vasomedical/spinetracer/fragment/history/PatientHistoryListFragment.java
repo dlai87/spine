@@ -14,6 +14,13 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
 
@@ -73,7 +80,47 @@ public class PatientHistoryListFragment extends BaseFragment {
         LinearListView.OnItemClickListener onItemClickListener = new LinearListView.OnItemClickListener() {
             @Override
             public void onItemClick(LinearListView parent, View view, int position, long id) {
-                fragmentUtil.showFragment(new RecordDetailFragment());
+                InspectionRecord record = recordList.get(position);
+                AnalyticBaseFragment analyticFragment = null;
+                switch (record.getType()) {
+                    case "slant": {
+                        analyticFragment = new AnalyticOptSlantFragment();
+                    }
+                    break;
+                    case "humpback": {
+                        analyticFragment = new AnalyticOptHumpbackFragment();
+                    }
+                    break;
+                    case "bending": {
+                        analyticFragment = new AnalyticOptHumpbackFragment();
+
+                    }
+                    break;
+                    case "left_right": {
+                        analyticFragment = new AnalyticOptLeftRightFragment();
+
+                    }
+                    break;
+                    case "forward_back": {
+                        analyticFragment = new AnalyticOptForwardBackFragment();
+                    }
+                    break;
+                    case "rotate": {
+                        analyticFragment = new AnalyticOptRotateFragment();
+                    }
+                    break;
+                    case "balance": {
+                        analyticFragment = new AnalyticOptBalanceFragment();
+                    }
+                    break;
+                    default: {
+                    }
+                    break;
+                }
+                if (analyticFragment != null) {
+                    analyticFragment.setRecord(record);
+                    fragmentUtil.showFragment(new RecordDetailFragment());
+                }
             }
         };
         patientHistoryListView.setOnItemClickListener(onItemClickListener);
@@ -85,7 +132,8 @@ public class PatientHistoryListFragment extends BaseFragment {
 
         TBDetection tbDetection = new TBDetection();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-        recordList = tbDetection.getDetectionList(database, patient);
+//        recordList = tbDetection.getDetectionList(database, patient);
+        recordList = tbDetection.getDetectionList(database);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }

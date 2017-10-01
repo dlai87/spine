@@ -29,7 +29,6 @@ import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
-import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.PdfManager;
@@ -51,7 +50,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     public static final String SCORE = "SCORE";
     protected ArrayList<Entry> detectionData;
 
-    protected ArrayList<Pose> poseData;
     protected int score = -1;
 
     // UI elements
@@ -94,10 +92,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     public void setDetectionData(ArrayList<Entry> data){
         detectionData = data;
-    }
-
-    public void setPoseData(ArrayList<Pose> poseData) {
-        this.poseData = poseData;
     }
 
     public void setRecord(InspectionRecord newRecord) {
@@ -226,18 +220,17 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     }
 
     void saveToDatabase() {
-        // TEMP: use timestamp as detection id
-        Long tsLong = System.currentTimeMillis() / 1000;
-        String detectionId = tsLong.toString();
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-        for (Pose pose : poseData) {
-            tbPose.smartInsert(database, pose, detectionId);
+        for (Pose pose : record.getInspectionData()) {
+            // FIXME: should be only one write
+            tbPose.smartInsert(database, pose, record.getId());
         }
 
+        record.setDoctorComments(getDoctorComment());
+        record.setScore(64); // TODO
         TBDetection tbDetection = new TBDetection();
-        DoctorModel doctor = Util.getCurrentDoctor();
-        tbDetection.smartInsert(database, detectionId, detectionId, doctor, record.getPatient());
+        tbDetection.smartInsert(database, record);
 
         AlertDialog alertDialog = new AlertDialog(mContext);
         alertDialog.setTitleView("成功");
