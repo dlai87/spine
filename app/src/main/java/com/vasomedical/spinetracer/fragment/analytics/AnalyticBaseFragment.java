@@ -338,7 +338,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
 
 
-    private void createandDisplayPdf() {
+    protected void createandDisplayPdf() {
 
         String filename = "test_" + System.currentTimeMillis() + ".pdf";
         PdfManager pdfManager = new PdfManager(mActivity);

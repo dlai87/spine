@@ -1,5 +1,7 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
+import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
@@ -19,8 +21,14 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
+import com.vasomedical.spinetracer.util.Global;
+import com.vasomedical.spinetracer.util.PdfManager;
 import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,6 +50,7 @@ public abstract class AnalyticPositionPositionFragment
 
     protected Float cobbsAngle = null;
     boolean pointsLayoutFlag = false;
+    Bitmap bitmap;
 
 
     LinkedBlockingQueue<String> buttonQueue = new LinkedBlockingQueue<String>(2);
@@ -97,7 +106,9 @@ public abstract class AnalyticPositionPositionFragment
             public void surfaceCreated(SurfaceHolder holder) {
                 // Do some drawing when surface is ready
                 final Canvas canvas = holder.lockCanvas();
+                Bitmap  bitmap = Bitmap.createBitmap( surfaceView.getWidth(), surfaceView.getHeight(), Bitmap.Config.ARGB_8888);
 
+                canvas.setBitmap(bitmap);
                 // generate control points
                 controlPoints = convertDataToPointList(detectionData, canvas.getWidth(), canvas.getHeight());
                 // draw on canvas
@@ -353,4 +364,34 @@ public abstract class AnalyticPositionPositionFragment
                 + ":" + String.format("%.1f", cobbsAngle)
                 + mContext.getResources().getString(R.string.degree_mark));
     }
+
+
+
+    @Override
+    protected void createandDisplayPdf() {
+
+        if (bitmap!=null){
+            FileOutputStream out = null;
+            try {
+                out = new FileOutputStream(Global.FOLDER_PDF + "bmp.png");
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        super.createandDisplayPdf();
+
+
+    }
+
+
 }
