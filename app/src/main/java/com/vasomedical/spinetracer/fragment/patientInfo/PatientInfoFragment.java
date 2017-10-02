@@ -30,7 +30,6 @@ import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectionOptionsFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
-import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
@@ -344,7 +343,7 @@ public class PatientInfoFragment extends BaseFragment {
      * Next Button  : Existing patient list
      * */
     private boolean nextButtonPressOnExistPatientList(){
-        return false;
+        return showDetectionOptions(selectedPatient);
     }
 
     private boolean showDetectionOptions(PatientModel patient) {

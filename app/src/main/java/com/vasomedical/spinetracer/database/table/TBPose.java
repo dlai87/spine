@@ -106,6 +106,47 @@ public class TBPose {
         return queryResult;
     }
 
+    public ArrayList<Pose> getPoseList(SQLiteDatabase db, String detectionId) {
+        ArrayList<Pose> queryResult = new ArrayList<>();
+        String selection = DBGlobal.COL_DETECTION_ID + " =? ";
+        String[] selectionArgs = {detectionId};
+        Cursor result = db.query(DBGlobal.TABLE_DOCTOR, null, selection, selectionArgs, null, null, null);
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+//            int col_timestamp = result.getColumnIndexOrThrow(DBGlobal.COL_TIMESTAMP);
+            int col_x = result.getColumnIndexOrThrow(DBGlobal.COL_X);
+            int col_y = result.getColumnIndexOrThrow(DBGlobal.COL_Y);
+            int col_z = result.getColumnIndexOrThrow(DBGlobal.COL_Z);
+            int col_r_x = result.getColumnIndexOrThrow(DBGlobal.COL_R_X);
+            int col_r_y = result.getColumnIndexOrThrow(DBGlobal.COL_R_Y);
+            int col_r_z = result.getColumnIndexOrThrow(DBGlobal.COL_R_Z);
+            int col_r_w = result.getColumnIndexOrThrow(DBGlobal.COL_R_W);
+//            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+
+            queryResult.add(new Pose(result.getFloat(col_x),
+                    result.getFloat(col_y),
+                    result.getFloat(col_z),
+                    result.getFloat(col_r_x),
+                    result.getFloat(col_r_y),
+                    result.getFloat(col_r_z),
+                    result.getFloat(col_r_w))
+            );
+
+            while (result.moveToNext()) {
+                queryResult.add(new Pose(result.getFloat(col_x),
+                        result.getFloat(col_y),
+                        result.getFloat(col_z),
+                        result.getFloat(col_r_x),
+                        result.getFloat(col_r_y),
+                        result.getFloat(col_r_z),
+                        result.getFloat(col_r_w))
+                );
+            }
+        }
+        result.close();
+        return queryResult;
+    }
+
     public void smartInsert(SQLiteDatabase db, Pose pose, String detectionId) {
         ArrayList<Pose> poses = getPoseList(db);
         boolean exist = false;

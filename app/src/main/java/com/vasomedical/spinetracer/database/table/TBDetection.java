@@ -9,6 +9,7 @@ import com.vasomedical.spinetracer.database.util.DBUtil;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.Pose;
 
 import java.util.ArrayList;
 
@@ -22,25 +23,31 @@ public class TBDetection {
     // FixMe :  detection table also need following information: detection_type ; score ; doctor_comments
 
 
-    public void insert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
+    public void insert(SQLiteDatabase db, InspectionRecord record) {
         ContentValues cv = new ContentValues();
-        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, detectionId);
-        DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, timestamp);
-        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, doctor.getId());
-        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, patient.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, record.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, record.getTimestamp());
+        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, record.getDoctor().getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, record.getPatient().getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_TYPE, record.getType());
+        DBUtil.smartPut(cv, DBGlobal.COL_SCORE, record.getScore());
+        DBUtil.smartPut(cv, DBGlobal.COL_COMMENT, record.getDoctorComments());
 
         db.insert(DBGlobal.TABLE_POSE, null, cv);
     }
 
-    public void update(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
+    public void update(SQLiteDatabase db, InspectionRecord record) {
         ContentValues cv = new ContentValues();
-        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, detectionId);
-        DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, timestamp);
-        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, doctor.getId());
-        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, patient.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_ID, record.getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_TIMESTAMP, record.getTimestamp());
+        DBUtil.smartPut(cv, DBGlobal.COL_DOCTOR_ID, record.getDoctor().getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_PATIENT_ID, record.getPatient().getId());
+        DBUtil.smartPut(cv, DBGlobal.COL_DETECTION_TYPE, record.getType());
+        DBUtil.smartPut(cv, DBGlobal.COL_SCORE, record.getScore());
+        DBUtil.smartPut(cv, DBGlobal.COL_COMMENT, record.getDoctorComments());
 
         String selection = DBGlobal.COL_DETECTION_ID + " =? "; // TEMP use timestamp to compare
-        String[] selectionArgs = {detectionId};
+        String[] selectionArgs = {record.getId()};
 
         db.update(DBGlobal.TABLE_DETECTION, cv, selection, selectionArgs);
     }
@@ -66,6 +73,7 @@ public class TBDetection {
     public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db) {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, null, null, null, null, null);
+        // TODO
 //        if (result.getCount() > 0) {
 //            result.moveToFirst();
 //            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
@@ -79,19 +87,68 @@ public class TBDetection {
         return queryResult;
     }
 
-    public void smartInsert(SQLiteDatabase db, String detectionId, String timestamp, DoctorModel doctor, PatientModel patient) {
+    public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db, PatientModel patient) {
+        ArrayList<InspectionRecord> queryResult = new ArrayList<>();
+        String selection = DBGlobal.COL_PATIENT_ID + " =? "; // TEMP use timestamp to compare
+        String[] selectionArgs = {patient.getId()};
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, null);
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+            int col_timestamp = result.getColumnIndexOrThrow(DBGlobal.COL_TIMESTAMP);
+            int col_patient_id = result.getColumnIndexOrThrow(DBGlobal.COL_PATIENT_ID);
+            int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_DOCTOR_ID);
+            int col_type = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_TYPE);
+            int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
+            int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
+
+            TBPose tbPose = new TBPose();
+            String detectionId = result.getString(col_detection_id);
+            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+            TBDoctor tbDoctor = new TBDoctor();
+            String doctorId = result.getString(col_doctor_id);
+            ArrayList<DoctorModel> doctorList = tbDoctor.getDoctorList(db, doctorId);
+            DoctorModel doctor = doctorList.get(0);
+            queryResult.add(new InspectionRecord.InspectionRecordBuilder(result.getString(col_detection_id),
+                    result.getString(col_timestamp),
+                    patient,
+                    doctor,
+                    result.getInt(col_type),
+                    poseList,
+                    result.getInt(col_score),
+                    result.getString(col_comment)).build());
+            while (result.moveToNext()) {
+                detectionId = result.getString(col_detection_id);
+                poseList = tbPose.getPoseList(db, detectionId);
+                doctorId = result.getString(col_doctor_id);
+                doctorList = tbDoctor.getDoctorList(db, doctorId);
+                doctor = doctorList.get(0);
+                queryResult.add(new InspectionRecord.InspectionRecordBuilder(result.getString(col_detection_id),
+                        result.getString(col_timestamp),
+                        patient,
+                        doctor,
+                        result.getInt(col_type),
+                        poseList,
+                        result.getInt(col_score),
+                        result.getString(col_comment)).build());
+            }
+        }
+        return queryResult;
+    }
+
+    public void smartInsert(SQLiteDatabase db, InspectionRecord record) {
         ArrayList<InspectionRecord> detectionList = getDetectionList(db);
         boolean exist = false;
-        for (InspectionRecord record : detectionList) {
-            if (record.getTimestamp().equals(timestamp)) { // TEMP: compare timestamp
+        for (InspectionRecord aRecord : detectionList) {
+            if (aRecord.getId().equals(record.getId())) {
                 exist = true;
             }
         }
 
         if (exist) {
-            update(db, detectionId, timestamp, doctor, patient);
+            update(db, record);
         } else {
-            insert(db, detectionId, timestamp, doctor, patient);
+            insert(db, record);
         }
     }
 

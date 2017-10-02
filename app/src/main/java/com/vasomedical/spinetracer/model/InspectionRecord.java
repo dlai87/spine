@@ -32,7 +32,7 @@ public class InspectionRecord {
     };
 
 
-
+    String id;
     String timestamp;
     PatientModel patient;
     DoctorModel doctor;
@@ -44,11 +44,22 @@ public class InspectionRecord {
     ArrayList<Pose> inspectionData;
 
     public InspectionRecord(InspectionRecordBuilder builder) {
+        id = builder.id;
         timestamp = builder.timestamp;
         patient = builder.patient;
         doctor = builder.doctor;
         type = builder.type;
         inspectionData = builder.inspectionData;
+        score = builder.score;
+        doctorComments = builder.doctorComments;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTimestamp() {
@@ -107,32 +118,6 @@ public class InspectionRecord {
         this.inspectionData = inspectionData;
     }
 
-    public static class InspectionRecordBuilder {
-
-        String timestamp;
-        PatientModel patient;
-        DoctorModel doctor;
-        String type;
-        ArrayList<Pose> inspectionData;
-
-        public InspectionRecordBuilder(String timestamp,
-                                       PatientModel patient,
-                                       DoctorModel doctor,
-                                       int detect_opt,
-                                       ArrayList<Pose> inspectionData) {
-            this.timestamp = timestamp;
-            this.patient = patient;
-            this.doctor = doctor;
-            this.type = TypeTable.get(detect_opt);
-            this.inspectionData = inspectionData;
-        }
-
-        public InspectionRecord build() {
-            return new InspectionRecord(this);
-        }
-    }
-
-
     public String getStringForPdf(Context context){
 
         StringBuffer buffer = new StringBuffer();
@@ -166,8 +151,6 @@ public class InspectionRecord {
         return buffer.toString();
     }
 
-
-
     public String getComments(Context context){
         StringBuffer buffer = new StringBuffer();
 
@@ -190,6 +173,66 @@ public class InspectionRecord {
         buffer.append(context.getResources().getString(R.string.doctor_comment) + " :\n" );
         buffer.append(doctorComments);
         return buffer.toString();
+    }
+
+    public static class InspectionRecordBuilder {
+
+        String id;
+        String timestamp;
+        PatientModel patient;
+        DoctorModel doctor;
+        String type;
+        ArrayList<Pose> inspectionData;
+        int score;
+        String doctorComments;
+
+        public InspectionRecordBuilder(String id,
+                                       String timestamp,
+                                       PatientModel patient,
+                                       DoctorModel doctor,
+                                       int detect_opt,
+                                       ArrayList<Pose> inspectionData,
+                                       int score,
+                                       String doctorComments) {
+            this.id = id;
+            this.timestamp = timestamp;
+            this.patient = patient;
+            this.doctor = doctor;
+            this.type = TypeTable.get(detect_opt);
+            this.inspectionData = inspectionData;
+            this.score = score;
+            this.doctorComments = doctorComments;
+        }
+
+        public InspectionRecordBuilder(String id,
+                                       String timestamp,
+                                       PatientModel patient,
+                                       DoctorModel doctor,
+                                       String type,
+                                       ArrayList<Pose> inspectionData,
+                                       int score,
+                                       String doctorComments) {
+            this.id = id;
+            this.timestamp = timestamp;
+            this.patient = patient;
+            this.doctor = doctor;
+            this.type = type;
+            this.inspectionData = inspectionData;
+            this.score = score;
+            this.doctorComments = doctorComments;
+        }
+
+        public String getDoctorComments() {
+            return doctorComments;
+        }
+
+        public void setDoctorComments(String doctorComments) {
+            this.doctorComments = doctorComments;
+        }
+
+        public InspectionRecord build() {
+            return new InspectionRecord(this);
+        }
     }
 
 }

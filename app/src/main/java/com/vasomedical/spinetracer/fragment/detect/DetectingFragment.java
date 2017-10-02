@@ -294,11 +294,14 @@ public class DetectingFragment extends BaseFragment {
         args.putInt(AnalyticBaseFragment.SCORE, algorithm.getScore());
         analyticFragment.setArguments(args);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp,
+        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
+                timeStamp,
                 patient,
                 Util.getCurrentDoctor(),
                 AlgorithmFactory.detectionOption,
-                poseLog.getPoseList());
+                poseLog.getPoseList(),
+                0,
+                "");
         analyticFragment.setDetectionData(processedData);
         analyticFragment.setRecord(builder.build());
 
