@@ -106,9 +106,8 @@ public abstract class AnalyticPositionPositionFragment
             public void surfaceCreated(SurfaceHolder holder) {
                 // Do some drawing when surface is ready
                 final Canvas canvas = holder.lockCanvas();
-                Bitmap  bitmap = Bitmap.createBitmap( surfaceView.getWidth(), surfaceView.getHeight(), Bitmap.Config.ARGB_8888);
-
-                canvas.setBitmap(bitmap);
+                //Bitmap  bitmap = Bitmap.createBitmap( surfaceView.getWidth(), surfaceView.getHeight(), Bitmap.Config.ARGB_8888);
+                //canvas.setBitmap(bitmap);
                 // generate control points
                 controlPoints = convertDataToPointList(detectionData, canvas.getWidth(), canvas.getHeight());
                 // draw on canvas

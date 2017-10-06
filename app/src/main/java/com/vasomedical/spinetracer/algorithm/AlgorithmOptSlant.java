@@ -18,9 +18,40 @@ public class AlgorithmOptSlant extends AlgorithmBase {
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
         int numSamples = 50;
-        return createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
+        ArrayList<Entry> data =  createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
+
+        return normalizeData(data);
     }
 
+
+    private ArrayList<Entry> normalizeData(ArrayList<Entry> inputData){
+        // reverse
+        for (Entry entry: inputData){
+            entry.setY(-entry.getY());
+        }
+        for (Entry entry: inputData){
+            Log.d("show", entry.toString());
+        }
+
+        float minX = Float.MAX_VALUE;
+        float minY = Float.MAX_VALUE;
+        for (Entry entry: inputData){
+            if (entry.getX() < minX) minX = entry.getX();
+            if (entry.getY() < minY) minY = entry.getY();
+        }
+
+        // normalize
+        for (Entry entry: inputData){
+            entry.setX(entry.getX() - minX);
+            entry.setY(entry.getY() - minY);
+        }
+
+
+        for (Entry entry: inputData){
+            Log.d("show", entry.toString());
+        }
+        return inputData;
+    }
     /**
      * 可自定义评分规则
      * */

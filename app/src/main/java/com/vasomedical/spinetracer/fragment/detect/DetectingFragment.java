@@ -133,7 +133,7 @@ public class DetectingFragment extends BaseFragment {
     private void updateUI(){
         switch (detectionStatus){
             case Init:
-                controlButton.setText(mContext.getResources().getString(R.string.calibrate));
+                controlButton.setText(mContext.getResources().getString(R.string.start));
                 instructionText.setVisibility(View.GONE);
                 break;
             case Calibrating:

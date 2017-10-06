@@ -128,6 +128,10 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                tempLogin();
+
+                /*
                 if (verifyInputFields() == NO_ERROR){
 
                     progressDialog = NJProgressDialog.show(mContext);
@@ -136,7 +140,7 @@ public class LoginFragment extends Fragment {
                         tempLogin();
                     }
 
-                    /*
+
                     AuthsTask authsTask = new AuthsTask(mContext);
                     HashMap params = new HashMap();
                     params.put(AuthsTask.PARAM_TASK, AuthsTask.TASK_LOGIN);
@@ -212,8 +216,9 @@ public class LoginFragment extends Fragment {
                         }
                     });
                     authsTask.sync(params);
-                    */
+
                 }
+                */
             }
         });
 
