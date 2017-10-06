@@ -2,58 +2,157 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/0a9c5cc3363f9670462717b9f401dace786284b2/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="2ce9cf6ca540c86e5a30dff8114d600365ddd81e">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c98b85fa3687429f32a9976025cdc3a91ff7114d/classes.dex" />
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_2e01c981bc765b1640c47bf83f80aae93b2ada1f.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/dehualai/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1f59f95ff1cdfb77a31522136f24d71bf74df9fc/classes.dex" />
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_6eb0f819a12937d0b2a6a15afd9e6afadcfef4b2.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/dehualai/.android/build-cache/b790a4f517bf5855b89c2ab6bfda9231351d7860/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/5e8e9619a8bc05c08ac7ba3d3827986b32fcbd65/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="acc7f730a7b9cccfc9251d727165bc37bbb8dd67">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1cc30a09c1daa5e240ed8290992fd7ea8e2b37d9/classes.dex" />
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_255d306445af250deda42c240a800d7049d9a374.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/dehualai/.android/build-cache/58e14c565906ccfca1fb9f9229241369e86ff68d/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/f3a9cf08fbd6946aebe72f8490dcec8285d13faf/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="100c2548728b6c99e002328d3590b750a6afa9e5">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3954d08df83e07b6f1ba186e1ca91b32aa124f81/classes.dex" />
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_af41a2352684bc4f700bc41a9341247b7b16cf0e.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/96388d0d526636a75be8bcdb20b5c3ed1190125f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_23faaf0192136b321810313ff066c15b670438d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/ba31fc18a4b1c7e6459d1fd0695e15bf6b997a71/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_88d92de32569671ad8e855fa1708a7ae5e1f8133.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/TangoReleaseLibs/jar/tango_java_lib.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="5535db653e019261093519b06e8ba9238d1cae68">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/2/tango_java_lib_3018d8092f5184bb6cfcd42bac0b761444fdb756/classes.dex" />
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/tango_java_lib_3018d8092f5184bb6cfcd42bac0b761444fdb756.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/b2cfbd8b4601ccbb89e0f78ebaa957130736b918/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_6a8ae20248153261f9b1f55ae589cedc83225c67.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/exploded-aar/org.rajawali3d/rajawali/1.1.346-SNAPSHOT/jars/classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="a33f3634fcfeff41b829d4120daa6aaffd95d4a6">
-        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10/org.rajawali3d-rajawali-1.1.346-SNAPSHOT_b7623668df3df6925a517d61f7fd5045a35c359e/classes.dex" />
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/org.rajawali3d-rajawali-1.1.346-SNAPSHOT_b7623668df3df6925a517d61f7fd5045a35c359e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/5203409ae8fbeb025cc83d6e4d67e563eeb474d9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_e00523b6ed425178c50c673291365d020f5d2e99.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/f37b79568a203f81519eb1c039b1cf0213e9e15e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_b51f962ac2a366eb66ffa8421f6edfd6a11408e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/0e4a5a74212901afc193f972fde5939c837af762/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_4818fe8958d6c65eadd616e6f16d8ea2e5b40b30.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/06176c764bc7db0593139ab9db45e2f5a20d2c63/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_dd11e08dc5130a4c7ba4049b62888b17af29b0f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/26f532975ae383b852d7edc32418977d90a87ec7/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_3e1c20fbb90576ff6ba2fdfc1280dd4d2c25d784.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/b790a4f517bf5855b89c2ab6bfda9231351d7860/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="acc7f730a7b9cccfc9251d727165bc37bbb8dd67">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_1cc30a09c1daa5e240ed8290992fd7ea8e2b37d9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/58e14c565906ccfca1fb9f9229241369e86ff68d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="100c2548728b6c99e002328d3590b750a6afa9e5">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_3954d08df83e07b6f1ba186e1ca91b32aa124f81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/dehualai/.android/build-cache/0cdb05fc8fcceb012838d87ddd3bb207884a9137/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_07ddc2205f4fee13aefdcc5300d648f0efb55500.jar" />
     </item>
 
 </items>

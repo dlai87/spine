@@ -313,9 +313,9 @@ public class PatientInfoFragment extends BaseFragment {
         String birthOfDate = newPatientDateOfBirthText.getText().toString();
         String phone = newPatientContactInfoEditText.getText().toString();
 
-        if (username==null || username.equals("") ){
-            return false;
-        }
+        //if (username==null || username.equals("") ){
+        //    return false;
+        //}
 
         PatientModel.PatientBuilder patientBuilder = new PatientModel.PatientBuilder(patientId, username, gender, birthOfDate);
         patientBuilder.phone(phone);
