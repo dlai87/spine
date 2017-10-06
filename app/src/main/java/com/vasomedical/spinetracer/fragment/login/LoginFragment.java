@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +16,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.vasomedical.spinetracer.MainActivity;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.SwithActivity;
+import com.vasomedical.spinetracer.database.table.TBDoctor;
+import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.controlPanel.ControlPanel;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.fragmentTransation.FragmentUtil;
@@ -26,8 +29,7 @@ import com.vasomedical.spinetracer.util.fragmentTransation.IMainAppHandler;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.NJProgressDialog;
 
-import java.io.File;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by dehualai on 5/13/17.
@@ -35,33 +37,26 @@ import java.util.HashMap;
 
 public class LoginFragment extends Fragment {
 
+    final int NO_ERROR = 9999;
+    final int ERROR_FIELD_EMPTY = 5000;
     String TAG = "LoginFragment";
     Context mContext;
     FragmentUtil fragmentUtil;
     IMainAppHandler mainAppHandler;
-
     View view;
     EditText usernameField;
     EditText passwordField;
     Button forgetPasswordButton;
     NJButton loginButton;
     Button signUpButton;
-
     LinearLayout usernameLayout;
     LinearLayout passwordLayout;
     LinearLayout usernameIcon;
     LinearLayout passwordIcon;
-
     TextView errorMessage;
-
     NJProgressDialog progressDialog;
-
     String username;
     String password;
-
-
-    final int NO_ERROR = 9999;
-    final int ERROR_FIELD_EMPTY = 5000;
 
     @Override
     public void onAttach(Activity activity) {
@@ -133,6 +128,10 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                tempLogin();
+
+                /*
                 if (verifyInputFields() == NO_ERROR){
 
                     progressDialog = NJProgressDialog.show(mContext);
@@ -141,7 +140,7 @@ public class LoginFragment extends Fragment {
                         tempLogin();
                     }
 
-                    /*
+
                     AuthsTask authsTask = new AuthsTask(mContext);
                     HashMap params = new HashMap();
                     params.put(AuthsTask.PARAM_TASK, AuthsTask.TASK_LOGIN);
@@ -217,8 +216,9 @@ public class LoginFragment extends Fragment {
                         }
                     });
                     authsTask.sync(params);
-                    */
+
                 }
+                */
             }
         });
 
@@ -236,6 +236,19 @@ public class LoginFragment extends Fragment {
 
     private void tempLogin(){
         Global.login = true;
+        // TEMP
+        TBDoctor tbDoctor = new TBDoctor();
+        SQLiteDatabase database = DBAdapter.getDatabase(mContext);
+        ArrayList<DoctorModel> doctorList = tbDoctor.getDoctorList(database);
+        DoctorModel doctor;
+        if (doctorList.size() == 0) {
+            DoctorModel.DoctorBuilder doctorBuilder = new DoctorModel.DoctorBuilder("0", "demo");
+            doctor = doctorBuilder.build();
+        } else {
+            doctor = doctorList.get(0);
+        }
+        Util.setCurrentDoctor(doctor);
+
         Intent targetIntent = new Intent(mContext, SwithActivity.class);
         targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);

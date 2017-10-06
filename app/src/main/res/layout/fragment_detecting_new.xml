@@ -55,16 +55,88 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
-        <com.vasomedical.spinetracer.util.widget.textView.NJTextView
-            android:id="@+id/real_time_display"
+        <TextView
+            android:id="@+id/instruction_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0°"
-            android:textSize="@dimen/text_h_huge"
-            android:textColor="@color/text_gray_dark"
-            android:textStyle="bold"
+            android:textSize="@dimen/text_h_4"
+            android:textColor="@color/red"
+            android:text="@string/please_calibrate"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/margin_2"
+            android:layout_marginRight="@dimen/margin_2"
             />
+
+
+        <!-- angleRulerLayout START -->
+        <RelativeLayout
+            android:id="@+id/angleRulerLayout"
+            android:layout_width="@dimen/angle_rule_w"
+            android:layout_height="@dimen/angle_rule_h"
+            android:background="@drawable/angle_rule">
+
+
+            <ImageView
+                android:id="@+id/indicator"
+                android:layout_width="@dimen/angle_indicator_r"
+                android:layout_height="@dimen/angle_indicator_r"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/red_dot" />
+
+
+            <com.vasomedical.spinetracer.util.widget.textView.NJTextView
+                android:id="@+id/real_time_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_1"
+                android:text="0°"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_huge"
+                android:textStyle="bold|italic" />
+
+        </RelativeLayout>
+
+        <!-- angleRulerLayout END -->
+
+
+        <!-- movementLayout START -->
+        <LinearLayout
+            android:id="@+id/movementLayout"
+            android:layout_width="@dimen/angle_rule_w"
+            android:layout_height="@dimen/angle_rule_h"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center_horizontal">
+
+            <com.vasomedical.spinetracer.util.widget.textView.NJTextView
+                android:id="@+id/vertical_move_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_1"
+                android:text="@string/vertical_move"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_2"
+                android:textStyle="bold" />
+
+            <com.vasomedical.spinetracer.util.widget.textView.NJTextView
+                android:id="@+id/horizontal_move_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_1"
+                android:text="@string/horizontal_move"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_h_2"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <!-- movementLayout END -->
+
+
 
         <com.vasomedical.spinetracer.util.widget.button.NJButton
             android:id="@+id/control_button"
@@ -79,10 +151,6 @@
     </LinearLayout>
 
     <!-- option_layout END -->
-
-
-
-
 
 
 </RelativeLayout>

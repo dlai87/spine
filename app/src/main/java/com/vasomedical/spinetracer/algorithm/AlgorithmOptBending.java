@@ -1,0 +1,61 @@
+package com.vasomedical.spinetracer.algorithm;
+
+import android.util.Log;
+
+import com.github.mikephil.charting.data.Entry;
+import com.vasomedical.spinetracer.model.Pose;
+
+import java.util.ArrayList;
+
+/**
+ * Created by dehualai on 9/19/17.
+ */
+
+public class AlgorithmOptBending extends AlgorithmBase {
+
+    public ArrayList<Entry> processData(ArrayList<Pose> inputData){
+
+        int numSamples = 80;
+        ArrayList<Entry> data = createDataForChartPositionVsPosition(inputData, Coordinate.x, Coordinate.z, numSamples);
+
+        return normalizeData(data);
+    }
+
+
+    private ArrayList<Entry> normalizeData(ArrayList<Entry> inputData){
+        // reverse
+        for (Entry entry: inputData){
+            entry.setY(-entry.getY());
+        }
+        for (Entry entry: inputData){
+            Log.d("show", entry.toString());
+        }
+
+        float minX = Float.MAX_VALUE;
+        float minY = Float.MAX_VALUE;
+        for (Entry entry: inputData){
+            if (entry.getX() < minX) minX = entry.getX();
+            if (entry.getY() < minY) minY = entry.getY();
+        }
+
+        // normalize
+        for (Entry entry: inputData){
+            entry.setX(entry.getX() - minX);
+            entry.setY(entry.getY() - minY);
+        }
+
+
+        for (Entry entry: inputData){
+            Log.d("show", entry.toString());
+        }
+        return inputData;
+    }
+
+
+    /**
+     * 可自定义评分规则
+     * */
+    protected void calScore(ArrayList<Entry> data){
+        score = 1; // temp
+    }
+}

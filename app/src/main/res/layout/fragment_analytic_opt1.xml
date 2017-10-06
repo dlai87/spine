@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/invalid_detection_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.vasomedical.spinetracer.util.widget.textView.NJTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_2"
+            android:text="@string/invalid_detection_data" />
+
+        <com.vasomedical.spinetracer.util.widget.button.NJButton
+            android:id="@+id/re_test_button"
+            android:layout_width="@dimen/button_w_4"
+            android:layout_height="@dimen/button_h_6"
+            android:text="@string/re_test"
+            android:textColor="@color/njbutton_white"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <!-- chart -->
+            <RelativeLayout
+                android:id="@+id/chartView"
+                android:layout_width="@dimen/layout_chart_w"
+                android:layout_height="@dimen/layout_chart_h">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="脊柱位置(m)" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="旋转角度(度)" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart1"
+                    android:layout_width="@dimen/img_chart_w"
+                    android:layout_height="@dimen/img_chart_h"
+                    android:layout_centerInParent="true" />
+
+
+                <requestFocus />
+
+            </RelativeLayout>
+
+            <!-- score START -->
+
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/scoreChart"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_width="@dimen/score_chart_w"
+                android:layout_height="@dimen/score_chart_h" />
+
+
+
+            <!-- score END -->
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/doctor_comment_multi_option"
+                android:textSize="@dimen/text_h_4a"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/margin_1"/>
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/list1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/list2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/list3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+
+            <com.vasomedical.spinetracer.util.widget.editText.NJEditText
+                android:id="@+id/diagnosis_edittext"
+                android:layout_width="@dimen/comment_area_w"
+                android:layout_height="@dimen/comment_area_h"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginBottom="@dimen/margin_1"
+                android:background="@drawable/rectangle_outline"
+                android:ems="10"
+                android:gravity="left|center_vertical"
+                android:hint="@string/please_write_diagnosis"
+                android:paddingLeft="@dimen/margin_1"
+                android:imeOptions="flagNoExtractUi"
+                android:textColor="@color/text_gray_dark"
+                android:textColorHint="@color/text_gray_light"
+                android:textSize="@dimen/text_h_5" />
+
+
+            <!-- Button Group -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/cancel_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginRight="@dimen/margin_1"
+                    android:text="@string/cancel_detection_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/save_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginRight="@dimen/margin_1"
+                    android:text="@string/accpet_detection_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+                <com.vasomedical.spinetracer.util.widget.button.NJButton
+                    android:id="@+id/pdf_button"
+                    android:layout_width="@dimen/button_w_6"
+                    android:layout_height="@dimen/button_h_6"
+                    android:text="@string/accpet_and_sent_result"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_h_5" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

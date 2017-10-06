@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
@@ -18,17 +19,19 @@ import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
 public class DetectionOptionsFragment extends BaseFragment {
 
-
-
-
     NJButton optionButton1;
     NJButton optionButton2;
     NJButton optionButton3;
     NJButton optionButton4;
     NJButton optionButton5;
+    NJButton optionButton6;
+    NJButton optionButton7;
+
 
     Button nextButton;
     Button introButton;
+
+    PatientModel patient;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class DetectionOptionsFragment extends BaseFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     @Override
     protected void assignViews(){
@@ -47,6 +53,8 @@ public class DetectionOptionsFragment extends BaseFragment {
         optionButton3 = (NJButton)view.findViewById(R.id.option_button_3);
         optionButton4 = (NJButton)view.findViewById(R.id.option_button_4);
         optionButton5 = (NJButton)view.findViewById(R.id.option_button_5);
+        optionButton6 = (NJButton)view.findViewById(R.id.option_button_6);
+        optionButton7 = (NJButton)view.findViewById(R.id.option_button_7);
         nextButton = (Button)view.findViewById(R.id.next_button);
         introButton = (Button)view.findViewById(R.id.intro_button);
     }
@@ -93,10 +101,29 @@ public class DetectionOptionsFragment extends BaseFragment {
             }
         });
 
+        optionButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_6;
+                refresh();
+            }
+        });
+
+        optionButton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_7;
+                refresh();
+            }
+        });
+
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentUtil.showFragment(new DetectingFragment());
+                DetectingFragment fragment = new DetectingFragment();
+                fragment.setPatient(patient);
+                fragmentUtil.showFragment(fragment);
             }
         });
 
@@ -121,6 +148,8 @@ public class DetectionOptionsFragment extends BaseFragment {
         optionButton3.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton4.setButtonTheme(NJButton.THEME_DEFAULT);
         optionButton5.setButtonTheme(NJButton.THEME_DEFAULT);
+        optionButton6.setButtonTheme(NJButton.THEME_DEFAULT);
+        optionButton7.setButtonTheme(NJButton.THEME_DEFAULT);
 
         switch (AlgorithmFactory.detectionOption){
             case AlgorithmFactory.DETECT_OPT_1:
@@ -137,6 +166,12 @@ public class DetectionOptionsFragment extends BaseFragment {
                 break;
             case AlgorithmFactory.DETECT_OPT_5:
                 optionButton5.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
+                break;
+            case AlgorithmFactory.DETECT_OPT_6:
+                optionButton6.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
+                break;
+            case AlgorithmFactory.DETECT_OPT_7:
+                optionButton7.setButtonTheme(NJButton.THEME_INVERSE_DEFAULT);
                 break;
         }
 

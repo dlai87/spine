@@ -13,13 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TextView;
 
 import com.vasomedical.spinetracer.R;
-import com.vasomedical.spinetracer.util.widget.button.NJButton;
-
-import java.util.Date;
+import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
+import com.vasomedical.spinetracer.util.Global;
 
 /**
  * Created by dehualai on 8/10/17.
@@ -37,9 +34,6 @@ public class IntroDialog {
 
 
 
-
-
-
     public IntroDialog(Context context) {
         mContext = context;
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -50,7 +44,7 @@ public class IntroDialog {
 
     private void assignViews(){
         closeButton = (Button)view.findViewById(R.id.close_button);
-
+        webView = (WebView) view.findViewById(R.id.webview);
     }
 
     private void addActionToViews(){
@@ -82,6 +76,34 @@ public class IntroDialog {
         dialog.getWindow().setGravity(Gravity.CENTER);
 
         dialog.show();
+
+        String url;
+        switch (AlgorithmFactory.detectionOption) {
+            case AlgorithmFactory.DETECT_OPT_1:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_2:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_3:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_4:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_5:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_6:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            case AlgorithmFactory.DETECT_OPT_7:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+                break;
+            default:
+                url = Global.INTRO_HTML_PATH + "hello_world.html";
+        }
+        webView.loadUrl(url);
     }
 
     public void dismiss()

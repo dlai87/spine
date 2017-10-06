@@ -1,12 +1,14 @@
 package com.vasomedical.spinetracer.fragment.detect;
 
 import android.os.Bundle;
-import android.os.DropBoxManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
@@ -24,13 +26,22 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
-import com.vasomedical.spinetracer.fragment.analytics.AnalyticFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
+import com.vasomedical.spinetracer.model.InspectionRecord;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
-import com.vasomedical.spinetracer.util.widget.progressDialog.NJProgressDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by dehualai on 5/17/17.
@@ -38,17 +49,32 @@ import java.util.ArrayList;
 
 public class DetectingFragment extends BaseFragment {
 
-    String TAG = "DetectingFragment";
-    private Tango mTango;
-    private TangoConfig mConfig;
+
     public static PoseLog poseLog;
-
-    private boolean isDetctiong = false;
-
+    String TAG = "DetectingFragment";
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
+    TextView instructionText;
     TextView realTimeDisplay;
+    RelativeLayout angleRulerLayout;
+    ImageView indicator;
+    LinearLayout movementLayout;
+    TextView verticalMoveText;
+    TextView horizontalMoveText;
+    PatientModel patient;
+    TangoPoseData initPose = null;
+    float translationInit[] = new float[3];
+    float orientationInit[] = new float[4];
+    DETECTION_STATUS detectionStatus = DETECTION_STATUS.Init;
+    int realtime_display_mode = 1;  // 0 = angle mode ;  1 = position mode
+    int realtime_display_degree = 1;  // which degree to display in real time,
+    //private boolean isDetctiong = false;
+    // 0 = rotation x;  1 = rotation y; 2 = rotation z
+    int realtime_display_horizontal_axis = 1; // 0 = x Axis; 1 = y Axis
+    AnalyticBaseFragment analyticFragment;
+    private Tango mTango;
+    private TangoConfig mConfig;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,43 +82,170 @@ public class DetectingFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
 
+
+        switch (AlgorithmFactory.detectionOption){
+            case AlgorithmFactory.DETECT_OPT_1:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptSlantFragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_2:{
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 1;
+                analyticFragment = new AnalyticOptHumpbackFragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_3:{
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 0;
+                analyticFragment = new AnalyticOptHumpbackFragment();
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_4:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptLeftRightFragment();
+
+            }break;
+            case AlgorithmFactory.DETECT_OPT_5:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 0;
+                analyticFragment = new AnalyticOptForwardBackFragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_6:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 2;
+                analyticFragment = new AnalyticOptRotateFragment();
+            }break;
+            case AlgorithmFactory.DETECT_OPT_7:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptBalanceFragment();
+            }break;
+            default:{
+
+            }break;
+        }
+
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    private void updateUI(){
+        switch (detectionStatus){
+            case Init:
+                controlButton.setText(mContext.getResources().getString(R.string.start));
+                instructionText.setVisibility(View.GONE);
+                break;
+            case Calibrating:
+                controlButton.setText(mContext.getResources().getString(R.string.start));
+                instructionText.setVisibility(View.VISIBLE);
+                break;
+            case Start:
+                controlButton.setText(mContext.getResources().getString(R.string.stop));
+                instructionText.setVisibility(View.GONE);
+                break;
+
+        }
+    }
+
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
     @Override
-    protected void assignViews(){
-        controlButton = (NJButton)view.findViewById(R.id.control_button);
-        nextButton = (Button)view.findViewById(R.id.next_button);
-        previousButton = (Button)view.findViewById(R.id.previous_button);
-        realTimeDisplay = (TextView)view.findViewById(R.id.real_time_display);
-
+    protected void assignViews() {
+        controlButton = (NJButton) view.findViewById(R.id.control_button);
+        nextButton = (Button) view.findViewById(R.id.next_button);
+        previousButton = (Button) view.findViewById(R.id.previous_button);
+        realTimeDisplay = (TextView) view.findViewById(R.id.real_time_display);
+        angleRulerLayout = (RelativeLayout) view.findViewById(R.id.angleRulerLayout);
+        indicator = (ImageView) view.findViewById(R.id.indicator);
+        movementLayout = (LinearLayout) view.findViewById(R.id.movementLayout);
+        verticalMoveText = (TextView) view.findViewById(R.id.vertical_move_text);
+        horizontalMoveText = (TextView) view.findViewById(R.id.horizontal_move_text);
+        instructionText = (TextView)view.findViewById(R.id.instruction_text);
     }
 
     @Override
     protected void addActionToViews() {
+
+        updateUI();
+
         controlButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDetctiong){
-                    isDetctiong = true;
-                    start();
-                    controlButton.setText(mContext.getResources().getString(R.string.stop));
-                 //   NJProgressDialog.showDialog(mContext);
-                }else {
-                    isDetctiong = false;
-                    stop();
-                    controlButton.setText(mContext.getResources().getString(R.string.start));
+
+                switch (detectionStatus){
+                    case Init:
+                        if (AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_2
+                                ||AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_3)
+                        {
+                            detectionStatus = DETECTION_STATUS.Calibrating;
+                        }else {
+                            detectionStatus = DETECTION_STATUS.Start;
+                        }
+                        start();
+                        break;
+                    case Calibrating:
+                        detectionStatus = DETECTION_STATUS.Start;
+                        break;
+                    case Start:
+                        detectionStatus = DETECTION_STATUS.Init;
+                        initPose = null;
+                        translationInit[0] = 0;
+                        translationInit[1] = 0;
+                        translationInit[2] = 0;
+                        orientationInit[0] = 0;
+                        orientationInit[1] = 0;
+                        orientationInit[2] = 0;
+                        orientationInit[3] = 0;
+                        stop();
+                        break;
+
                 }
+
+               updateUI();
 
             }
         });
+
+        switch (realtime_display_mode) {
+            case 0: {
+                try {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            angleRulerLayout.setVisibility(View.VISIBLE);
+                            movementLayout.setVisibility(View.GONE);
+                            drawIndicator(0);
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+            }
+            break;
+            case 1: {
+                try {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            angleRulerLayout.setVisibility(View.GONE);
+                            movementLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+            }
+            break;
+            default:
+                break;
+        }
+
     }
 
-
-    ////  Tango
-
-    private void start(){
+    private void start() {
         // Initialize Tango Service as a normal Android Service. Since we call mTango.disconnect()
         // in onPause, this will unbind Tango Service, so every time onResume gets called we
         // should create a new Tango object.
@@ -122,7 +275,9 @@ public class DetectingFragment extends BaseFragment {
     }
 
 
-    private void stop(){
+    ////  Tango
+
+    private void stop() {
         synchronized (this) {
             try {
                 mTango.disconnect();
@@ -132,17 +287,27 @@ public class DetectingFragment extends BaseFragment {
         }
 
         AlgorithmFactory algorithmFactory = new AlgorithmFactory();
-        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.DETECT_OPT_1);
+        AlgorithmBase algorithm = algorithmFactory.getAlgorithm(AlgorithmFactory.detectionOption);
         ArrayList<Entry> processedData = algorithm.processData(poseLog.getPoseList());
-        for (Entry entry : processedData){
-            Log.e("show", "entry " + entry.toString());
-        }
-        AnalyticFragment analyticFragment = new AnalyticFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(AnalyticBaseFragment.SCORE, algorithm.getScore());
+        analyticFragment.setArguments(args);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
+                timeStamp,
+                patient,
+                Util.getCurrentDoctor(),
+                AlgorithmFactory.detectionOption,
+                poseLog.getPoseList(),
+                0,
+                "");
         analyticFragment.setDetectionData(processedData);
+        analyticFragment.setRecord(builder.build());
+
         fragmentUtil.showFragment(analyticFragment);
 
     }
-
 
     /**
      * Sets up the tango configuration object. Make sure mTango object is initialized before
@@ -157,7 +322,6 @@ public class DetectingFragment extends BaseFragment {
         config.putBoolean(TangoConfig.KEY_BOOLEAN_AUTORECOVERY, true);
         return config;
     }
-
 
     /**
      * Set up the callback listeners for the Tango Service and obtain other parameters required
@@ -177,7 +341,7 @@ public class DetectingFragment extends BaseFragment {
         mTango.connectListener(framePairs, new Tango.OnTangoUpdateListener() {
             @Override
             public void onPoseAvailable(final TangoPoseData pose) {
-               // NJProgressDialog.dismiss();
+                // NJProgressDialog.dismiss();
                 logPose(pose);
             }
 
@@ -209,34 +373,102 @@ public class DetectingFragment extends BaseFragment {
      * @param pose the pose to log.
      */
     private void logPose(TangoPoseData pose) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        final float translation[] = pose.getTranslationAsFloats();
-        stringBuilder.append("Position: " +
-                translation[0] + ", " + translation[1] + ", " + translation[2]);
-
-        final float orientation[] = pose.getRotationAsFloats();
-        stringBuilder.append(". Orientation: " +
-                orientation[0] + ", " + orientation[1] + ", " +
-                orientation[2] + ", " + orientation[3]);
 
 
-        final double[] euler = Util.quaternion2Euler(orientation[0], orientation[1], orientation[2],orientation[3]);
+            final float translation[] = pose.getTranslationAsFloats();
+            final float orientation[] = pose.getRotationAsFloats();
 
-        //Log.i(TAG, stringBuilder.toString());
-        try{
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    float degree = Util.radianToDegree((float) euler[1]);
-                    realTimeDisplay.setText( degree + mContext.getResources().getString(R.string.degree_mark));
-                }
-            });
-        }catch (Exception e){
+            final double[] euler = Util.quaternion2Euler(
+                    orientation[0],
+                    orientation[1],
+                    orientation[2],
+                    orientation[3]);
 
+            try {
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (realtime_display_mode){
+                            case 0:{
+                                int offset = 0 ;
+                                switch (realtime_display_degree){
+                                    case 0:
+                                        offset = -90;
+                                        break;
+                                    case 1:
+                                        offset = 0 ;
+                                        break;
+                                    case 2:
+                                        offset = 90 ;
+                                        break;
+                                }
+                                float degree = Util.radianToDegree((float) euler[realtime_display_degree], offset, realtime_display_degree==2);
+                                realTimeDisplay.setText(Math.abs(degree) + mContext.getResources().getString(R.string.degree_mark));
+                                drawIndicator(degree);
+                            }break;
+                            case 1:{
+                                verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] - (-translationInit[2]) ) + "cm");
+                                horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis] - translationInit[realtime_display_horizontal_axis]) + "cm");
+                            }break;
+                            default:
+                                break;
+                        }
+
+                    }
+                });
+            } catch (Exception e) {
+
+            }
+
+
+
+
+
+        if (detectionStatus == DETECTION_STATUS.Start){
+            if (initPose==null){
+                initPose = pose;
+                float arrTrans[] = initPose.getTranslationAsFloats();
+                float arrOrient[] = initPose.getRotationAsFloats();
+                translationInit[0] = arrTrans[0];
+                translationInit[1] = arrTrans[1];
+                translationInit[2] = arrTrans[2];
+                orientationInit[0] = arrOrient[0];
+                orientationInit[1] = arrOrient[1];
+                orientationInit[2] = arrOrient[2];
+                orientationInit[3] = arrOrient[3];
+            }
+            poseLog.recordPoseData(pose, null);
         }
 
-        poseLog.recordPoseData(pose);
     }
+
+    private void drawIndicator(float degree) {
+
+        float layoutW = angleRulerLayout.getWidth();
+        float layoutH = angleRulerLayout.getHeight();
+        float indicatorR = indicator.getWidth() / 2;
+
+        float radius = layoutH - indicatorR;
+        float tempX = (float) (Math.sin(Math.toRadians(Math.abs(degree))) * radius);
+
+        if (degree < 0) {
+            indicator.setX(layoutW / 2 - tempX - indicatorR);
+        } else {
+            indicator.setX(layoutW / 2 + tempX - indicatorR);
+        }
+
+        float tempY = (float) (Math.cos(Math.toRadians(Math.abs(degree))) * radius);
+
+        indicator.setY(tempY - indicatorR);
+
+    }
+
+
+    enum DETECTION_STATUS {
+        Init,
+        Calibrating,
+        Start
+    }
+
 
 }

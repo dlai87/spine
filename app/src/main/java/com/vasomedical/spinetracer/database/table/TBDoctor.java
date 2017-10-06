@@ -22,8 +22,9 @@ public class TBDoctor {
         DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getPhone());
+        DBUtil.smartPut(cv, DBGlobal.COL_EMAIL, model.getEmail());
+        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getHospital());
+        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getDepartment());
 
         db.insert(DBGlobal.TABLE_DOCTOR, null, cv);
     }
@@ -33,8 +34,9 @@ public class TBDoctor {
     //    DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
-        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getPhone());
+        DBUtil.smartPut(cv, DBGlobal.COL_EMAIL, model.getEmail());
+        DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getHospital());
+        DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getDepartment());
         String selection = DBGlobal.COL_ID + " =? ";
         String[] selectionArgs = {model.getId()};
         db.update(DBGlobal.TABLE_DOCTOR, cv, selection, selectionArgs);
@@ -93,6 +95,52 @@ public class TBDoctor {
 
             while(result.moveToNext()){
                 queryResult.add( (new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+                        .phone(result.getString(col_phone))
+                        .email(result.getString(col_email))
+                        .hospital(result.getString(col_hospital))
+                        .department(result.getString(col_department))
+                ).build());
+
+            }
+
+        }
+        result.close();
+        return queryResult;
+    }
+
+    public ArrayList<DoctorModel> getDoctorList(SQLiteDatabase db, String doctorId) {
+        /*  NOTE:
+        * Cursor query (String table,
+                String[] columns,
+                String selection,
+                String[] selectionArgs,
+                String groupBy,
+                String having,
+                String orderBy,
+                String limit)
+                */
+        ArrayList<DoctorModel> queryResult = new ArrayList<DoctorModel>();
+        String selection = DBGlobal.COL_DOCTOR_ID + " =? ";
+        String[] selectionArgs = {doctorId};
+        Cursor result = db.query(DBGlobal.TABLE_DOCTOR, null, selection, selectionArgs, null, null, null);
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_hospital = result.getColumnIndexOrThrow(DBGlobal.COL_HOSPITAL);
+            int col_department = result.getColumnIndexOrThrow(DBGlobal.COL_DEPARTMENT);
+
+            queryResult.add((new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .hospital(result.getString(col_hospital))
+                    .department(result.getString(col_department))
+            ).build());
+
+            while (result.moveToNext()) {
+                queryResult.add((new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
                         .phone(result.getString(col_phone))
                         .email(result.getString(col_email))
                         .hospital(result.getString(col_hospital))
