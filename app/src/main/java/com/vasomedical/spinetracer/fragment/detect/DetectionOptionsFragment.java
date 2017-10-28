@@ -8,8 +8,11 @@ import android.widget.Button;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
+import com.vasomedical.spinetracer.database.util.DBGlobal;
+import com.vasomedical.spinetracer.database.util.DBUtil;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.IntroDialog;
 
@@ -140,6 +143,10 @@ public class DetectionOptionsFragment extends BaseFragment {
 
 
     private void refresh(){
+
+        if (DBGlobal.TEST_MODE){
+            DBUtil.cleanAllTable(mContext);
+        }
 
         nextButton.setVisibility(AlgorithmFactory.detectionOption==0?View.GONE:View.VISIBLE);
         introButton.setVisibility(AlgorithmFactory.detectionOption==0?View.GONE:View.VISIBLE);

@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.database.table.TBDataProcessed;
+import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.pdf.PdfViewFragment;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.PdfManager;
@@ -145,6 +147,10 @@ public abstract class AnalyticPositionPositionFragment
         for (Entry p : data) {
             Log.d("temp", "Entry " + p);
         }
+
+        TBDataProcessed tbDataProcessed = new TBDataProcessed();
+        tbDataProcessed.smartInsert(DBAdapter.getDatabase(mContext), data, "posVSpos");
+
         Log.d("temp", "===========");
         // find data range
         for (Entry entry : data) {

@@ -83,6 +83,7 @@ public class DBAdapter extends SQLiteOpenHelper {
         createTableDoctor(db);
         createTableDetection(db);
         createTablePose(db);
+        createTableDataPorcessed(db);
     }
 
     /**
@@ -214,6 +215,20 @@ public class DBAdapter extends SQLiteOpenHelper {
         keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
 
         String SPEC = generateCreationSpec( DBGlobal.TABLE_POSE, keyValuePair);
+        db.execSQL(SPEC);
+        Log.d(TAG,"Db Created" + SPEC );
+    }
+
+
+    private void createTableDataPorcessed(SQLiteDatabase db){
+        ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
+        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
+        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[] {DBGlobal.COL_ENTRY_X, "TEXT"});
+        keyValuePair.add(new String[] {DBGlobal.COL_ENTRY_Y, "TEXT"});
+        keyValuePair.add(new String[] {DBGlobal.COL_TYPE, "TEXT"});
+
+        String SPEC = generateCreationSpec( DBGlobal.TABLE_DATA_PROCESSED, keyValuePair);
         db.execSQL(SPEC);
         Log.d(TAG,"Db Created" + SPEC );
     }

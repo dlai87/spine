@@ -306,6 +306,7 @@ public class DetectingFragment extends BaseFragment {
         analyticFragment.setRecord(builder.build());
 
         fragmentUtil.showFragment(analyticFragment);
+        poseLog.save(mActivity);
 
     }
 

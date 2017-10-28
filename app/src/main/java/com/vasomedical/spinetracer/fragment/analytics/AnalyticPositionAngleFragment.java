@@ -14,6 +14,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.database.table.TBDataProcessed;
+import com.vasomedical.spinetracer.database.util.DBAdapter;
 
 import java.util.ArrayList;
 
@@ -115,6 +117,9 @@ public abstract class AnalyticPositionAngleFragment extends AnalyticBaseFragment
             }
             yVals1 = inputData;
         }
+
+        TBDataProcessed tbDataProcessed = new TBDataProcessed();
+        tbDataProcessed.smartInsert(DBAdapter.getDatabase(mContext), inputData, "bending");
 
         LineDataSet set1;
 

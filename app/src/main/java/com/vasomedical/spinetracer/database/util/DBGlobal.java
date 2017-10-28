@@ -12,6 +12,7 @@ public class DBGlobal {
 
 
 
+    public static boolean TEST_MODE = true;
     public static String DB = "tango_db";
     public static  int DB_VERSION = 1;
     public static boolean DB_ON_SDCARD = true;
@@ -63,6 +64,11 @@ public class DBGlobal {
 
     public static String TABLE_POSE = "pose";
     public static String COL_DETECTION_ID = "detection_id";
+
+    public static String TABLE_DATA_PROCESSED = "data_processed";
+    public static String COL_ENTRY_X = "entry_x";
+    public static String COL_ENTRY_Y = "entry_y";
+    public static String COL_TYPE = "type";
 
 
 
