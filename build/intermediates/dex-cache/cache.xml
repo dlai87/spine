@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="bcc0be12d73e0f929005aa21a2198f49088ed52d">
+        sha1="327e7852f8b30dfa219813f9fea70915e66f2e55">
         <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c98b85fa3687429f32a9976025cdc3a91ff7114d/classes.dex" />
     </item>
     <item
@@ -117,6 +117,15 @@
         revision="25.0.2"
         sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
         <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/pre-dexed/debug/classes_b51f962ac2a366eb66ffa8421f6edfd6a11408e7.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/libs/JKalman.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="63f8d97a30cc344e2cac3dc66a88d5328aaf1053">
+        <dex dex="/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/spine/app/build/intermediates/transforms/dex/debug/folders/1000/2/JKalman_4e2d52d99563883916e6d445b409697315e1957a/classes.dex" />
     </item>
     <item
         is-multidex="false"

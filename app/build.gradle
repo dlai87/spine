@@ -12,12 +12,12 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.vasomedical.spinetracer"
         minSdkVersion 23
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -48,11 +48,12 @@ dependencies {
 
 
     compile fileTree(dir: external_lib_prefix + '/jar', include: ['**/*.jar'])
+    compile fileTree(include: '*.jar', dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support:design:27.0.2'
 
     testCompile 'junit:junit:4.12'
 
@@ -86,6 +87,8 @@ dependencies {
     compile 'org.apache.commons:commons-math3:3.6.1'
 
 
+
 }
+
 
 

@@ -27,6 +27,7 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticKalmanFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptHumpbackFragment;
@@ -87,7 +88,8 @@ public class DetectingFragment extends BaseFragment {
             case AlgorithmFactory.DETECT_OPT_1:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-                analyticFragment = new AnalyticOptSlantFragment();
+               // analyticFragment = new AnalyticOptSlantFragment();
+                analyticFragment = new AnalyticKalmanFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_2:{
                 realtime_display_mode = 1;

@@ -44,11 +44,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="landscape">
 
-
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
         </activity>
 
@@ -71,6 +71,15 @@
         <activity android:name=".fragment.camera.PhotoIntentActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="landscape">
+
+
+        </activity>
+
+
+        <activity android:name=".algorithm.kalman.JKalmanActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:screenOrientation="landscape">
+
 
 
         </activity>
