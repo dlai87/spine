@@ -3,21 +3,21 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+       // classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '28.0.0'
     defaultConfig {
         applicationId "com.vasomedical.spinetracer"
         minSdkVersion 23
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -36,46 +36,38 @@ android {
 }
 
 
-def external_lib_prefix = null
-if (project.hasProperty("Tango.catkin_devel_prefix")) {
-    external_lib_prefix = project.property("Tango.catkin_devel_prefix")
-} else {
-    // Building in standalone sample form.
-    external_lib_prefix = "../../TangoReleaseLibs"
-}
-
 dependencies {
 
 
-    compile fileTree(dir: external_lib_prefix + '/jar', include: ['**/*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.2.0'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+//    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:design:27.1.1'
 
-    testCompile 'junit:junit:4.12'
+    //testapi 'junit:junit:4.12'
 
     // 3d modeling
-    compile 'org.rajawali3d:rajawali:1.1.346-SNAPSHOT@aar'
+    api 'org.rajawali3d:rajawali:1.1.346-SNAPSHOT@aar'
 
     // UI framework
-    compile 'com.github.Yalantis:GuillotineMenu-Android:1.2'
+    api 'com.github.Yalantis:GuillotineMenu-Android:1.2'
 
     // Chart Library
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
     // pdf
-    compile 'com.itextpdf:itextpdf:5.5.10'
+    api 'com.itextpdf:itextpdf:5.5.10'
 
     // side menu drawer
-    compile 'com.yarolegovich:sliding-root-nav:1.0.2'
+    api 'com.yarolegovich:sliding-root-nav:1.0.2'
 
     // step indicator
-    compile 'com.github.badoualy:stepper-indicator:1.0.6'
+    api 'com.github.badoualy:stepper-indicator:1.0.6'
 
     // list view
-    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
+    api 'com.github.frankiesardo:linearlistview:1.0.1@aar'
 
 }
 
