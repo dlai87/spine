@@ -17,10 +17,11 @@ import java.util.ArrayList;
 public class TBDoctor {
 
 
-    public void insert(SQLiteDatabase db, DoctorModel model){
+    public void insert(SQLiteDatabase db, DoctorModel model) {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
+        DBUtil.smartPut(cv, DBGlobal.COL_PASSWORD, model.getPassword());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
         DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
         DBUtil.smartPut(cv, DBGlobal.COL_DEPARTMENT, model.getPhone());
@@ -28,9 +29,9 @@ public class TBDoctor {
         db.insert(DBGlobal.TABLE_DOCTOR, null, cv);
     }
 
-    public void update(SQLiteDatabase db, DoctorModel model){
+    public void update(SQLiteDatabase db, DoctorModel model) {
         ContentValues cv = new ContentValues();
-    //    DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
+        //    DBUtil.smartPut(cv, DBGlobal.COL_ID, model.getId());
         DBUtil.smartPut(cv, DBGlobal.COL_NAME, model.getName());
         DBUtil.smartPut(cv, DBGlobal.COL_PHONE_NUMBER, model.getPhone());
         DBUtil.smartPut(cv, DBGlobal.COL_HOSPITAL, model.getPhone());
@@ -41,7 +42,7 @@ public class TBDoctor {
     }
 
 
-    public String checkTransmissionStatus(SQLiteDatabase db){
+    public String checkTransmissionStatus(SQLiteDatabase db) {
 
         String status = DBGlobal.TRANS_STATUS_INSERTED;
         Cursor result = db.query(DBGlobal.TABLE_DOCTOR, null, null, null, null, null, null);
@@ -54,15 +55,14 @@ public class TBDoctor {
         return status;
     }
 
-    public void updateTransmissionStatus(SQLiteDatabase db, String status){
+    public void updateTransmissionStatus(SQLiteDatabase db, String status) {
         ContentValues cv = new ContentValues();
         DBUtil.smartPut(cv, DBGlobal.COL_TRANSMISSTION_STATUS, status);
         db.update(DBGlobal.TABLE_DOCTOR, cv, null, null);
     }
 
 
-
-    public ArrayList<DoctorModel> getDoctorList(SQLiteDatabase db){
+    public ArrayList<DoctorModel> getDoctorList(SQLiteDatabase db) {
         /*  NOTE:
         * Cursor query (String table,
                 String[] columns,
@@ -84,15 +84,15 @@ public class TBDoctor {
             int col_hospital = result.getColumnIndexOrThrow(DBGlobal.COL_HOSPITAL);
             int col_department = result.getColumnIndexOrThrow(DBGlobal.COL_DEPARTMENT);
 
-            queryResult.add( (new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+            queryResult.add((new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
                     .phone(result.getString(col_phone))
                     .email(result.getString(col_email))
                     .hospital(result.getString(col_hospital))
                     .department(result.getString(col_department))
             ).build());
 
-            while(result.moveToNext()){
-                queryResult.add( (new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+            while (result.moveToNext()) {
+                queryResult.add((new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
                         .phone(result.getString(col_phone))
                         .email(result.getString(col_email))
                         .hospital(result.getString(col_hospital))
@@ -106,18 +106,71 @@ public class TBDoctor {
         return queryResult;
     }
 
-    public void smartInsert(SQLiteDatabase db, DoctorModel model){
+    public DoctorModel getDoctorByNameAndPass(SQLiteDatabase db, String name, String password) {
+        Cursor result = db.query(DBGlobal.TABLE_DOCTOR,
+                null,
+                DBGlobal.COL_NAME + "=? and " + DBGlobal.COL_PASSWORD + "=?",
+                new String[]{name, password}, null, null, null);
+
+        DoctorModel doctorModel = null;
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_hospital = result.getColumnIndexOrThrow(DBGlobal.COL_HOSPITAL);
+            int col_department = result.getColumnIndexOrThrow(DBGlobal.COL_DEPARTMENT);
+
+            doctorModel = new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .hospital(result.getString(col_hospital))
+                    .department(result.getString(col_department))
+                    .build();
+        }
+        result.close();
+        return doctorModel;
+    }
+    public DoctorModel getDoctorByName(SQLiteDatabase db, String name) {
+        Cursor result = db.query(DBGlobal.TABLE_DOCTOR,
+                null,
+                DBGlobal.COL_NAME + "=?",
+                new String[]{name,}, null, null, null);
+
+        DoctorModel doctorModel = null;
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_hospital = result.getColumnIndexOrThrow(DBGlobal.COL_HOSPITAL);
+            int col_department = result.getColumnIndexOrThrow(DBGlobal.COL_DEPARTMENT);
+
+            doctorModel = new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .hospital(result.getString(col_hospital))
+                    .department(result.getString(col_department))
+                    .build();
+        }
+        result.close();
+        return doctorModel;
+    }
+
+    public void smartInsert(SQLiteDatabase db, DoctorModel model) {
         ArrayList<DoctorModel> models = getDoctorList(db);
         boolean exist = false;
-        for (DoctorModel eachModel : models){
-            if (eachModel.getId().equals(model.getId())){
+        for (DoctorModel eachModel : models) {
+            if (eachModel.getId().equals(model.getId())) {
                 exist = true;
             }
         }
 
-        if (exist){
+        if (exist) {
             update(db, model);
-        }else {
+        } else {
             insert(db, model);
         }
     }

@@ -11,6 +11,7 @@ public class PatientModel {
     String name;
     String gender;
     String date_of_birth;
+    String id_doctor;
 
     // optional
     String phone;
@@ -18,7 +19,7 @@ public class PatientModel {
     String photo;
     String note;
 
-    public PatientModel(PatientBuilder builder){
+    public PatientModel(PatientBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.gender = builder.gender;
@@ -27,9 +28,10 @@ public class PatientModel {
         this.email = builder.email;
         this.photo = builder.photo;
         this.note = builder.note;
+        this.id_doctor = builder.id_doctor;
     }
 
-    public static class PatientBuilder{
+    public static class PatientBuilder {
         String id;
         String name;
         String gender;
@@ -38,33 +40,41 @@ public class PatientModel {
         String email;
         String photo;
         String note;
-        public PatientBuilder(String id, String name, String gender, String date_of_birth){
+        String id_doctor;
+
+        public PatientBuilder(String id, String name, String gender, String date_of_birth) {
             this.id = id;
             this.name = name;
             this.gender = gender;
             this.date_of_birth = date_of_birth;
         }
 
-        public PatientBuilder phone(String phone){
+        public PatientBuilder phone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public PatientBuilder email(String email){
+        public PatientBuilder email(String email) {
             this.email = email;
             return this;
         }
-        public PatientBuilder photo(String photo){
+
+        public PatientBuilder photo(String photo) {
             this.photo = photo;
             return this;
         }
 
-        public PatientBuilder note(String note){
+        public PatientBuilder note(String note) {
             this.note = note;
             return this;
         }
 
-        public PatientModel build(){
+        public PatientBuilder setId_doctor(String id_doctor) {
+            this.id_doctor = id_doctor;
+            return this;
+        }
+
+        public PatientModel build() {
             return new PatientModel(this);
         }
     }
@@ -131,5 +141,13 @@ public class PatientModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getId_doctor() {
+        return id_doctor;
+    }
+
+    public void setId_doctor(String id_doctor) {
+        this.id_doctor = id_doctor;
     }
 }

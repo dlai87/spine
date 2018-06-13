@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MianToolsActivity">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:text="欢迎您 , 王医生"
+        android:textColor="#ff00baff"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/bg1"
+        android:layout_width="0dp"
+        android:layout_height="152dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/button_item_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/icon_start"
+        app:layout_constraintEnd_toEndOf="@+id/bg1"
+        app:layout_constraintStart_toStartOf="@+id/bg1"
+        app:layout_constraintTop_toTopOf="@+id/bg1" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始测量"
+        android:textColor="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="@+id/bg1"
+        app:layout_constraintStart_toStartOf="@+id/bg1"
+        app:layout_constraintTop_toBottomOf="@+id/img1" />
+
+    <View
+        android:id="@+id/bg2"
+        android:layout_width="0dp"
+        android:layout_height="152dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_item_bg"
+        app:layout_constraintEnd_toStartOf="@+id/bg3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bg1" />
+
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@mipmap/icon_recod"
+        app:layout_constraintEnd_toEndOf="@+id/bg2"
+        app:layout_constraintStart_toStartOf="@+id/bg2"
+        app:layout_constraintTop_toTopOf="@+id/bg2" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看记录"
+        android:textColor="#ff61c9ff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="@+id/bg2"
+        app:layout_constraintStart_toStartOf="@+id/bg2"
+        app:layout_constraintTop_toBottomOf="@+id/img2" />
+
+    <View
+        android:id="@+id/bg3"
+        android:layout_width="0dp"
+        android:layout_height="152dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_item_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toEndOf="@+id/bg2"
+        app:layout_constraintTop_toBottomOf="@+id/bg1" />
+
+    <ImageView
+        android:id="@+id/img3"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@mipmap/icon_people"
+        app:layout_constraintEnd_toEndOf="@+id/bg3"
+        app:layout_constraintStart_toStartOf="@+id/bg3"
+        app:layout_constraintTop_toTopOf="@+id/bg3" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="病人管理"
+        android:textColor="#ff61c9ff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="@+id/bg3"
+        app:layout_constraintStart_toStartOf="@+id/bg3"
+        app:layout_constraintTop_toBottomOf="@+id/img3" />
+
+
+    <TextView
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginBottom="51dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#ff9298c6"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/buttonStartTest"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="bg1,img1,tv1" />
+
+    <android.support.constraint.Group
+        android:id="@+id/buttonRecod"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="bg2,img2,tv2" />
+
+    <android.support.constraint.Group
+        android:id="@+id/buttonPeople"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="bg3,img3,tv3" />
+
+</android.support.constraint.ConstraintLayout>

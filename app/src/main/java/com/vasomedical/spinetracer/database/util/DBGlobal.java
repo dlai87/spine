@@ -11,9 +11,8 @@ public class DBGlobal {
     public final static String TRANS_STATUS_SENT = "sent";
 
 
-
     public static String DB = "tango_db";
-    public static  int DB_VERSION = 1;
+    public static int DB_VERSION = 1;
     public static boolean DB_ON_SDCARD = true;
 
 
@@ -36,6 +35,7 @@ public class DBGlobal {
 
     public static String TABLE_PATIENT = "patient";
     public static String COL_ID = "id";
+    public static String COL_ID_DOCTOR = "id_doctor";
     public static String COL_NAME = "name";
     public static String COL_GENDER = "gender";
     public static String COL_DATE_OF_BIRTH = "date_of_birth";
@@ -46,6 +46,7 @@ public class DBGlobal {
 
 
     public static String TABLE_DOCTOR = "doctor";
+    public static String COL_PASSWORD = "password";
     public static String COL_HOSPITAL = "hospital";
     public static String COL_DEPARTMENT = "department";
 
@@ -61,9 +62,6 @@ public class DBGlobal {
 
     public static String TABLE_POSE = "pose";
     public static String COL_DETECTION_ID = "detection_id";
-
-
-
 
 
 }
