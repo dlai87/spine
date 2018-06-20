@@ -11,19 +11,28 @@ import android.widget.Toast;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.PatientPresenter;
 import com.vasomedical.spinetracer.activity.presenter.PatientPresenterCompl;
+import com.vasomedical.spinetracer.activity.presenter.ProjectPresenter;
+import com.vasomedical.spinetracer.activity.presenter.ProjectPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.PatientView;
+import com.vasomedical.spinetracer.activity.view.ProjectView;
+import com.vasomedical.spinetracer.dialog.ReportDialog;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.ProjectModel;
 import com.vasomedical.spinetracer.util.Global;
 
 import java.util.List;
 
 //界面--项目选择
-public class SelProjectcAtivity extends AppCompatActivity implements View.OnClickListener, PatientView {
+public class SelProjectcAtivity extends AppCompatActivity implements View.OnClickListener, PatientView, ProjectView, View.OnLongClickListener {
 
     private View buttonBack, buttonItem1, buttonItem2, buttonItem3, buttonItem4, buttonItem5, buttonItem6;
     private TextView tvName, tvPatientName;
 
     private PatientPresenter patientPresenter;
+    private ProjectPresenter projectPresenter;
+    private List<ProjectModel> projectModelList;
+
+    private ReportDialog reportDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,8 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     private void addAction() {
         patientPresenter = new PatientPresenterCompl(this, this);
+        projectPresenter = new ProjectPresenterCompl(this, this);
+        projectPresenter.reqProjectList();
         buttonBack.setOnClickListener(this);
         buttonItem1.setOnClickListener(this);
         buttonItem2.setOnClickListener(this);
@@ -60,6 +71,13 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         buttonItem4.setOnClickListener(this);
         buttonItem5.setOnClickListener(this);
         buttonItem6.setOnClickListener(this);
+        buttonBack.setOnLongClickListener(this);
+        buttonItem1.setOnLongClickListener(this);
+        buttonItem2.setOnLongClickListener(this);
+        buttonItem3.setOnLongClickListener(this);
+        buttonItem4.setOnLongClickListener(this);
+        buttonItem5.setOnLongClickListener(this);
+        buttonItem6.setOnLongClickListener(this);
 
         String name = Global.userModel == null ? "测试用户" : Global.userModel.getName();
         tvName.setText(name);
@@ -70,17 +88,41 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         if (v == buttonBack) {
             onBackPressed();
         } else if (v == buttonItem1) {
-            Toast.makeText(this, "躯干倾斜角", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(0).isEnable()) {
+                Toast.makeText(this, "躯干倾斜角", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonItem2) {
-            Toast.makeText(this, "脊柱弯曲COBB角", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(1).isEnable()) {
+                Toast.makeText(this, "脊柱弯曲COBB角", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonItem3) {
-            Toast.makeText(this, "左右侧弯倾角", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(2).isEnable()) {
+                Toast.makeText(this, "左右侧弯倾角", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonItem4) {
-            Toast.makeText(this, "身体平衡度", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(5).isEnable()) {
+                Toast.makeText(this, "身体平衡度", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonItem5) {
-            Toast.makeText(this, "前倾/后仰角", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(3).isEnable()) {
+                Toast.makeText(this, "前倾/后仰角", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonItem6) {
-            Toast.makeText(this, "旋转角", Toast.LENGTH_SHORT).show();
+            if (projectModelList.get(4).isEnable()) {
+                Toast.makeText(this, "旋转角", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -102,5 +144,44 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     @Override
     public void delPatientCallBack(boolean success, String no, String msg) {
 
+    }
+
+    @Override
+    public void updateUIProjetList(List<ProjectModel> projectModels) {
+        this.projectModelList = projectModels;
+    }
+
+    @Override
+    public void updateProjetListCallBack(boolean success, String msg) {
+
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (v == buttonItem1) {
+            showReportDialog("躯干倾斜角", getString(R.string.item1_desc));
+        } else if (v == buttonItem2) {
+            showReportDialog("脊柱弯曲COBB角", getString(R.string.item1_desc));
+        } else if (v == buttonItem3) {
+            showReportDialog("左右侧弯倾角", getString(R.string.item1_desc));
+        } else if (v == buttonItem4) {
+            showReportDialog("身体平衡度", getString(R.string.item1_desc));
+        } else if (v == buttonItem5) {
+            showReportDialog("前倾/后仰角", getString(R.string.item1_desc));
+        } else if (v == buttonItem6) {
+            showReportDialog("旋转角", getString(R.string.item1_desc));
+        }
+        return true;
+    }
+
+    private void showReportDialog(String title, String mesg) {
+        if (reportDialog == null) {
+            reportDialog = new ReportDialog(this);
+        }
+        if (!reportDialog.isShowing()) {
+            reportDialog.setTitle(title);
+            reportDialog.setMessage(mesg);
+            reportDialog.show();
+        }
     }
 }

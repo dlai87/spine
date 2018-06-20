@@ -22,12 +22,14 @@ public class PatientPresenterCompl implements PatientPresenter {
     private SQLiteDatabase db;
     private TBPatient tbPatient;
     private Handler handler;
+    private LogsPresenter logsPresenter;
 
     public PatientPresenterCompl(Context context, PatientView patientView) {
         this.patientView = patientView;
         db = DBAdapter.getDatabase(context);
         tbPatient = new TBPatient();
         handler = new Handler();
+        logsPresenter = new LogsPresenterCompl(context);
     }
 
 
@@ -43,6 +45,7 @@ public class PatientPresenterCompl implements PatientPresenter {
                         patientView.updatePatient(patientModel);
                     }
                 });
+                addLog("查询病人:" + no);
             }
         }).start();
     }
@@ -59,6 +62,7 @@ public class PatientPresenterCompl implements PatientPresenter {
                         patientView.updatePatientList(patientModel);
                     }
                 });
+                addLog("查询病人信息");
             }
         }).start();
     }
@@ -82,6 +86,9 @@ public class PatientPresenterCompl implements PatientPresenter {
                         patientView.savePatientCallBack(!isExist, isExist ? "用户已经存在" : "添加成功");
                     }
                 });
+                if (!isExist) {
+                    addLog("添加病人编号:" + patientModel.getId());
+                }
             }
         }).start();
     }
@@ -98,6 +105,7 @@ public class PatientPresenterCompl implements PatientPresenter {
                         patientView.savePatientCallBack(true, "修改成功");
                     }
                 });
+                addLog("删除病人编号:" + peopleModel.getId());
             }
         }).start();
     }
@@ -114,7 +122,12 @@ public class PatientPresenterCompl implements PatientPresenter {
                         patientView.delPatientCallBack(true, no, "刪除成功");
                     }
                 });
+                addLog("删除病人编号:" + no);
             }
         }).start();
+    }
+
+    private void addLog(String thing) {
+        logsPresenter.addLog(thing);
     }
 }

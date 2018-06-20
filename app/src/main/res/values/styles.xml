@@ -68,7 +68,9 @@
     <style name="ImageView.Hamburger" parent="Widget.AppCompat.ActionButton">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/abc_action_bar_overflow_padding_start_material</item>
+        <item name="android:layout_marginBottom">
+            @dimen/abc_action_bar_overflow_padding_start_material
+        </item>
     </style>
 
     <style name="ImageView.GuillotineItem">
@@ -88,6 +90,21 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!--自定义dialog背景全透明无边框theme -->
+    <style name="ReportportDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>

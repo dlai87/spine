@@ -17,6 +17,10 @@ public class DoctorModel {
     private String hospital;
     private String department;
 
+    public DoctorModel() {
+
+    }
+
     public DoctorModel(DoctorBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;

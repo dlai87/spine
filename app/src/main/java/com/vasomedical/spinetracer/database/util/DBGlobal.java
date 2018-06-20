@@ -63,5 +63,12 @@ public class DBGlobal {
     public static String TABLE_POSE = "pose";
     public static String COL_DETECTION_ID = "detection_id";
 
+    public static String TABLE_LOGS = "logs";
+    public static String COL_LOGS_ID = "logs_id";
+    public static String COL_LOGS_DOCTORID = "logs_doctorId";
+    public static String COL_LOGS_DOCTORNAME = "logs_doctorName";
+    public static String COL_LOGS_THING = "logs_thing";
+    public static String COL_LOGS_TIME = "logs_time";
+
 
 }

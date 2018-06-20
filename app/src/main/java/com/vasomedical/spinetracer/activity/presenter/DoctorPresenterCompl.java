@@ -20,12 +20,14 @@ public class DoctorPresenterCompl implements DoctorPresenter {
     private SQLiteDatabase db;
     private TBDoctor tbDoctor;
     private Handler handler;
+    private LogsPresenter logsPresenter;
 
     public DoctorPresenterCompl(Context context, DoctorView doctorView) {
         this.doctorView = doctorView;
         db = DBAdapter.getDatabase(context);
         tbDoctor = new TBDoctor();
         handler = new Handler();
+        logsPresenter = new LogsPresenterCompl(context);
     }
 
     @Override
@@ -43,6 +45,9 @@ public class DoctorPresenterCompl implements DoctorPresenter {
                         doctorView.loginCallBack(success, success ? "登录成功" : "用户名或密码错误");
                     }
                 });
+                if (success) {
+                    addLog(doctorModel, "登录");
+                }
             }
         }).start();
     }
@@ -66,7 +71,15 @@ public class DoctorPresenterCompl implements DoctorPresenter {
                         doctorView.registerCallBack(!isExist, isExist ? "用户已经存在" : "注册成功");
                     }
                 });
+                if (!isExist) {
+                    addLog(doctorModel, "注册成功");
+                }
             }
         }).start();
     }
+
+    private void addLog(DoctorModel doctorModel, String thing) {
+        logsPresenter.addLog(thing);
+    }
+
 }

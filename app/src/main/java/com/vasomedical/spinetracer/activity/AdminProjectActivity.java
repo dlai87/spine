@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.ProjectPresenter;
@@ -71,18 +72,19 @@ public class AdminProjectActivity extends AppCompatActivity implements ProjectVi
 
     @Override
     public void updateUIProjetList(List<ProjectModel> projectModels) {
-        for (Switch switchItem : switchItemList) {
-            for (ProjectModel projectModel : projectModels) {
-                if (String.valueOf(switchItem.getId()).equals(projectModel.getId())) {
-                    switchItem.setChecked(projectModel.isEnable());
-                    switchItem.setTag(projectModel);
-                }
-            }
+        for (int index = 0; index < projectModels.size(); index++) {
+            ProjectModel projectModel = projectModels.get(index);
+            Switch switchItem = switchItemList.get(index);
+
+            projectModel.setName(switchItem.getContentDescription().toString());
+            switchItem.setChecked(projectModel.isEnable());
+            switchItem.setTag(projectModel);
         }
     }
 
     @Override
     public void updateProjetListCallBack(boolean success, String msg) {
-        finish();
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 }
