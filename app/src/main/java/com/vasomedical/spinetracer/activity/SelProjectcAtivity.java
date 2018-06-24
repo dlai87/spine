@@ -1,5 +1,6 @@
 package com.vasomedical.spinetracer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.vasomedical.spinetracer.activity.presenter.ProjectPresenter;
 import com.vasomedical.spinetracer.activity.presenter.ProjectPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.PatientView;
 import com.vasomedical.spinetracer.activity.view.ProjectView;
+import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.dialog.ReportDialog;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.ProjectModel;
@@ -90,6 +92,11 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         } else if (v == buttonItem1) {
             if (projectModelList.get(0).isEnable()) {
                 Toast.makeText(this, "躯干倾斜角", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                intent.putExtra(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_1);
+                startActivity(intent);
+
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }

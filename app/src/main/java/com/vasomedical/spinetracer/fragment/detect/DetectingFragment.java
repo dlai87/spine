@@ -56,6 +56,8 @@ public class DetectingFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
 
+        int detect_opt = args.getInt(AlgorithmFactory.AlgorithmFactoryDetectOption);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

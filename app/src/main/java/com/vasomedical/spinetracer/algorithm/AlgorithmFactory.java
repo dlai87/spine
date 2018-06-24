@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class AlgorithmFactory {
 
+
+    public static final String AlgorithmFactoryDetectOption = "Detect_OPT";
     public static final int DETECT_OPT_1 = 1;  // 脊柱侧弯倾角
     public static final int DETECT_OPT_2 = 2;  // 矢面旋转角
     public static final int DETECT_OPT_3 = 3;  // 前倾 后伸

@@ -84,6 +84,9 @@
         <activity
             android:name=".activity.PatientEditActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DetectActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".activity.SelProjectcAtivity" />
         <activity android:name=".activity.AdminActivity" />
         <activity android:name=".activity.AdminProjectActivity" />
