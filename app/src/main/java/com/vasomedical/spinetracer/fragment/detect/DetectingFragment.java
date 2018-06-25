@@ -26,11 +26,6 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.algorithm.filters.BasicOperation;
-import com.vasomedical.spinetracer.algorithm.spineObj.SpineSegmentManager;
-import com.vasomedical.spinetracer.database.table.TBDetection;
-import com.vasomedical.spinetracer.database.table.TBMotion;
-import com.vasomedical.spinetracer.database.table.TBPose;
-import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSegment;
@@ -56,7 +51,7 @@ public class DetectingFragment extends BaseFragment {
     NJButton controlButton;
     Button previousButton;
     Button nextButton;
-   // TextView instructionText;
+    TextView instructionText;
     TextView realTimeDisplay;
     RelativeLayout angleRulerLayout;
     ImageView indicator;
@@ -85,39 +80,58 @@ public class DetectingFragment extends BaseFragment {
 
         // Fixme : clean data
         {
-         //   TBMotion.clean(DBAdapter.getDatabase(mContext));
-         //   TBPose.clean(DBAdapter.getDatabase(mContext));
-         //   TBDetection.clean(DBAdapter.getDatabase(mContext));
+       //     TBDataProcessed.clean(DBAdapter.getDatabase(mContext));
+       //     TBMotion.clean(DBAdapter.getDatabase(mContext));
+       //     TBPose.clean(DBAdapter.getDatabase(mContext));
+       //     TBDetection.clean(DBAdapter.getDatabase(mContext));
 
         }
+
+        /*
         switch (AlgorithmFactory.detectionOption){
             case AlgorithmFactory.DETECT_OPT_1:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptSlantFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_2:{
-
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 1;
+                analyticFragment = new AnalyticOptHumpbackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_3:{
-
+                realtime_display_mode = 1;
+                realtime_display_horizontal_axis = 0;
+                analyticFragment = new AnalyticOptSegment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_4:{
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptLeftRightFragment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_5:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 0;
+                analyticFragment = new AnalyticOptForwardBackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_6:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 2;
+                analyticFragment = new AnalyticOptRotateFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_7:{
-
+                realtime_display_mode = 0 ;
+                realtime_display_degree = 1;
+                analyticFragment = new AnalyticOptBalanceFragment();
             }break;
             default:{
 
             }break;
         }
 
+*/
 
         realtime_display_mode = 1;
         realtime_display_horizontal_axis = 0;
@@ -130,15 +144,15 @@ public class DetectingFragment extends BaseFragment {
         switch (detectionStatus){
             case Init:
                 controlButton.setText(mContext.getResources().getString(R.string.start));
-            //    instructionText.setVisibility(View.GONE);
+                instructionText.setVisibility(View.GONE);
                 break;
             case Calibrating:
                 controlButton.setText(mContext.getResources().getString(R.string.start));
-            //    instructionText.setVisibility(View.VISIBLE);
+                instructionText.setVisibility(View.VISIBLE);
                 break;
             case Start:
                 controlButton.setText(mContext.getResources().getString(R.string.stop));
-            //    instructionText.setVisibility(View.GONE);
+                instructionText.setVisibility(View.GONE);
                 break;
 
         }
@@ -154,6 +168,12 @@ public class DetectingFragment extends BaseFragment {
         nextButton = (Button) view.findViewById(R.id.next_button);
         previousButton = (Button) view.findViewById(R.id.previous_button);
         realTimeDisplay = (TextView) view.findViewById(R.id.real_time_display);
+        angleRulerLayout = (RelativeLayout) view.findViewById(R.id.angleRulerLayout);
+        indicator = (ImageView) view.findViewById(R.id.indicator);
+        movementLayout = (LinearLayout) view.findViewById(R.id.movementLayout);
+        verticalMoveText = (TextView) view.findViewById(R.id.vertical_move_text);
+        horizontalMoveText = (TextView) view.findViewById(R.id.horizontal_move_text);
+        instructionText = (TextView)view.findViewById(R.id.instruction_text);
     }
 
     @Override
@@ -167,13 +187,16 @@ public class DetectingFragment extends BaseFragment {
 
                 switch (detectionStatus){
                     case Init:
+                        // fixme : calibrating or not 
+                        /*
                         if (AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_2
                                 ||AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_3)
                         {
                             detectionStatus = DETECTION_STATUS.Calibrating;
                         }else {
                             detectionStatus = DETECTION_STATUS.Start;
-                        }
+                        }*/
+                        detectionStatus = DETECTION_STATUS.Calibrating;
                         start();
                         break;
                     case Calibrating:
@@ -287,15 +310,27 @@ public class DetectingFragment extends BaseFragment {
         ArrayList<Entry> filterData = algorithm.processData(listFilterData);
 
 
+
+
         Bundle args = new Bundle();
         args.putInt(AnalyticBaseFragment.SCORE, algorithm.getScore());
         analyticFragment.setArguments(args);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
+        /*
+        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
+                timeStamp,
+                patient,
+                Util.getCurrentDoctor(),
+                AlgorithmFactory.detectionOption,
+                poseLog.getPoseList(),
+                0,
+                "");
+                */
         analyticFragment.setRawData(list);
         analyticFragment.setDetectionData(processedData);
         analyticFragment.setTrimData(trimProcessedData);
         analyticFragment.setFilterData(filterData);
+        //analyticFragment.setRecord(builder.build());
 
         fragmentUtil.showFragment(analyticFragment);
         // poseLog.save(mActivity);
@@ -400,8 +435,8 @@ public class DetectingFragment extends BaseFragment {
                             drawIndicator(degree);
                         }break;
                         case 1:{
-                    //        verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] - (-translationInit[2]) ) + "cm");
-                    //        horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis] - translationInit[realtime_display_horizontal_axis]) + "cm");
+                            verticalMoveText.setText(mContext.getResources().getString(R.string.vertical_move) + " : " + Util.positionToDisplay(-translation[2] - (-translationInit[2]) ) + "cm");
+                            horizontalMoveText.setText(mContext.getResources().getString(R.string.horizontal_move) + " : " +   Util.positionToDisplay(translation[realtime_display_horizontal_axis] - translationInit[realtime_display_horizontal_axis]) + "cm");
                         }break;
                         default:
                             break;
@@ -412,6 +447,9 @@ public class DetectingFragment extends BaseFragment {
         } catch (Exception e) {
 
         }
+
+
+
 
 
         if (detectionStatus == DETECTION_STATUS.Start){

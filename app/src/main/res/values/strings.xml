@@ -136,5 +136,7 @@
     <string name="inspection_type">测量类型</string>
     <string name="inspection_time">测量时间</string>
     <string name="doctor">医生</string>
+    <string name="please_calibrate">请缓慢运动设备，当看到读数较稳定合理后，按"开始测量"。</string>
+    <string name="calibrate">设备校准</string>
 
 </resources>
