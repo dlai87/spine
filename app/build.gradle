@@ -37,37 +37,31 @@ android {
 
 
 dependencies {
-
-
-    api fileTree(dir: 'libs', include: ['*.jar'])
-//    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    //    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    //        exclude group: 'com.android.support', module: 'support-annotations'
+    //    })
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.android.support:design:27.1.1'
-
     //testapi 'junit:junit:4.12'
-
     // 3d modeling
     api 'org.rajawali3d:rajawali:1.1.346-SNAPSHOT@aar'
-
     // UI framework
     api 'com.github.Yalantis:GuillotineMenu-Android:1.2'
-
     // Chart Library
-    api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    // api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+
+    // rotate layout
+    compile 'rongi.rotate-layout:rotate-layout:3.0.0'
 
     // pdf
     api 'com.itextpdf:itextpdf:5.5.10'
-
     // side menu drawer
     api 'com.yarolegovich:sliding-root-nav:1.0.2'
-
     // step indicator
     api 'com.github.badoualy:stepper-indicator:1.0.6'
-
     // list view
     api 'com.github.frankiesardo:linearlistview:1.0.1@aar'
-
     implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation project(':MPChartLib')
 }

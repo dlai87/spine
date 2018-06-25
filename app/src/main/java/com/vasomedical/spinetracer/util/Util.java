@@ -7,12 +7,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
+import com.vasomedical.spinetracer.model.DoctorModel;
+import com.vasomedical.spinetracer.model.Pose;
 
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -24,11 +28,21 @@ import java.util.regex.Pattern;
 
 public class Util {
 
-    static String TAG = "Util";
-
     public static String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
     public static String FORMAT_DATE = "yyyy-MM-dd";
     public static String FORMAT_TIME = "HH:mm:ss";
+    static String TAG = "Util";
+    private static DoctorModel currentDoctor;
+
+    public static DoctorModel getCurrentDoctor() {
+        return currentDoctor;
+    }
+
+    public static void setCurrentDoctor(DoctorModel currentDoctor) {
+        Util.currentDoctor = currentDoctor;
+    }
+
+
 
 
     public static String generateUniqueID(int len){
@@ -61,15 +75,19 @@ public class Util {
 
 
     public static void hideSoftKeyboard(Activity activity) {
+        /*
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        */
     }
 
     public static void highlightLayout(LinearLayout layout, boolean highLight, Context mContext ){
+        /*
         if (highLight)
             layout.setBackgroundColor(mContext.getResources().getColor(R.color.red));
         else
             layout.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
+            */
     }
 
     public static boolean validateEmailFormat(String emailStr){
@@ -79,12 +97,42 @@ public class Util {
         return matcher.find();
     }
 
-    public static float radianToDegree(float radian){
-        float degree = (float) (radian / Math.PI * 180) ;
+
+    public static float radianToDegree(float radian, int offset, boolean reverse){
+        float degree = (float) Math.toDegrees(radian);
+        degree += offset;
+        if (reverse) degree = -degree;
+        Log.d("temp", " radian "  + radian + " degree " + degree + " Math degree ");
         DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
         try {
             float normDegree = Float.valueOf(decimalFormat.format(degree));
             return normDegree ;
+        }catch (Exception e){
+            return -99999;
+        }
+    }
+
+    public static float radianToDegree(float radian){
+
+        float degree = (float) Math.toDegrees(radian);
+
+        Log.d("temp", " radian "  + radian + " degree " + degree + " Math degree ");
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
+        try {
+            float normDegree = Float.valueOf(decimalFormat.format(degree));
+            return normDegree ;
+        }catch (Exception e){
+            return -99999;
+        }
+    }
+
+
+    public static float positionToDisplay(float value){
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
+        try {
+            float normPosition = Float.valueOf(decimalFormat.format(value*100));
+            return normPosition ;
         }catch (Exception e){
             return -99999;
         }
@@ -129,6 +177,43 @@ public class Util {
         reuslt[1] = attitude;
         reuslt[2] = bank;
         return reuslt;
+    }
+
+
+
+    /**
+     *
+     *
+     *
+     * */
+    public static  float valueOfCoordinate(Pose pose, AlgorithmBase.Coordinate c){
+        switch (c){
+            case x:
+                return pose.getX();
+            case y:
+                return pose.getY();
+            case z:
+                return pose.getZ();
+            case rx:
+                return pose.getEuler_x();
+            case ry:
+                return pose.getEuler_y();
+            case rz:
+                return pose.getEuler_z();
+        }
+        return -1;
+    }
+
+
+
+    public static void printArrayList(ArrayList list, String tag){
+        if (tag==null){
+            tag = TAG;
+        }
+        for(int i = 0 ; i < list.size() ; i++){
+            Log.i(tag, i + " : " + list.get(i));
+        }
+
     }
 
 

@@ -5,5 +5,5 @@ package com.github.mikephil.charting.utils;
  */
 
 public class GlobalFlags {
-    public static boolean SpineShapeSegmentFlag = false;
+    public static boolean SpineShapeSegmentFlag = true;
 }

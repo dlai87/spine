@@ -52,6 +52,8 @@
     <color name="njbutton_cherry_red">#FF6259</color>
     <!--  r: 127 g:234 b:255 -->
     <color name="njbutton_transparent">#00000000</color>
+    <!-- r:35 g:41 b:76 -->
+    <color name="bg">#23294C</color>
 
 
 

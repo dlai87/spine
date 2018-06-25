@@ -1,10 +1,15 @@
 package com.vasomedical.spinetracer.model;
 
+import android.support.annotation.NonNull;
+
+import com.vasomedical.spinetracer.util.Coor;
 import com.vasomedical.spinetracer.util.Util;
 
 import java.util.Date;
 
-public class Pose {
+public class Pose implements Comparable{
+
+    public static Coor sortBy = Coor.py; // default sort by;
 
     // raw data
     float x;
@@ -88,5 +93,35 @@ public class Pose {
 
     public Date getTimeStamp() {
         return timeStamp;
+    }
+
+    @Override
+    public String toString(){
+        return "x:" + x +
+                ",y:" + y +
+                ",z:" + z +
+                ",rx:" + euler_x +
+                ",ry:" + euler_y +
+                ",rz:" + euler_z;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Pose other = (Pose) o;
+        switch (sortBy){
+            case px:
+                if (this.x < other.getX()) return -1;
+                if (this.x > other.getX()) return 1;
+                break;
+            case py:
+                if (this.y < other.getY()) return -1;
+                if (this.y > other.getY()) return 1;
+                break;
+            case pz:
+                if (this.z < other.getZ()) return -1;
+                if (this.z > other.getZ()) return 1;
+                break;
+        }
+        return 0;
     }
 }

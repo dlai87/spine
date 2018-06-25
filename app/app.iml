@@ -98,7 +98,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifest-checker" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
@@ -130,6 +129,7 @@
     <orderEntry type="library" name="android.arch.lifecycle:common:1.1.0@jar" level="project" />
     <orderEntry type="library" name="com.yarolegovich:sliding-root-nav-1.0.2" level="project" />
     <orderEntry type="library" name="__local_aars__:/Users/dehualai/Dropbox (AiCure)/DehuaWorkSpace/PersonalProject/V/SpinScanner/final/spine/app/libs/tango_java_lib.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="rongi.rotate-layout:rotate-layout-3.0.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-27.1.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-27.1.1" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:viewmodel-1.1.0" level="project" />
@@ -137,7 +137,6 @@
     <orderEntry type="library" name="com.github.Yalantis:GuillotineMenu-Android-1.2" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:livedata-core-1.1.0" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.1.1@jar" level="project" />
-    <orderEntry type="library" name="com.github.PhilJay:MPAndroidChart:v3.0.1@jar" level="project" />
     <orderEntry type="library" name="com.itextpdf:itextpdf:5.5.10@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-27.1.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-27.1.1" level="project" />
@@ -146,5 +145,6 @@
     <orderEntry type="library" name="com.android.support:support-annotations:27.1.1@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-27.1.1" level="project" />
     <orderEntry type="library" name="android.arch.core:runtime-1.1.0" level="project" />
+    <orderEntry type="module" module-name="MPChartLib" />
   </component>
 </module>
