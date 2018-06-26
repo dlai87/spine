@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -71,6 +74,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
  //   NJButton cancelButton;
 
 
+    Spinner spinner;
+
+
+
     static int argb(String hex) {
         int color = (int) Long.parseLong(hex.replace("#", ""), 16);
         int a = (color >> 24) & 0xFF;
@@ -118,6 +125,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
        // reTestButton = (Button)view.findViewById(R.id.re_test_button);
 
+        spinner = (Spinner)view.findViewById(R.id.scoreSpinner);
 
 
         if (detectionData == null){
@@ -141,7 +149,25 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
         displayScoreChart();
 
+        String[] scoreOptions = {"优", "良", "健康","不健康"};
 
+        ArrayAdapter<CharSequence> dataAdapter = new ArrayAdapter(mContext, R.layout.list_cell, scoreOptions);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                // select_language = item;
+                // fixme select socre
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // re-test button, when input data is invalid, ask to re test
         /*

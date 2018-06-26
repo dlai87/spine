@@ -133,6 +133,21 @@
                     android:textColor="#ff00baff"
                     android:textSize="21sp" />
 
+
+                <Spinner
+                    android:id="@+id/scoreSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_h_6"
+                    android:layout_marginBottom="@dimen/margin_0"
+                    android:layout_marginTop="@dimen/margin_0"
+                    android:background="@drawable/button_drop_down"
+                    android:popupBackground="@color/white"
+                    android:spinnerMode="dropdown"
+                    android:gravity="center"
+                    />
+
+                <!--
+
                 <Button
                     android:id="@+id/buttonScore"
                     android:layout_width="match_parent"
@@ -145,6 +160,7 @@
                     android:text="优"
                     android:textColor="#ff00baff"
                     android:textSize="21sp" />
+                    -->
 
 
                 <Button
