@@ -87,6 +87,8 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+
+
         if (v == buttonBack) {
             onBackPressed();
         } else if (v == buttonItem1) {
@@ -94,7 +96,10 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
                 Toast.makeText(this, "躯干倾斜角", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, DetectActivity.class);
-                intent.putExtra(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_1);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_1);
+                intent.putExtras(bundle);
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_1;
                 startActivity(intent);
 
             } else {
@@ -103,34 +108,80 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         } else if (v == buttonItem2) {
             if (projectModelList.get(1).isEnable()) {
                 Toast.makeText(this, "脊柱弯曲COBB角", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_3);
+                intent.putExtras(bundle);
+
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_3;
+
+                startActivity(intent);
+
+
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }
         } else if (v == buttonItem3) {
             if (projectModelList.get(2).isEnable()) {
                 Toast.makeText(this, "左右侧弯倾角", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_4);
+                intent.putExtras(bundle);
+
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_4;
+                startActivity(intent);
+
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }
         } else if (v == buttonItem4) {
             if (projectModelList.get(5).isEnable()) {
                 Toast.makeText(this, "身体平衡度", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_7);
+                intent.putExtras(bundle);
+
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_7;
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }
         } else if (v == buttonItem5) {
             if (projectModelList.get(3).isEnable()) {
                 Toast.makeText(this, "前倾/后仰角", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_5);
+                intent.putExtras(bundle);
+
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_5;
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }
         } else if (v == buttonItem6) {
             if (projectModelList.get(4).isEnable()) {
                 Toast.makeText(this, "旋转角", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, DetectActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AlgorithmFactory.AlgorithmFactoryDetectOption, AlgorithmFactory.DETECT_OPT_6);
+                intent.putExtras(bundle);
+
+                AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_6;
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "该功能已被管理员停用", Toast.LENGTH_SHORT).show();
             }
         }
+
+
     }
 
     @Override

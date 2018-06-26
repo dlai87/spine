@@ -24,17 +24,34 @@ public class AlgorithmFactory {
     public static int detectionOption = 0;
 
 
+
     public AlgorithmBase getAlgorithm(int option){
         switch (option){
+            case DETECT_OPT_1:
+                return new AlgorithmOptSlant();
 
+            case DETECT_OPT_2:
+                return new AlgorithmOptHumpback();
+
+            case DETECT_OPT_3:
+                return new AlgorithmOptBending();
+
+            case DETECT_OPT_4:
+                return new AlgorithmOptLeftRight();
+
+            case DETECT_OPT_5:
+                return new AlgorithmOptForwardBack();
+
+            case DETECT_OPT_6:
+                return new AlgorithmOptRotate();
+
+            case DETECT_OPT_7:
+                return new AlgorithmOptBalance();
 
             default:
                 return new AlgorithmOptBending();
         }
     }
-
-
-
 
 
 }

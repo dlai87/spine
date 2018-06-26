@@ -72,11 +72,21 @@ public class DetectingFragment extends BaseFragment {
     private Tango mTango;
     private TangoConfig mConfig;
 
+
+    private int detection_options = 0 ;
+    private boolean shouldCalubrate = true;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_detecting_new, container, false);
         Bundle args = getArguments();
+        detection_options = args.getInt(AlgorithmFactory.AlgorithmFactoryDetectOption);
+        if(detection_options == AlgorithmFactory.DETECT_OPT_3){
+            shouldCalubrate = true;
+        }else{
+            shouldCalubrate = false;
+        }
 
         // Fixme : clean data
         {
@@ -87,55 +97,55 @@ public class DetectingFragment extends BaseFragment {
 
         }
 
-        /*
+
         switch (AlgorithmFactory.detectionOption){
             case AlgorithmFactory.DETECT_OPT_1:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-                analyticFragment = new AnalyticOptSlantFragment();
+             //   analyticFragment = new AnalyticOptSlantFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_2:{
                 realtime_display_mode = 1;
                 realtime_display_horizontal_axis = 1;
-                analyticFragment = new AnalyticOptHumpbackFragment();
+             //   analyticFragment = new AnalyticOptHumpbackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_3:{
                 realtime_display_mode = 1;
                 realtime_display_horizontal_axis = 0;
-                analyticFragment = new AnalyticOptSegment();
+              //  analyticFragment = new AnalyticOptSegment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_4:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-                analyticFragment = new AnalyticOptLeftRightFragment();
+             //   analyticFragment = new AnalyticOptLeftRightFragment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_5:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 0;
-                analyticFragment = new AnalyticOptForwardBackFragment();
+             //   analyticFragment = new AnalyticOptForwardBackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_6:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 2;
-                analyticFragment = new AnalyticOptRotateFragment();
+             //   analyticFragment = new AnalyticOptRotateFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_7:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-                analyticFragment = new AnalyticOptBalanceFragment();
+             //   analyticFragment = new AnalyticOptBalanceFragment();
             }break;
             default:{
 
             }break;
         }
 
-*/
 
-        realtime_display_mode = 1;
-        realtime_display_horizontal_axis = 0;
-        analyticFragment = new AnalyticOptSegment();
+
+    //    realtime_display_mode = 1;
+    //    realtime_display_horizontal_axis = 0;
+    //    analyticFragment = new AnalyticOptSegment();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -187,16 +197,7 @@ public class DetectingFragment extends BaseFragment {
 
                 switch (detectionStatus){
                     case Init:
-                        // fixme : calibrating or not 
-                        /*
-                        if (AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_2
-                                ||AlgorithmFactory.detectionOption == AlgorithmFactory.DETECT_OPT_3)
-                        {
-                            detectionStatus = DETECTION_STATUS.Calibrating;
-                        }else {
-                            detectionStatus = DETECTION_STATUS.Start;
-                        }*/
-                        detectionStatus = DETECTION_STATUS.Calibrating;
+                        detectionStatus = shouldCalubrate? DETECTION_STATUS.Calibrating : DETECTION_STATUS.Start;
                         start();
                         break;
                     case Calibrating:
