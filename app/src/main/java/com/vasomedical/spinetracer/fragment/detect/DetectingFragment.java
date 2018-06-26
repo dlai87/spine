@@ -112,7 +112,7 @@ public class DetectingFragment extends BaseFragment {
             case AlgorithmFactory.DETECT_OPT_3:{
                 realtime_display_mode = 1;
                 realtime_display_horizontal_axis = 0;
-              //  analyticFragment = new AnalyticOptSegment();
+                analyticFragment = new AnalyticOptSegment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_4:{
