@@ -74,8 +74,8 @@ public abstract class AlgorithmBase  {
             }
 
             float eulurDegree =  Util.radianToDegree(Util.valueOfCoordinate(temp, c2), offset, c2==Coordinate.rz);
-            Log.e("show", "++++ eulurDegree ++++" + eulurDegree);
-            dataWithProcess.add(new Entry( Util.valueOfCoordinate(temp, c1) , eulurDegree));
+            Log.e("show", Util.valueOfCoordinate(temp, c1) + "  ++++ eulurDegree ++++ " + eulurDegree);
+            dataWithProcess.add(new Entry( Math.abs(Util.valueOfCoordinate(temp, c1)) , eulurDegree));
         }
 
         int i = 0 ;
@@ -107,28 +107,6 @@ public abstract class AlgorithmBase  {
 
 
 
-
-
-
-
-    protected ArrayList<Entry> createDataForChartSpineSegment(ArrayList<Pose> inputData,
-                                                              Coordinate c1 ,
-                                                              Coordinate c2){
-
-        SpineSegmentManager spineSegmentManager = new SpineSegmentManager();
-        ArrayList<SpineShape> spineList = spineSegmentManager.covert(inputData);
-
-        ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
-        for(int i = 0 ; i < spineList.size(); i++){
-            Pose temp = spineList.get(i).getPose();
-            dataWithProcess.add(new
-                    Entry(
-                    Util.valueOfCoordinate(temp, c1) ,
-                    Util.valueOfCoordinate(temp, c2)));
-        }
-
-        return dataWithProcess;
-    }
 
 
 

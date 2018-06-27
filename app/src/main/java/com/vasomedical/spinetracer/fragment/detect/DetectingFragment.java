@@ -28,7 +28,12 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.algorithm.filters.BasicOperation;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptBalanceFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptForwardBackFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptLeftRightFragment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSegment;
+import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.model.PoseLog;
@@ -102,7 +107,7 @@ public class DetectingFragment extends BaseFragment {
             case AlgorithmFactory.DETECT_OPT_1:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-             //   analyticFragment = new AnalyticOptSlantFragment();
+                analyticFragment = new AnalyticOptSlantFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_2:{
                 realtime_display_mode = 1;
@@ -118,23 +123,23 @@ public class DetectingFragment extends BaseFragment {
             case AlgorithmFactory.DETECT_OPT_4:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-             //   analyticFragment = new AnalyticOptLeftRightFragment();
+                analyticFragment = new AnalyticOptLeftRightFragment();
 
             }break;
             case AlgorithmFactory.DETECT_OPT_5:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 0;
-             //   analyticFragment = new AnalyticOptForwardBackFragment();
+                analyticFragment = new AnalyticOptForwardBackFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_6:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 2;
-             //   analyticFragment = new AnalyticOptRotateFragment();
+                analyticFragment = new AnalyticOptRotateFragment();
             }break;
             case AlgorithmFactory.DETECT_OPT_7:{
                 realtime_display_mode = 0 ;
                 realtime_display_degree = 1;
-             //   analyticFragment = new AnalyticOptBalanceFragment();
+                analyticFragment = new AnalyticOptBalanceFragment();
             }break;
             default:{
 

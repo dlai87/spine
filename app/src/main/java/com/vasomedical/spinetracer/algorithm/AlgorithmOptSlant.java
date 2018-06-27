@@ -3,6 +3,7 @@ package com.vasomedical.spinetracer.algorithm;
 import android.util.Log;
 
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.GlobalFlags;
 import com.vasomedical.spinetracer.model.Pose;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class AlgorithmOptSlant extends AlgorithmBase {
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
-        int numSamples = 50;
+        GlobalFlags.SpineShapeSegmentFlag = true;
+
+        int numSamples = 30;
         ArrayList<Entry> data =  createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
 
         return normalizeData(data);
@@ -25,6 +28,7 @@ public class AlgorithmOptSlant extends AlgorithmBase {
 
     private ArrayList<Entry> normalizeData(ArrayList<Entry> inputData){
         // reverse
+        /*
         for (Entry entry: inputData){
             entry.setY(-entry.getY());
         }
@@ -32,6 +36,7 @@ public class AlgorithmOptSlant extends AlgorithmBase {
             Log.d("show", entry.toString());
         }
 
+         */
         float minX = Float.MAX_VALUE;
         float minY = Float.MAX_VALUE;
         for (Entry entry: inputData){
@@ -40,10 +45,12 @@ public class AlgorithmOptSlant extends AlgorithmBase {
         }
 
         // normalize
+        /*
         for (Entry entry: inputData){
             entry.setX(entry.getX() - minX);
             entry.setY(entry.getY() - minY);
         }
+        */
 
 
         for (Entry entry: inputData){

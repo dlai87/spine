@@ -59,6 +59,7 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        // fixme :  update cobb's angle in real time
                         cobbsAngleText.setText("Cobb's angle : " + angle);
                     }
                 });

@@ -3,6 +3,7 @@ package com.vasomedical.spinetracer.algorithm;
 import android.util.Log;
 
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.GlobalFlags;
 import com.vasomedical.spinetracer.algorithm.filters.BasicOperation;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Coor;
@@ -37,6 +38,7 @@ public class AlgorithmOptBending extends AlgorithmBase {
     };
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
+
 
         BasicOperation basicOperation = new BasicOperation();
         ArrayList<ArrayList<Pose>> processedData = basicOperation.chop(inputData, segmentRatio, Coor.py);

@@ -83,11 +83,18 @@
         <activity
             android:name=".activity.DetectActivity"
             android:screenOrientation="landscape"/>
-        <activity android:name=".activity.SelProjectcAtivity" />
-        <activity android:name=".activity.AdminActivity" />
-        <activity android:name=".activity.AdminProjectActivity" />
-        <activity android:name=".activity.AdminCompanyActivity" />
-        <activity android:name=".activity.AdminLogsActivity"></activity>
+        <activity android:name=".activity.SelProjectcAtivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AdminProjectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AdminCompanyActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AdminLogsActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
     </application>
 
 </manifest>
