@@ -33,6 +33,12 @@
             android:required="true" />
 
         <activity
+            android:name=".activity.CelianTest"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
+
+        <activity
             android:name=".HelloMotionTrackingActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
@@ -50,7 +56,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="landscape" />
@@ -82,17 +88,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DetectActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".activity.SelProjectcAtivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.SelProjectcAtivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.AdminActivity"
+        <activity
+            android:name=".activity.AdminActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.AdminProjectActivity"
+        <activity
+            android:name=".activity.AdminProjectActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.AdminCompanyActivity"
+        <activity
+            android:name=".activity.AdminCompanyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.AdminLogsActivity"
-            android:screenOrientation="portrait" >
+        <activity
+            android:name=".activity.AdminLogsActivity"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>
