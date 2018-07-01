@@ -29,8 +29,8 @@ public class TBPatient {
      * COL_NAME            名字
      * COL_GENDER          性别
      * COL_DATE_OF_BIRTH   出生日期
-     * COL_PHONE_NUMBER    电话
-     * COL_NOTE            备注
+     * COL_PHONE_NUMBER    点哈
+     * COL_NOTE
      *
      * **/
 
@@ -135,6 +135,129 @@ public class TBPatient {
         result.close();
         return queryResult;
     }
+
+
+    /*
+
+    public ArrayList<PatientModel> getPatientListByDoctor(SQLiteDatabase db, String id_doctor) {
+
+        ArrayList<PatientModel> queryResult = new ArrayList<PatientModel>();
+        Cursor result = db.query(DBGlobal.TABLE_PATIENT, null, DBGlobal.COL_ID_DOCTOR + "=?",
+                new String[]{id_doctor}, null, null, null);
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_id_doctor = result.getColumnIndexOrThrow(DBGlobal.COL_ID_DOCTOR);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_gender = result.getColumnIndexOrThrow(DBGlobal.COL_GENDER);
+            int col_date_of_birth = result.getColumnIndexOrThrow(DBGlobal.COL_DATE_OF_BIRTH);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_photo = result.getColumnIndexOrThrow(DBGlobal.COL_PHOTO);
+            int col_note = result.getColumnIndexOrThrow(DBGlobal.COL_NOTE);
+
+            queryResult.add((new PatientModel.PatientBuilder(result.getString(col_id),
+                    result.getString(col_name),
+                    result.getString(col_gender),
+                    result.getString(col_date_of_birth))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .photo(result.getString(col_photo))
+                    .note(result.getString(col_note))
+                    .setId_doctor(result.getString(col_id_doctor))
+            ).build());
+
+            while (result.moveToNext()) {
+                queryResult.add((new PatientModel.PatientBuilder(result.getString(col_id),
+                        result.getString(col_name),
+                        result.getString(col_gender),
+                        result.getString(col_date_of_birth))
+                        .phone(result.getString(col_phone))
+                        .email(result.getString(col_email))
+                        .photo(result.getString(col_photo))
+                        .note(result.getString(col_note))
+                        .setId_doctor(result.getString(col_id_doctor))
+                ).build());
+
+            }
+
+        }
+        result.close();
+        return queryResult;
+    }
+
+
+    public PatientModel getPatientByNo(SQLiteDatabase db, String no) {
+        Cursor result = db.query(DBGlobal.TABLE_PATIENT,
+                null,
+                DBGlobal.COL_ID + "=?",
+                new String[]{no}, null, null, null);
+
+        PatientModel patientModel = null;
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_id_doctor = result.getColumnIndexOrThrow(DBGlobal.COL_ID_DOCTOR);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_gender = result.getColumnIndexOrThrow(DBGlobal.COL_GENDER);
+            int col_date_of_birth = result.getColumnIndexOrThrow(DBGlobal.COL_DATE_OF_BIRTH);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_photo = result.getColumnIndexOrThrow(DBGlobal.COL_PHOTO);
+            int col_note = result.getColumnIndexOrThrow(DBGlobal.COL_NOTE);
+
+            patientModel = new PatientModel.PatientBuilder(result.getString(col_id),
+                    result.getString(col_name),
+                    result.getString(col_gender),
+                    result.getString(col_date_of_birth))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .photo(result.getString(col_photo))
+                    .note(result.getString(col_note))
+                    .setId_doctor(result.getString(col_id_doctor))
+                    .build();
+        }
+        result.close();
+        return patientModel;
+    }
+
+    public PatientModel getPatientByNameAndIddoctor(SQLiteDatabase db, String no, String id_doctor) {
+        Cursor result = db.query(DBGlobal.TABLE_PATIENT,
+                null,
+                DBGlobal.COL_ID + "=? and " + DBGlobal.COL_ID_DOCTOR + "=?",
+                new String[]{no, id_doctor}, null, null, null);
+
+        PatientModel patientModel = null;
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_id_doctor = result.getColumnIndexOrThrow(DBGlobal.COL_ID_DOCTOR);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_gender = result.getColumnIndexOrThrow(DBGlobal.COL_GENDER);
+            int col_date_of_birth = result.getColumnIndexOrThrow(DBGlobal.COL_DATE_OF_BIRTH);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_photo = result.getColumnIndexOrThrow(DBGlobal.COL_PHOTO);
+            int col_note = result.getColumnIndexOrThrow(DBGlobal.COL_NOTE);
+
+            patientModel = new PatientModel.PatientBuilder(result.getString(col_id),
+                    result.getString(col_name),
+                    result.getString(col_gender),
+                    result.getString(col_date_of_birth))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .photo(result.getString(col_photo))
+                    .note(result.getString(col_note))
+                    .setId_doctor(result.getString(col_id_doctor))
+                    .build();
+        }
+        result.close();
+        return patientModel;
+    }
+
+
+    */
+
 
     public void smartInsert(SQLiteDatabase db, PatientModel model){
         ArrayList<PatientModel> models = getPatientList(db);

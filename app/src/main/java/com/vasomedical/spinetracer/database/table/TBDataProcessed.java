@@ -18,7 +18,8 @@ public class TBDataProcessed {
 
     /**
      * 这个内部算法实验用到
-     * 
+     *
+     *
      *
      * **/
     public void insert(SQLiteDatabase db, Entry dataProcessed, String type) {

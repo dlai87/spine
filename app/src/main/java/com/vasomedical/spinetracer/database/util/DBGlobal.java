@@ -47,6 +47,7 @@ public class DBGlobal {
 
 
     public static String TABLE_DOCTOR = "doctor";
+    public static String COL_PASSWORD = "password";
     public static String COL_HOSPITAL = "hospital";
     public static String COL_DEPARTMENT = "department";
 
