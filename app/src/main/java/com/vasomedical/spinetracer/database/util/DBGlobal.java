@@ -11,8 +11,10 @@ public class DBGlobal {
     public final static String TRANS_STATUS_SENT = "sent";
 
 
+
+    public static boolean TEST_MODE = true;
     public static String DB = "tango_db";
-    public static int DB_VERSION = 1;
+    public static  int DB_VERSION = 1;
     public static boolean DB_ON_SDCARD = true;
 
 
@@ -35,7 +37,6 @@ public class DBGlobal {
 
     public static String TABLE_PATIENT = "patient";
     public static String COL_ID = "id";
-    public static String COL_ID_DOCTOR = "id_doctor";
     public static String COL_NAME = "name";
     public static String COL_GENDER = "gender";
     public static String COL_DATE_OF_BIRTH = "date_of_birth";
@@ -58,10 +59,17 @@ public class DBGlobal {
     public static String COL_MOTION_ID = "motion_id";
     public static String COL_DETECTION_TYPE = "detection_type";
     public static String COL_SAVE_CHART_PATH = "save_chart_path";
-
+    public static String COL_POSE_DATA = "pose_data";
+    public static String COL_SCORE = "score";
+    public static String COL_COMMENT = "comment";
 
     public static String TABLE_POSE = "pose";
     public static String COL_DETECTION_ID = "detection_id";
+
+    public static String TABLE_DATA_PROCESSED = "data_processed";
+    public static String COL_ENTRY_X = "entry_x";
+    public static String COL_ENTRY_Y = "entry_y";
+    public static String COL_TYPE = "type";
 
     public static String TABLE_LOGS = "logs";
     public static String COL_LOGS_ID = "logs_id";
