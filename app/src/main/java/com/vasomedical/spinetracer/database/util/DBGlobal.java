@@ -43,7 +43,7 @@ public class DBGlobal {
     public static String COL_PHONE_NUMBER = "phone_number";
     public static String COL_EMAIL = "email";
     public static String COL_NOTE = "note";
-    public static String COL_ID_DOCTOR = "doctor_id";
+    public static String COL_ID_DOCTOR = "id_doctor";
 
 
     public static String TABLE_DOCTOR = "doctor";

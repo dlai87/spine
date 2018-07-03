@@ -75,7 +75,7 @@ public class MianToolsActivity extends AppCompatActivity implements View.OnClick
             }
         } else if (v == buttonRecod) {
             if (Global.login) {
-                Intent intent = new Intent(this, PatientActivity.class);
+                Intent intent = new Intent(this, HistoryTestActivity.class);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "测试用户无法历史记录", Toast.LENGTH_SHORT).show();

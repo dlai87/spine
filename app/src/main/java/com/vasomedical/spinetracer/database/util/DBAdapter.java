@@ -156,6 +156,7 @@ public class DBAdapter extends SQLiteOpenHelper {
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
         keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
         keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[] {DBGlobal.COL_ID_DOCTOR, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_NAME, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_GENDER, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_DATE_OF_BIRTH, "TEXT"});

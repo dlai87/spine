@@ -35,12 +35,7 @@
         <activity
             android:name=".activity.CelianTest"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
 
         <activity
             android:name=".HelloMotionTrackingActivity"
@@ -110,6 +105,9 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name=".activity.HistoryTestActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
