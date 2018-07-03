@@ -136,7 +136,7 @@ public class TBDoctor {
                 String limit)
                 */
         ArrayList<DoctorModel> queryResult = new ArrayList<DoctorModel>();
-        String selection = DBGlobal.COL_DOCTOR_ID + " =? ";
+        String selection = DBGlobal.COL_ID + " =? ";
         String[] selectionArgs = {doctorId};
         Cursor result = db.query(DBGlobal.TABLE_DOCTOR, null, selection, selectionArgs, null, null, null);
         if (result.getCount() > 0) {

@@ -182,9 +182,10 @@ public class TBPatient {
 
     public ArrayList<PatientModel> getPatientListByDoctorAndName(SQLiteDatabase db, String id_doctor, String name) {
         ArrayList<PatientModel> queryResult = new ArrayList<PatientModel>();
+        String selection = DBGlobal.COL_ID_DOCTOR + "=? and " + DBGlobal.COL_NAME + " like ?";
         Cursor result = db.query(DBGlobal.TABLE_PATIENT, null,
-                DBGlobal.COL_ID_DOCTOR + "=? and " + DBGlobal.COL_NAME + " like '%?%'",
-                new String[]{id_doctor, name}, null, null, null);
+                selection,
+                new String[]{id_doctor, "%" + name + "%"}, null, null, null);
         if (result.getCount() > 0) {
             result.moveToFirst();
             int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);

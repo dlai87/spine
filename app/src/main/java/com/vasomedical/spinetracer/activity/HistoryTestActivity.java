@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.JsonWriter;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,9 +15,14 @@ import com.vasomedical.spinetracer.activity.presenter.HistoryTestPresenter;
 import com.vasomedical.spinetracer.activity.presenter.HistoryTestPresenterCompl;
 import com.vasomedical.spinetracer.activity.presenter.LogsPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.HistoryTestView;
+import com.vasomedical.spinetracer.model.HistoryTestModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class HistoryTestActivity extends AppCompatActivity implements View.OnClickListener, HistoryTestView {
 
@@ -60,12 +67,12 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
         } else if (v == btnSearch) {
             historyTestPresenter.reqName(edSearch.getText().toString());
         } else if (v == btnReport) {
-
+            Map<HistoryTestModel, Set<InspectionRecord>> modelSetMap = historyTestAdapter.getSelectModel();
         }
     }
 
     @Override
-    public void updateUI(List<InspectionRecord> recordList) {
+    public void updateUI(List<HistoryTestModel> recordList) {
         historyTestAdapter.setData(recordList);
     }
 }

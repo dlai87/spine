@@ -103,20 +103,21 @@ public class TBDetection {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         String selection = DBGlobal.COL_PATIENT_ID + " =? "; // TEMP use timestamp to compare
         String[] selectionArgs = {patient.getId()};
-        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, null);
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, DBGlobal.COL_TIMESTAMP, null, DBGlobal.COL_PATIENT_ID);
         if (result.getCount() > 0) {
             result.moveToFirst();
-            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
             int col_timestamp = result.getColumnIndexOrThrow(DBGlobal.COL_TIMESTAMP);
             int col_patient_id = result.getColumnIndexOrThrow(DBGlobal.COL_PATIENT_ID);
             int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_DOCTOR_ID);
             int col_type = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_TYPE);
-            int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
-            int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
+            //int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
+            //int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
 
             TBPose tbPose = new TBPose();
             String detectionId = result.getString(col_detection_id);
-            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+//            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+            ArrayList<Pose> poseList = null;
             TBDoctor tbDoctor = new TBDoctor();
             String doctorId = result.getString(col_doctor_id);
             ArrayList<DoctorModel> doctorList = tbDoctor.getDoctorList(db, doctorId);
@@ -125,13 +126,15 @@ public class TBDetection {
                     result.getString(col_timestamp),
                     patient,
                     doctor,
-                    result.getInt(col_type),
+                    result.getString(col_type),
                     poseList,
-                    result.getInt(col_score),
-                    result.getString(col_comment)).build());
+//                    result.getInt(col_score),
+//                    result.getString(col_comment)
+                    0, null
+            ).build());
             while (result.moveToNext()) {
                 detectionId = result.getString(col_detection_id);
-                poseList = tbPose.getPoseList(db, detectionId);
+                //poseList = tbPose.getPoseList(db, detectionId);
                 doctorId = result.getString(col_doctor_id);
                 doctorList = tbDoctor.getDoctorList(db, doctorId);
                 doctor = doctorList.get(0);
@@ -139,10 +142,12 @@ public class TBDetection {
                         result.getString(col_timestamp),
                         patient,
                         doctor,
-                        result.getInt(col_type),
+                        result.getString(col_type),
                         poseList,
-                        result.getInt(col_score),
-                        result.getString(col_comment)).build());
+//                        result.getInt(col_score),
+//                        result.getString(col_comment)
+                        0, ""
+                ).build());
             }
         }
         return queryResult;
@@ -152,20 +157,21 @@ public class TBDetection {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         String selection = DBGlobal.COL_DOCTOR_ID + " =? "; // TEMP use timestamp to compare
         String[] selectionArgs = {doctorModel.getId()};
-        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, null);
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, DBGlobal.COL_TIMESTAMP, null, DBGlobal.COL_PATIENT_ID);
         if (result.getCount() > 0) {
             result.moveToFirst();
-            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
             int col_timestamp = result.getColumnIndexOrThrow(DBGlobal.COL_TIMESTAMP);
             int col_patient_id = result.getColumnIndexOrThrow(DBGlobal.COL_PATIENT_ID);
             int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_DOCTOR_ID);
             int col_type = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_TYPE);
-            int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
-            int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
+            //int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
+            //int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
 
             TBPose tbPose = new TBPose();
             String detectionId = result.getString(col_detection_id);
-            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+//            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+            ArrayList<Pose> poseList = null;
 
             TBPatient tbPatient = new TBPatient();
             String patientId = result.getString(col_patient_id);
@@ -174,23 +180,27 @@ public class TBDetection {
                     result.getString(col_timestamp),
                     patientModel,
                     doctorModel,
-                    result.getInt(col_type),
+                    result.getString(col_type),
                     poseList,
-                    result.getInt(col_score),
-                    result.getString(col_comment)).build());
+//                    result.getInt(col_score),
+//                    result.getString(col_comment)
+                    0, ""
+            ).build());
             while (result.moveToNext()) {
                 detectionId = result.getString(col_detection_id);
-                poseList = tbPose.getPoseList(db, detectionId);
+                //poseList = tbPose.getPoseList(db, detectionId);
                 patientId = result.getString(col_patient_id);
                 patientModel = tbPatient.getPatientByNo(db, patientId);
                 queryResult.add(new InspectionRecord.InspectionRecordBuilder(result.getString(col_detection_id),
                         result.getString(col_timestamp),
                         patientModel,
                         doctorModel,
-                        result.getInt(col_type),
+                        result.getString(col_type),
                         poseList,
-                        result.getInt(col_score),
-                        result.getString(col_comment)).build());
+//                        result.getInt(col_score),
+//                        result.getString(col_comment)
+                        0, ""
+                ).build());
             }
         }
         return queryResult;

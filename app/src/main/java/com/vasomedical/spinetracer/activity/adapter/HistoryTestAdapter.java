@@ -6,37 +6,99 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.adapter.viewholder.HistoryTestViewHolder;
+import com.vasomedical.spinetracer.model.HistoryTestModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHolder> {
+public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHolder> implements CompoundButton.OnCheckedChangeListener {
 
     private LayoutInflater mLayoutInflater;
     private Context mContext;
-    private List<InspectionRecord> data;
+    private List<HistoryTestModel> data;
+    private Map<HistoryTestModel, Set<InspectionRecord>> selectModel;
 
     public HistoryTestAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
+        selectModel = new HashMap<>();
     }
 
     @NonNull
     @Override
     public HistoryTestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HistoryTestViewHolder(mLayoutInflater.inflate(R.layout.activity_people_item, parent, false));
+        HistoryTestViewHolder viewHolder = new HistoryTestViewHolder(mLayoutInflater.inflate(R.layout.activity_historytest_item, parent, false));
+        viewHolder.radioButton.setOnCheckedChangeListener(this);
+        viewHolder.checkbox1.setOnCheckedChangeListener(this);
+        viewHolder.checkbox2.setOnCheckedChangeListener(this);
+        viewHolder.checkbox3.setOnCheckedChangeListener(this);
+        viewHolder.checkbox4.setOnCheckedChangeListener(this);
+        viewHolder.checkbox5.setOnCheckedChangeListener(this);
+        viewHolder.checkbox6.setOnCheckedChangeListener(this);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistoryTestViewHolder holder, int position) {
         if (data != null) {
-            InspectionRecord model = data.get(position);
-            holder.tvName.setText(model.getPatient().getName());
-            holder.tvDate.setText(model.getPatient().getDate_of_birth() + " No." + model.getPatient().getId());
+            HistoryTestModel model = data.get(position);
+            holder.tvName.setText(model.getPatientModel().getName());
+            holder.tvDate.setText(model.getDate() + " No." + model.getPatientModel().getId());
+            //控制数据
+            holder.radioButton.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox1.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox2.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox3.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox4.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox5.setTag(R.id.HistoryTestModel, model);
+            holder.checkbox6.setTag(R.id.HistoryTestModel, model);
+            //控制显示
+            Set<InspectionRecord> selInspectionRecord = selectModel.get(model);
+            holder.radioButton.setChecked(selectModel.containsKey(model));
+            holder.item1.setVisibility(View.GONE);
+            holder.item2.setVisibility(View.GONE);
+            holder.item3.setVisibility(View.GONE);
+            holder.item4.setVisibility(View.GONE);
+            holder.item5.setVisibility(View.GONE);
+            holder.item6.setVisibility(View.GONE);
+            for (InspectionRecord inspectionRecord : model.getInspectionRecordList()) {
+                if ("躯干倾斜角".contains(inspectionRecord.getType())) {
+                    holder.item1.setVisibility(View.VISIBLE);
+                    holder.checkbox1.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox1.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                } else if ("脊柱弯曲COBB角".contains(inspectionRecord.getType())) {
+                    holder.item2.setVisibility(View.VISIBLE);
+                    holder.checkbox2.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox2.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                } else if ("左右侧弯倾角".contains(inspectionRecord.getType())) {
+                    holder.item3.setVisibility(View.VISIBLE);
+                    holder.checkbox3.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox3.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                } else if ("身体平衡度".contains(inspectionRecord.getType())) {
+                    holder.item4.setVisibility(View.VISIBLE);
+                    holder.checkbox4.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox4.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                } else if ("前倾/后仰角".contains(inspectionRecord.getType())) {
+                    holder.item5.setVisibility(View.VISIBLE);
+                    holder.checkbox5.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox5.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                } else if ("旋转角".contains(inspectionRecord.getType())) {
+                    holder.item6.setVisibility(View.VISIBLE);
+                    holder.checkbox6.setTag(R.id.InspectionRecord, inspectionRecord);
+                    holder.checkbox6.setChecked(selInspectionRecord != null && selInspectionRecord.contains(inspectionRecord));
+                }
+            }
         }
     }
 
@@ -45,21 +107,21 @@ public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHold
         return data == null ? 10 : data.size();
     }
 
-    public void setData(List<InspectionRecord> data) {
+    public void setData(List<HistoryTestModel> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public void addData(List<InspectionRecord> data) {
+    public void addData(List<HistoryTestModel> data) {
         this.data.addAll(data);
         notifyDataSetChanged();
     }
 
-    public List<InspectionRecord> getData() {
+    public List<HistoryTestModel> getData() {
         return data;
     }
 
-    public InspectionRecord getDataItem(int index) {
+    public HistoryTestModel getDataItem(int index) {
         if (data == null || index >= data.size()) {
             return null;
         } else {
@@ -77,13 +139,36 @@ public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHold
         notifyDataSetChanged();
     }
 
-    public void removeItem(String no) {
-        for (InspectionRecord model : data) {
-            if (no.equals(model.getId())) {
-                data.remove(model);
-                break;
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        HistoryTestModel model = (HistoryTestModel) buttonView.getTag(R.id.HistoryTestModel);
+
+        if (buttonView.getId() == R.id.radioButton) {
+            Set<InspectionRecord> setInspectionRecord = selectModel.get(model);
+            if (setInspectionRecord == null) {
+                setInspectionRecord = new HashSet<>();
             }
+            if (isChecked) {
+                selectModel.put(model, setInspectionRecord);
+            } else {
+                selectModel.remove(model);
+            }
+        } else {
+            Set<InspectionRecord> setInspectionRecord = selectModel.get(model);
+            InspectionRecord inspectionRecord = (InspectionRecord) buttonView.getTag(R.id.InspectionRecord);
+            if (setInspectionRecord == null) {
+                setInspectionRecord = new HashSet<>();
+            }
+            if (isChecked) {
+                setInspectionRecord.add(inspectionRecord);
+            } else {
+                setInspectionRecord.remove(inspectionRecord);
+            }
+            selectModel.put(model, setInspectionRecord);
         }
-        notifyDataSetChanged();
+    }
+
+    public Map<HistoryTestModel, Set<InspectionRecord>> getSelectModel() {
+        return selectModel;
     }
 }

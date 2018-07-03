@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/radioButton"
         android:layout_width="26dp"
         android:layout_height="26dp"
@@ -52,11 +52,10 @@
 
     <CheckBox
         android:id="@+id/checkbox1"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
-        android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName1" />
@@ -80,11 +79,11 @@
 
     <CheckBox
         android:id="@+id/checkbox2"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
         android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName2" />
@@ -108,11 +107,11 @@
 
     <CheckBox
         android:id="@+id/checkbox3"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
         android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName3" />
@@ -136,11 +135,11 @@
 
     <CheckBox
         android:id="@+id/checkbox4"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
         android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName4" />
@@ -164,11 +163,11 @@
 
     <CheckBox
         android:id="@+id/checkbox5"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
         android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName5" />
@@ -192,11 +191,11 @@
 
     <CheckBox
         android:id="@+id/checkbox6"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:background="@drawable/check"
         android:button="@null"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/itemName6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemName6" />
