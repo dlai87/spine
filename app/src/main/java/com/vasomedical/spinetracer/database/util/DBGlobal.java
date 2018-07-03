@@ -11,10 +11,9 @@ public class DBGlobal {
     public final static String TRANS_STATUS_SENT = "sent";
 
 
-
     public static boolean TEST_MODE = true;
     public static String DB = "tango_db";
-    public static  int DB_VERSION = 1;
+    public static int DB_VERSION = 1;
     public static boolean DB_ON_SDCARD = true;
 
 
@@ -44,6 +43,7 @@ public class DBGlobal {
     public static String COL_PHONE_NUMBER = "phone_number";
     public static String COL_EMAIL = "email";
     public static String COL_NOTE = "note";
+    public static String COL_ID_DOCTOR = "doctor_id";
 
 
     public static String TABLE_DOCTOR = "doctor";

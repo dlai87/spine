@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/radio"
+        android:button="@null"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="张三风 "
+        android:textColor="#ff00baff"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioButton"
+        app:layout_constraintStart_toEndOf="@+id/radioButton"
+        app:layout_constraintTop_toTopOf="@+id/radioButton" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="1999-07-28 NO.432652722780  "
+        android:textColor="#ffffffff"
+        android:textSize="19sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/itemName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="躯干倾斜角"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <CheckBox
+        android:id="@+id/checkbox1"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName1" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName1,checkbox1" />
+
+    <TextView
+        android:id="@+id/itemName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="脊柱弯曲COBB角"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/itemName1" />
+
+    <CheckBox
+        android:id="@+id/checkbox2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName2" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName2,checkbox2" />
+
+    <TextView
+        android:id="@+id/itemName3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="左右侧弯倾角"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/itemName2" />
+
+    <CheckBox
+        android:id="@+id/checkbox3"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName3" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName3,checkbox3" />
+
+    <TextView
+        android:id="@+id/itemName4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="身体平衡度"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/itemName3" />
+
+    <CheckBox
+        android:id="@+id/checkbox4"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName4" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName4,checkbox4" />
+
+    <TextView
+        android:id="@+id/itemName5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="前倾/后仰角"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/itemName4" />
+
+    <CheckBox
+        android:id="@+id/checkbox5"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName5" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName5,checkbox5" />
+
+    <TextView
+        android:id="@+id/itemName6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="旋转角"
+        android:textColor="#ff97a0c0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/itemName5" />
+
+    <CheckBox
+        android:id="@+id/checkbox6"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/check"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemName6" />
+
+    <android.support.constraint.Group
+        android:id="@+id/item6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="itemName6,checkbox6" />
+
+</android.support.constraint.ConstraintLayout>

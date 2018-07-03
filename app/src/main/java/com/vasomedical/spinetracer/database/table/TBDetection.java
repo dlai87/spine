@@ -12,6 +12,7 @@ import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dehualai on 5/13/17.
@@ -20,13 +21,11 @@ import java.util.ArrayList;
 public class TBDetection {
 
 
-
     /**
-     *
      * 测量表
-     *
+     * <p>
      * 测量表里面是每一次测量的记录
-     *
+     * <p>
      * COL_DETECTION_ID    唯一key
      * COL_TIMESTAMP       测量的时间戳
      * COL_DOCTOR_ID       医生id，可以通过这个id到医生表里面找到医生的信息
@@ -34,9 +33,7 @@ public class TBDetection {
      * COL_DETECTION_TYPE  测量的类型  如 躯干倾斜角、驼背角、侧弯cobb角 等等
      * COL_SCORE           测量评定、优、良、健康、不健康等
      * COL_COMMENT         医生写的评语
-     *
-     *
-     * **/
+     **/
 
     public void insert(SQLiteDatabase db, InspectionRecord record) {
         ContentValues cv = new ContentValues();
@@ -142,6 +139,54 @@ public class TBDetection {
                         result.getString(col_timestamp),
                         patient,
                         doctor,
+                        result.getInt(col_type),
+                        poseList,
+                        result.getInt(col_score),
+                        result.getString(col_comment)).build());
+            }
+        }
+        return queryResult;
+    }
+
+    public ArrayList<InspectionRecord> getDetectionList(SQLiteDatabase db, DoctorModel doctorModel) {
+        ArrayList<InspectionRecord> queryResult = new ArrayList<>();
+        String selection = DBGlobal.COL_DOCTOR_ID + " =? "; // TEMP use timestamp to compare
+        String[] selectionArgs = {doctorModel.getId()};
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, null);
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_ID);
+            int col_timestamp = result.getColumnIndexOrThrow(DBGlobal.COL_TIMESTAMP);
+            int col_patient_id = result.getColumnIndexOrThrow(DBGlobal.COL_PATIENT_ID);
+            int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_DOCTOR_ID);
+            int col_type = result.getColumnIndexOrThrow(DBGlobal.COL_DETECTION_TYPE);
+            int col_score = result.getColumnIndexOrThrow(DBGlobal.COL_SCORE);
+            int col_comment = result.getColumnIndexOrThrow(DBGlobal.COL_COMMENT);
+
+            TBPose tbPose = new TBPose();
+            String detectionId = result.getString(col_detection_id);
+            ArrayList<Pose> poseList = tbPose.getPoseList(db, detectionId);
+
+            TBPatient tbPatient = new TBPatient();
+            String patientId = result.getString(col_patient_id);
+            PatientModel patientModel = tbPatient.getPatientByNo(db, patientId);
+            queryResult.add(new InspectionRecord.InspectionRecordBuilder(result.getString(col_detection_id),
+                    result.getString(col_timestamp),
+                    patientModel,
+                    doctorModel,
+                    result.getInt(col_type),
+                    poseList,
+                    result.getInt(col_score),
+                    result.getString(col_comment)).build());
+            while (result.moveToNext()) {
+                detectionId = result.getString(col_detection_id);
+                poseList = tbPose.getPoseList(db, detectionId);
+                patientId = result.getString(col_patient_id);
+                patientModel = tbPatient.getPatientByNo(db, patientId);
+                queryResult.add(new InspectionRecord.InspectionRecordBuilder(result.getString(col_detection_id),
+                        result.getString(col_timestamp),
+                        patientModel,
+                        doctorModel,
                         result.getInt(col_type),
                         poseList,
                         result.getInt(col_score),

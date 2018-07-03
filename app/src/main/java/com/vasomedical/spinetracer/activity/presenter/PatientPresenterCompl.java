@@ -31,13 +31,8 @@ public class PatientPresenterCompl implements PatientPresenter {
         handler = new Handler();
         logsPresenter = new LogsPresenterCompl(context);
     }
-
-    // todo 这里我暂时注销，因为patient table的几个方法涉及到doctor id 的需要更新。
-
     @Override
     public void selectPatientByNo(final String no) {
-
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -51,12 +46,10 @@ public class PatientPresenterCompl implements PatientPresenter {
                 addLog("查询病人:" + no);
             }
         }).start();
-        */
     }
 
     @Override
     public void selectPatientList(final DoctorModel userModel) {
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,12 +63,10 @@ public class PatientPresenterCompl implements PatientPresenter {
                 addLog("查询病人信息");
             }
         }).start();
-        */
     }
 
     @Override
     public void savePatient(final PatientModel patientModel) {
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -98,7 +89,6 @@ public class PatientPresenterCompl implements PatientPresenter {
                 }
             }
         }).start();
-        */
     }
 
 
@@ -121,7 +111,6 @@ public class PatientPresenterCompl implements PatientPresenter {
 
     @Override
     public void deletPatient(final String no) {
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -135,7 +124,6 @@ public class PatientPresenterCompl implements PatientPresenter {
                 addLog("删除病人编号:" + no);
             }
         }).start();
-        */
     }
 
     private void addLog(String thing) {
