@@ -10,6 +10,7 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.detect.DetectingBaseFragment;
 import com.vasomedical.spinetracer.fragment.detect.DetectingFactory;
+import com.vasomedical.spinetracer.fragment.detect.DetectingFragment;
 import com.vasomedical.spinetracer.util.fragmentTransation.FragmentUtil;
 import com.vasomedical.spinetracer.util.fragmentTransation.IMainAppHandler;
 
@@ -57,22 +58,32 @@ public class DetectActivity extends AppCompatActivity implements IMainAppHandler
             }
             switch (fragment.detection_status){
                 case Init:
-                //    detectionStatus = shouldCalubrate? DETECTION_STATUS.Calibrating : DETECTION_STATUS.Start;
-                    fragment.detection_status = DETECTION_STATUS.Start;
+                    fragment.detection_status = fragment.shouldCalubrate? DETECTION_STATUS.Calibrating : DETECTION_STATUS.Start;
+                //    fragment.detection_status = DETECTION_STATUS.Start;
                     fragment.start();
+                    Log.i(TAG, "key Event === 1 " );
                     break;
                 case Calibrating:
+                    Log.i(TAG, "key Event === 2 " );
                     fragment.detection_status = DETECTION_STATUS.Start;
                     break;
                 case Start:
+                    Log.i(TAG, "key Event === 3 stop " );
                     fragment.detection_status = DETECTION_STATUS.Init;
+                    fragment.initPose = null;
+                    fragment.translationInit[0] = 0;
+                    fragment.translationInit[1] = 0;
+                    fragment.translationInit[2] = 0;
+                    fragment.orientationInit[0] = 0;
+                    fragment.orientationInit[1] = 0;
+                    fragment.orientationInit[2] = 0;
+                    fragment.orientationInit[3] = 0;
                     fragment.stop();
                     break;
             }
         }
         return true;
     }
-
 
 
     /**

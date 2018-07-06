@@ -37,12 +37,25 @@ import java.util.Date;
 public abstract class DetectingBaseFragment extends BaseFragment {
 
     private static final String TAG = "DetectingBaseFragment";
+
+    // tango
     protected Tango mTango;
     protected TangoConfig mConfig;
-    protected AnalyticBaseFragment analyticFragment;
-    public static PoseLog poseLog;
-    public static DetectActivity.DETECTION_STATUS detection_status = DetectActivity.DETECTION_STATUS.Init;;
 
+    // analytic
+    protected AnalyticBaseFragment analyticFragment;
+
+    // initial pose related
+    public TangoPoseData initPose = null;
+    public float translationInit[] = new float[3];
+    public float orientationInit[] = new float[4];
+
+    // status
+    public DetectActivity.DETECTION_STATUS detection_status = DetectActivity.DETECTION_STATUS.Init;
+    public boolean shouldCalubrate = false;
+
+    // pose log
+    public PoseLog poseLog;
 
     @Override
     protected void assignViews() {
