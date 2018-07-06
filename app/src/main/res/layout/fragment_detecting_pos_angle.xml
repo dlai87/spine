@@ -17,15 +17,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/status_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="23dp"
-                android:textColor="@color/red"
-                android:text="@string/calibrate"
-                android:layout_marginBottom="@dimen/margin_2"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="侧向移动"
+                    android:text="旋转"
                     android:textColor="#ff00baff"
                     android:textSize="43sp" />
 
@@ -46,20 +37,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="43sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="厘米"
-                    android:textColor="#ff00baff"
-                    android:textSize="43sp" />
-
             </LinearLayout>
 
 
             <include
-                android:id="@+id/layout_celian2"
-                layout="@layout/layout_celian2"
+                android:id="@+id/layout_celian"
+                layout="@layout/layout_celian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />

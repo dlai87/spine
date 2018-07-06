@@ -27,25 +27,25 @@ public class AlgorithmFactory {
 
     public AlgorithmBase getAlgorithm(int option){
         switch (option){
-            case DETECT_OPT_1:
+            case DETECT_OPT_1:   // 躯干倾斜角
                 return new AlgorithmOptSlant();
 
-            case DETECT_OPT_2:
+            case DETECT_OPT_2:  // 驼背角
                 return new AlgorithmOptHumpback();
 
-            case DETECT_OPT_3:
+            case DETECT_OPT_3:  // 脊柱弯曲cobb角
                 return new AlgorithmOptBending();
 
-            case DETECT_OPT_4:
+            case DETECT_OPT_4: // 脊柱左右侧弯角
                 return new AlgorithmOptLeftRight();
 
-            case DETECT_OPT_5:
+            case DETECT_OPT_5:  // 前倾后仰角
                 return new AlgorithmOptForwardBack();
 
-            case DETECT_OPT_6:
+            case DETECT_OPT_6:  // 旋转角
                 return new AlgorithmOptRotate();
 
-            case DETECT_OPT_7:
+            case DETECT_OPT_7:  // 身体平衡度
                 return new AlgorithmOptBalance();
 
             default:

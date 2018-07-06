@@ -98,6 +98,19 @@ public class Util {
     }
 
 
+    public static float meterToCM(float len, float offset , boolean reverse){
+        len = len * 100.0f;
+        len += offset;
+        if (reverse) len = -len;
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
+        try {
+            float move = Float.valueOf(decimalFormat.format(len));
+            return move ;
+        }catch (Exception e){
+            return -99999;
+        }
+    }
+
     public static float radianToDegree(float radian, int offset, boolean reverse){
         float degree = (float) Math.toDegrees(radian);
         degree += offset;
