@@ -101,7 +101,7 @@ public class Util {
     public static float meterToCM(float len, float offset , boolean reverse){
         len += offset;
         len = len * 100.0f;
-        
+
         if (reverse) len = -len;
         DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
         try {

@@ -100,8 +100,10 @@
 
     <dimen name="img_chart_w">640dp</dimen>
     <dimen name="img_chart_h">320dp</dimen>
-    <dimen name="img_chart_h2">100dp</dimen>
+    <dimen name="img_chart_h2">200dp</dimen>
 
+    <dimen name="img_chart_seg_w">320dp</dimen>
+    <dimen name="img_chart_seg_h">400dp</dimen>
 
     <dimen name="img_avatar_w">110dp</dimen>
     <dimen name="img_avatar_h">110dp</dimen>

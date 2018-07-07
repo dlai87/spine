@@ -22,6 +22,7 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.algorithm.filters.BasicOperation;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticBaseFragment;
+import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.model.PoseLog;
 import com.vasomedical.spinetracer.util.Util;
@@ -44,6 +45,9 @@ public abstract class DetectingBaseFragment extends BaseFragment {
 
     // analytic
     protected AnalyticBaseFragment analyticFragment;
+
+    PatientModel patient;
+
 
     // initial pose related
     public TangoPoseData initPose = null;
@@ -68,7 +72,9 @@ public abstract class DetectingBaseFragment extends BaseFragment {
     }
 
 
-
+    public void setPatient(PatientModel newPatient) {
+        patient = newPatient;
+    }
 
 
     public void start() {

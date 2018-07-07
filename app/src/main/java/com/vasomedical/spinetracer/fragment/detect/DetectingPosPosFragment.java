@@ -11,10 +11,15 @@ import android.widget.TextView;
 import com.google.atap.tangoservice.TangoPoseData;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.DetectActivity;
+import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSegment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
+import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.util.Util;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by dehualai on 7/5/18.
@@ -29,8 +34,6 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
     TextView moveLengthText;
     TextView degreeText;
     TextView calibrateText;
-    float initialMove = Integer.MIN_VALUE;
-    float initialDegree = Integer.MIN_VALUE;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +43,17 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
 
         analyticFragment = new AnalyticOptSegment();
 
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
+                timeStamp,
+                patient,
+                Util.getCurrentDoctor(),
+                AlgorithmFactory.detectionOption,
+                null,
+                0,
+                "");
+        analyticFragment.setRecord(builder.build());
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -48,8 +62,6 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
     public void onResume(){
         super.onResume();
         shouldCalubrate = true;
-        initialMove = Integer.MIN_VALUE;
-        initialDegree = Integer.MIN_VALUE;
     }
 
 
@@ -72,8 +84,6 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
     @Override
     protected void logPose(TangoPoseData pose){
 
-        final int realtime_display_degree = 1;
-        final int offset = 0 ;
 
         final float translation[] = pose.getTranslationAsFloats();
         final float orientation[] = pose.getRotationAsFloats();
@@ -85,19 +95,9 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
                 orientation[3]);
 
         try {
-            float move = 0;
-            float degree = 0 ;
-            if(initialMove == Integer.MIN_VALUE){
-                Log.e(TAG, "init @@@@@ " + translationInit[1] );
-                initialMove = Util.meterToCM(translation[1],  -translationInit[1], true);
-                initialDegree = Util.meterToCM(translation[0], -translationInit[0], true);
-            }else{
-                Log.e(TAG, "init **** " + translationInit[1] );
-                move = Util.meterToCM(translation[1], -translationInit[1], true);
-                degree = Util.meterToCM(translation[0], -translationInit[0], true);
-            }
 
-
+            float move = Util.meterToCM(translation[1], -translationInit[1], true);
+            float degree = Util.meterToCM(translation[0], -translationInit[0], true);
 
 
             updateUI(degree, move);

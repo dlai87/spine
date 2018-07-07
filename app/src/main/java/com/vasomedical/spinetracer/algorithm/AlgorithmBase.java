@@ -107,7 +107,24 @@ public abstract class AlgorithmBase  {
 
 
 
+    protected ArrayList<Entry> createDataForChartSpineSegment(ArrayList<Pose> inputData,
+                                                              Coordinate c1 ,
+                                                              Coordinate c2){
 
+        SpineSegmentManager spineSegmentManager = new SpineSegmentManager();
+        ArrayList<SpineShape> spineList = spineSegmentManager.covert(inputData);
+
+        ArrayList<Entry> dataWithProcess = new ArrayList<Entry>();
+        for(int i = 0 ; i < spineList.size(); i++){
+            Pose temp = spineList.get(i).getPose();
+            dataWithProcess.add(new
+                    Entry(
+                    Util.valueOfCoordinate(temp, c1) ,
+                    Util.valueOfCoordinate(temp, c2)));
+        }
+
+        return dataWithProcess;
+    }
 
 
     protected ArrayList<Entry> createDataForChartSpineSegment2( ArrayList<ArrayList<Pose>> inputData,

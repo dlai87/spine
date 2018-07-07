@@ -55,10 +55,12 @@ public class AlgorithmOptBending extends AlgorithmBase {
 
     private ArrayList<Entry> normalizeData(ArrayList<Entry> inputData){
         // reverse
+
         /*
         for (Entry entry: inputData){
             entry.setY(-entry.getY());
         }
+
         for (Entry entry: inputData){
             Log.d("show", entry.toString());
         }

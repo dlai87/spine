@@ -41,24 +41,26 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/margin_1">
 
 
-            <com.github.rongi.rotate_layout.layout.RotateLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:angle="0">
+                android:layout_marginBottom="@dimen/margin_2"
+                android:text="测量结果分析"
+                android:textColor="#ff00baff"
+                android:textSize="28sp" />
 
-                <!-- should rotate 90 / 270 -->
 
-                <com.github.mikephil.charting.charts.HorizontalBarChart
-                    android:id="@+id/chart1"
-                    android:layout_width="@dimen/img_chart_w"
-                    android:layout_height="@dimen/img_chart_h2"
-                    android:background="@android:color/transparent"
-                    android:layout_centerHorizontal="true"/>
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/img_chart_h2"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/white" />
 
-            </com.github.rongi.rotate_layout.layout.RotateLayout>
 
         </LinearLayout>
 
@@ -83,8 +85,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/margin_0">
+                    android:layout_marginBottom="@dimen/margin_0"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -106,8 +108,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/margin_0">
+                    android:layout_marginBottom="@dimen/margin_0"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -142,10 +144,9 @@
                     android:layout_marginBottom="@dimen/margin_0"
                     android:layout_marginTop="@dimen/margin_0"
                     android:background="@drawable/button_drop_down"
-                    android:popupBackground="@color/white"
-                    android:spinnerMode="dropdown"
                     android:gravity="center"
-                    />
+                    android:popupBackground="@color/white"
+                    android:spinnerMode="dropdown" />
 
                 <!--
 

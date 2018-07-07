@@ -18,6 +18,7 @@ import com.vasomedical.spinetracer.activity.view.PatientView;
 import com.vasomedical.spinetracer.activity.view.ProjectView;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.dialog.ReportDialog;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.ProjectModel;
 import com.vasomedical.spinetracer.util.Global;
@@ -36,12 +37,21 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     private ReportDialog reportDialog;
 
+
+    // fixme : 一旦到了SelProjectcAtivity ， 就必须包含patient 和 doctor， 不然是非法的
+    private PatientModel patientModel;
+    private DoctorModel doctorModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sel_projectctivity);
         findViews();
         addAction();
+
+        // fixme :  能够到达这一页，必须是有了病人，以及有了医生。 所以这里需要有两个object ： patientModel, doctorModel
+        // 需要处理前面步骤里，用户选择的病人，和医生信息。造出patient model , doctor model
+
 
         //选择了用户了
         String patinetId = getIntent().getStringExtra("patinet_no");
@@ -216,6 +226,7 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public boolean onLongClick(View v) {
+
         if (v == buttonItem1) {
             showReportDialog("躯干倾斜角", getString(R.string.item1_desc));
         } else if (v == buttonItem2) {

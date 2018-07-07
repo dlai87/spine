@@ -2,6 +2,7 @@ package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,10 +29,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.activity.SelProjectcAtivity;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
+import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
@@ -68,11 +71,12 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     protected RelativeLayout chartView;
 
-  //  Button reTestButton;
+    //Button reTestButton;
 
     // control buttons
- //   NJButton cancelButton;
-
+    Button saveButton;
+    Button abandonButton;
+    InspectionRecord record;
 
     Spinner spinner;
 
@@ -106,6 +110,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         filterData = data;
     }
 
+    public void setRecord(InspectionRecord newRecord) {
+        record = newRecord;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,7 +130,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
-       // reTestButton = (Button)view.findViewById(R.id.re_test_button);
+
+        saveButton = (Button)view.findViewById(R.id.buttonSave);
+        abandonButton = (Button)view.findViewById(R.id.buttonAbandon);
 
         spinner = (Spinner)view.findViewById(R.id.scoreSpinner);
 
@@ -191,7 +200,16 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         });
         */
 
-        /*
+
+        abandonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mActivity, SelProjectcAtivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,32 +218,25 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             }
         });
 
-        pdfButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                record.setDoctorComments(getDoctorComment());
-                createandDisplayPdf();
-            }
-        });
-        */
+
     }
 
     void saveToDatabase() {
 
-        /*
+
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-        for (Pose pose : record.getInspectionData()) {
+    //    for (Pose pose : record.getInspectionData()) {
             // FIXME: should be only one write
-            tbPose.smartInsert(database, pose, record.getId());
-        }
+    //        tbPose.smartInsert(database, pose, record.getId());
+    //    }
 
         record.setDoctorComments(getDoctorComment());
         record.setScore(64); // TODO
         TBDetection tbDetection = new TBDetection();
         tbDetection.smartInsert(database, record);
-        */
+
 
         AlertDialog alertDialog = new AlertDialog(mContext);
         alertDialog.setTitleView("成功");
