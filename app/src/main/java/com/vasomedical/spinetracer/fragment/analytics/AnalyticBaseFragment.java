@@ -33,6 +33,8 @@ import com.vasomedical.spinetracer.activity.SelProjectcAtivity;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
+import com.vasomedical.spinetracer.dialog.DoctorCommentDialog;
+import com.vasomedical.spinetracer.dialog.ReportDialog;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
@@ -76,6 +78,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     // control buttons
     Button saveButton;
     Button abandonButton;
+    Button diagnosisButton;
     InspectionRecord record;
 
     Spinner spinner;
@@ -131,6 +134,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
 
+        diagnosisButton = (Button) view.findViewById(R.id.buttonDiagnosis);
         saveButton = (Button)view.findViewById(R.id.buttonSave);
         abandonButton = (Button)view.findViewById(R.id.buttonAbandon);
 
@@ -201,6 +205,14 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         */
 
 
+        diagnosisButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DoctorCommentDialog dialog = new DoctorCommentDialog(mContext);
+                dialog.show();
+
+            }
+        });
         abandonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
