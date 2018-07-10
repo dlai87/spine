@@ -1,5 +1,7 @@
 package com.vasomedical.spinetracer.fragment.analytics;
 
+import com.vasomedical.spinetracer.R;
+
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,13 @@ import java.util.ArrayList;
 
 public class AnalyticOptBendingFragment  extends AnalyticAngleRangeFragment {
 
+
+
+    @Override
+    protected void preDefineParams(){
+        angleRange1 = 30;
+        angleRnage2 = 45;
+    }
 
     @Override
     protected void initSubclassValues() {

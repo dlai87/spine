@@ -36,6 +36,7 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         assignViews();
         addActionToViews();
+
         return view;
     }
 

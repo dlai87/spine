@@ -117,14 +117,14 @@
     <string name="please_select_correct_points">请选择脊柱弯曲相应起始点和结束点，以计算Cobb\'s角</string>
     <string name="cobbs_angle">Cobb\'s角</string>
 
-    <string name="analytic_label_left_right_1">左侧弯角度</string>
-    <string name="analytic_label_left_right_2">右侧弯角度</string>
-    <string name="analytic_label_forward_back_1">后仰角度</string>
-    <string name="analytic_label_forward_back_2">前倾角度</string>
-    <string name="analytic_label_rotate_1">左转角度</string>
-    <string name="analytic_label_rotate_2">右转角度</string>
-    <string name="analytic_label_balance_1">左侧倾斜</string>
-    <string name="analytic_label_balance_2">右侧倾斜</string>
+    <string name="analytic_label_left_right_1">右侧弯角度：</string>
+    <string name="analytic_label_left_right_2">左侧弯角度：</string>
+    <string name="analytic_label_forward_back_1">前倾角度：</string>
+    <string name="analytic_label_forward_back_2">后仰角度：</string>
+    <string name="analytic_label_rotate_1">右转角度：</string>
+    <string name="analytic_label_rotate_2">左转角度：</string>
+    <string name="analytic_label_balance_1">右侧倾斜：</string>
+    <string name="analytic_label_balance_2">左侧倾斜：</string>
 
 
     <string name="result_score_0">健康</string>

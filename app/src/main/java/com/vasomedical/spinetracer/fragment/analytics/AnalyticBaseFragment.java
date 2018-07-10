@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -74,6 +76,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
     protected boolean suggestionInitFlag ;
 
     protected RelativeLayout chartView;
+
+
+    protected TextView textView1;
+    protected TextView textView2;
 
     //Button reTestButton;
 
@@ -142,6 +148,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
 
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
+        textView1 = (TextView) view.findViewById(R.id.tvLabel1);
+        textView2 = (TextView) view.findViewById(R.id.tvLabel2);
 
         diagnosisButton = (Button) view.findViewById(R.id.buttonDiagnosis);
         saveButton = (Button)view.findViewById(R.id.buttonSave);
@@ -218,6 +226,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
             @Override
             public void onClick(View v) {
                 if(Global.patientModel == null || Global.userModel == null){
+                    Toast.makeText(mContext, "试用模式下不能保存", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 record.setDoctorComments(docComment);
