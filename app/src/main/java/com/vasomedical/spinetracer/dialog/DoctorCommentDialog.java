@@ -32,6 +32,15 @@ public class DoctorCommentDialog extends Dialog implements View.OnClickListener 
     private String[] commentOptions;
     private Set<String> selectedComment = new HashSet<String>();
 
+    private DoctorCommentInterface callback;
+
+    public void setDoctorCommentInterface(DoctorCommentInterface callback){
+        this.callback = callback;
+    }
+
+    public interface DoctorCommentInterface{
+        public void setDocComment(String docComment);
+    }
 
     public void setCommentOptions(String[] comments){
         this.commentOptions = comments;
@@ -105,7 +114,9 @@ public class DoctorCommentDialog extends Dialog implements View.OnClickListener 
                 for(String s : selectedComment){
                     buf.append(s + "; ");
                 }
-                Log.e("show", "select " + buf.toString());
+                callback.setDocComment(buf.toString());
+                //Log.e("show", "select " + buf.toString());
+                dismiss();
             }
         });
         commentLayout.addView(saveButton);

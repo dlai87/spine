@@ -50,7 +50,7 @@ import java.util.ArrayList;
  * Created by dehualai on 6/24/18.
  */
 
-public abstract class AnalyticBaseFragment extends BaseFragment {
+public abstract class AnalyticBaseFragment extends BaseFragment implements DoctorCommentDialog.DoctorCommentInterface {
 
 
 
@@ -85,7 +85,11 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     Spinner spinner;
 
+    DoctorCommentDialog doctorCommentDialog;
     protected String[] doctorComments;
+    protected String docComment = "";
+
+
 
     protected abstract void defineDoctorComments();
 
@@ -161,6 +165,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         }
 
 
+
+        doctorCommentDialog = new DoctorCommentDialog(mContext);
+        doctorCommentDialog.setCommentOptions(doctorComments);
+        doctorCommentDialog.setDoctorCommentInterface(this);
     }
 
     protected void addActionToViews(){
@@ -192,9 +200,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 defineDoctorComments();
-                DoctorCommentDialog dialog = new DoctorCommentDialog(mContext);
-                dialog.setCommentOptions(doctorComments);
-                dialog.show();
+                doctorCommentDialog.setCommentOptions(doctorComments);
+                doctorCommentDialog.show();
             }
         });
 
@@ -213,7 +220,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
                 if(Global.patientModel == null || Global.userModel == null){
                     return;
                 }
-                record.setDoctorComments(getDoctorComment());
+                record.setDoctorComments(docComment);
                 saveToDatabase();
             }
         });
@@ -231,7 +238,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     //        tbPose.smartInsert(database, pose, record.getId());
     //    }
 
-        record.setDoctorComments(getDoctorComment());
+        record.setDoctorComments(docComment);
         record.setScore(64); // TODO
         TBDetection tbDetection = new TBDetection();
         tbDetection.smartInsert(database, record);
@@ -284,44 +291,18 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
 
 
-
-
-    protected void createandDisplayPdf() {
-
-        /*
-        String filename = "test_" + System.currentTimeMillis() + ".pdf";
-        PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(filename,
-                record,
-                chartView);
-
-        Fragment pdfViewFragment = new PdfViewFragment();
-        Bundle args = new Bundle();
-        args.putString(PdfViewFragment.FILE_NAME, filename);
-        pdfViewFragment.setArguments(args);
-        fragmentUtil.showFragment(pdfViewFragment);
-        */
-
+    // Override interface DoctorCommentDialog.DoctorCommentInterface
+    @Override
+    public void setDocComment(String docComment){
+        this.docComment = docComment;
+        Log.i("show", "doc comment " + this.docComment);
     }
 
 
-    private String getDoctorComment(){
 
-        /*
-        StringBuffer buffer = new StringBuffer();
-        for (OnOffButton button: selectButtonArray){
-            if (button.isOn()){
-                buffer.append(button.getText() + ";\n");
-            }
-        }
-        if (diagnosisEditText.getText()!=null){
-            buffer.append(diagnosisEditText.getText() + ";\n");
-        }
 
-        return buffer.toString();
 
-        */
-        return null;
-    }
+
+
 
 }
