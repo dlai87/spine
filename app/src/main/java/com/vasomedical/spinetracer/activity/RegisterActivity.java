@@ -1,10 +1,12 @@
 package com.vasomedical.spinetracer.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -16,6 +18,9 @@ import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
 import com.vasomedical.spinetracer.model.DoctorModel;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 //界面--用户注册
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, DoctorView {
@@ -52,11 +57,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void addAction() {
-        doctorPresenter = new DoctorPresenterCompl(this,this);
+        doctorPresenter = new DoctorPresenterCompl(this, this);
         buttonRegister.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
         buttonEye.setOnCheckedChangeListener(this);
         buttonEye2.setOnCheckedChangeListener(this);
+
+        editName.setFocusable(true);
+        editName.setFocusableInTouchMode(true);
+        editName.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) RegisterActivity.this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);//这里的时间大概是自己测试的
     }
 
     @Override
