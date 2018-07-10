@@ -26,4 +26,14 @@ public class AnalyticOptForwardBackFragment extends AnalyticAngleRangeFragment{
         label1 = mContext.getResources().getString(R.string.analytic_label_forward_back_1);
         label2 = mContext.getResources().getString(R.string.analytic_label_forward_back_2);
     }
+
+    @Override
+    protected void defineDoctorComments(){
+        doctorComments = new String[]{
+                "医生分析 5 -- 1",
+                "医生分析 5 -- 2",
+                "医生分析 5 -- 3",
+        };
+    }
+
 }

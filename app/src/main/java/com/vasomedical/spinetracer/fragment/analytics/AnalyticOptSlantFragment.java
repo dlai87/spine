@@ -20,4 +20,13 @@ public class AnalyticOptSlantFragment extends AnalyticPositionAngleFragment{
         */
     }
 
+    @Override
+    protected void defineDoctorComments(){
+        doctorComments = new String[]{
+                "医生分析 1 -- 1",
+                "医生分析 1 -- 2",
+                "医生分析 1 -- 3",
+        };
+    }
+
 }

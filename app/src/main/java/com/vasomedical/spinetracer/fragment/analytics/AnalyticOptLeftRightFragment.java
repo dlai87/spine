@@ -26,4 +26,13 @@ public class AnalyticOptLeftRightFragment extends AnalyticAngleRangeFragment{
         label1 = mContext.getResources().getString(R.string.analytic_label_left_right_1);
         label2 = mContext.getResources().getString(R.string.analytic_label_left_right_2);
     }
+
+    @Override
+    protected void defineDoctorComments(){
+        doctorComments = new String[]{
+                "医生分析 4 -- 1",
+                "医生分析 4 -- 2",
+                "医生分析 4 -- 3",
+        };
+    }
 }

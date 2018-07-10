@@ -46,7 +46,7 @@ public abstract class DetectingBaseFragment extends BaseFragment {
     // analytic
     protected AnalyticBaseFragment analyticFragment;
 
-    PatientModel patient;
+   // PatientModel patient;
 
 
     // initial pose related
@@ -69,11 +69,6 @@ public abstract class DetectingBaseFragment extends BaseFragment {
     @Override
     protected void addActionToViews() {
 
-    }
-
-
-    public void setPatient(PatientModel newPatient) {
-        patient = newPatient;
     }
 
 

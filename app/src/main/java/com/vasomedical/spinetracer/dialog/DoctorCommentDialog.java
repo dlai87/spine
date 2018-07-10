@@ -3,12 +3,19 @@ package com.vasomedical.spinetracer.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.util.widget.button.OnOffButton;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dehualai on 7/7/18.
@@ -21,6 +28,15 @@ public class DoctorCommentDialog extends Dialog implements View.OnClickListener 
     private String titleStr;//从外界设置的title文本
     private String messageStr;//从外界设置的消息文本
     private LinearLayout commentLayout;
+
+    private String[] commentOptions;
+    private Set<String> selectedComment = new HashSet<String>();
+
+
+    public void setCommentOptions(String[] comments){
+        this.commentOptions = comments;
+    }
+
 
     public DoctorCommentDialog(Context context) {
         super(context, R.style.ReportportDialog);
@@ -49,29 +65,52 @@ public class DoctorCommentDialog extends Dialog implements View.OnClickListener 
 
     private void addAction() {
         btnClose.setOnClickListener(this);
-     //   tvTitle.setText(titleStr);
-     //   tvDesc.setText(messageStr);
-        Button saveButton1 = new Button(getContext());
-        saveButton1.setText("SAVE");
-        commentLayout.addView(saveButton1);
-        Button saveButton2 = new Button(getContext());
-        saveButton2.setText("SAVE");
-        commentLayout.addView(saveButton2);
-        Button saveButton3 = new Button(getContext());
-        saveButton3.setText("SAVE");
-        commentLayout.addView(saveButton3);
-        Button saveButton4 = new Button(getContext());
-        saveButton4.setText("SAVE");
-        commentLayout.addView(saveButton4);
-        Button saveButton5 = new Button(getContext());
-        saveButton5.setText("SAVE");
-        commentLayout.addView(saveButton5);
-        Button saveButton6 = new Button(getContext());
-        saveButton6.setText("SAVE");
-        commentLayout.addView(saveButton6);
+
+
+        for(int i = 0 ; i < commentOptions.length; i ++){
+            final String str = commentOptions[i];
+            final OnOffButton button = new OnOffButton(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(1800, 160);
+            params.setMargins(10, 15, 10, 15);
+            button.setLayoutParams(params);
+            button.setBackground(getContext().getResources().getDrawable(R.drawable.grey_round_rect));
+            button.setText(str);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    button.onClick();
+                    String buttonText = button.getText()+ "";
+                    if(button.isOn()){
+                        button.setBackground(getContext().getResources().getDrawable(R.drawable.green_round_rect) );
+                        selectedComment.add(buttonText);
+                    }else {
+                        button.setBackground(getContext().getResources().getDrawable(R.drawable.grey_round_rect) );
+                        if(selectedComment.contains(buttonText)){
+                            selectedComment.remove(buttonText);
+                        }
+                    }
+
+                }
+            });
+            commentLayout.addView(button);
+        }
+
         Button saveButton = new Button(getContext());
-        saveButton.setText("SAVE");
+        saveButton.setText("确定");
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StringBuffer buf = new StringBuffer();
+                for(String s : selectedComment){
+                    buf.append(s + "; ");
+                }
+                Log.e("show", "select " + buf.toString());
+            }
+        });
         commentLayout.addView(saveButton);
+
+
     }
 
     /**

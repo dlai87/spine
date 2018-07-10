@@ -60,7 +60,7 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
                     @Override
                     public void run() {
                         // fixme :  update cobb's angle in real time
-                     //   cobbsAngleText.setText("Cobb's angle : " + angle);
+                        cobbsAngleText.setText(angle + mContext.getResources().getString(R.string.degree_mark));
                     }
                 });
             }
@@ -94,7 +94,7 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
 
         // create a dataset and give it a type
         BubbleDataSet set1 = new BubbleDataSet(yVals1, "");
-        set1.setColor(ColorTemplate.COLORFUL_COLORS[0], 0);
+        set1.setColor(ColorTemplate.COLORFUL_COLORS[0], 255);
         set1.setDrawValues(true);
 
 
@@ -114,4 +114,13 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
     }
 
 
+
+    @Override
+    protected void defineDoctorComments(){
+        doctorComments = new String[]{
+                "医生分析 2 -- 1",
+                "医生分析 2 -- 2",
+                "医生分析 2 -- 3",
+        };
+    }
 }

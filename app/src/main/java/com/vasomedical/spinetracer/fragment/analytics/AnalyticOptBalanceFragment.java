@@ -26,4 +26,13 @@ public class AnalyticOptBalanceFragment extends AnalyticAngleRangeFragment{
         label1 = mContext.getResources().getString(R.string.analytic_label_balance_1);
         label2 = mContext.getResources().getString(R.string.analytic_label_balance_2);
     }
+
+    @Override
+    protected void defineDoctorComments(){
+        doctorComments = new String[]{
+                "医生分析 7 -- 1",
+                "医生分析 7 -- 2",
+                "医生分析 7 -- 3",
+        };
+    }
 }

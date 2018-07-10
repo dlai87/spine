@@ -30,6 +30,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.SelProjectcAtivity;
+import com.vasomedical.spinetracer.activity.TestModeActivity;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
@@ -38,6 +39,7 @@ import com.vasomedical.spinetracer.dialog.ReportDialog;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
@@ -83,6 +85,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     Spinner spinner;
 
+    protected String[] doctorComments;
+
+    protected abstract void defineDoctorComments();
 
 
     static int argb(String hex) {
@@ -182,41 +187,21 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             }
         });
 
-        // re-test button, when input data is invalid, ask to re test
-        /*
-        reTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        cancelButton.updateTheme(
-                mContext.getResources().getColor(R.color.njbutton_cherry_red),
-                mContext.getResources().getColor(R.color.njbutton_cherry_red),
-                mContext.getResources().getColor(R.color.njbutton_red_pressed)
-        );
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        */
-
 
         diagnosisButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                defineDoctorComments();
                 DoctorCommentDialog dialog = new DoctorCommentDialog(mContext);
+                dialog.setCommentOptions(doctorComments);
                 dialog.show();
-
             }
         });
+
         abandonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mActivity, SelProjectcAtivity.class);
+                Intent intent = new Intent(mActivity, TestModeActivity.class);
                 startActivity(intent);
             }
         });
@@ -225,6 +210,9 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Global.patientModel == null || Global.userModel == null){
+                    return;
+                }
                 record.setDoctorComments(getDoctorComment());
                 saveToDatabase();
             }
@@ -235,7 +223,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     }
 
     void saveToDatabase() {
-
 
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
