@@ -38,7 +38,6 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     private ReportDialog reportDialog;
 
 
-    // fixme : 一旦到了SelProjectcAtivity ， 就必须包含patient 和 doctor， 不然是非法的
     private PatientModel patientModel;
     private DoctorModel doctorModel;
 
@@ -48,10 +47,6 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_sel_projectctivity);
         findViews();
         addAction();
-
-        // fixme :  能够到达这一页，必须是有了病人，以及有了医生。 所以这里需要有两个object ： patientModel, doctorModel
-        // 需要处理前面步骤里，用户选择的病人，和医生信息。造出patient model , doctor model
-
 
         //选择了用户了
         String patinetId = getIntent().getStringExtra("patinet_no");
@@ -91,6 +86,7 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         buttonItem5.setOnLongClickListener(this);
         buttonItem6.setOnLongClickListener(this);
 
+        doctorModel = Global.userModel;
         String name = Global.userModel == null ? "测试用户" : Global.userModel.getName();
         tvName.setText(name);
     }
@@ -196,6 +192,7 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void updatePatient(PatientModel peopleModel) {
+        patientModel = peopleModel;
         tvPatientName.setText("病人:" + peopleModel.getName());
     }
 
