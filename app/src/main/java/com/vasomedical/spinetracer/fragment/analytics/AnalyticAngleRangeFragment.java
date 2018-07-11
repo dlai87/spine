@@ -30,8 +30,8 @@ public abstract class AnalyticAngleRangeFragment extends AnalyticBaseFragment {
 
     private HorizontalBarChart mChart;
 
-   // TextView textView1;
-   // TextView textView2;
+    TextView labelTextView1;
+    TextView labelTextView2;
 
 
     protected int angleRange1;
@@ -41,19 +41,21 @@ public abstract class AnalyticAngleRangeFragment extends AnalyticBaseFragment {
     float minAngle = Float.MAX_VALUE;
     float maxAngle = Float.MIN_VALUE;
 
+    protected abstract void preDefineParams();
     protected abstract void initSubclassValues();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
-        initSubclassValues();
+        preDefineParams();
 
         view = inflater.inflate(R.layout.fragment_analytic_opt3, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
 
         assignViews();
         addActionToViews();
+        initSubclassValues();
 
         return view;
     }
@@ -71,8 +73,10 @@ public abstract class AnalyticAngleRangeFragment extends AnalyticBaseFragment {
             return;
         }
 
-    //    textView1 = (TextView) view.findViewById(R.id.label1);
-    //    textView2 = (TextView) view.findViewById(R.id.label2);
+        labelTextView1 = (TextView) view.findViewById(R.id.label1);
+        labelTextView2 = (TextView) view.findViewById(R.id.label2);
+        labelTextView1.setText(label1);
+        labelTextView2.setText(label2);
 
         mChart = (HorizontalBarChart) view.findViewById(R.id.chart1);
         mChart.setDrawGridBackground(false);

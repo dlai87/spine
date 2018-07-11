@@ -39,14 +39,13 @@ public abstract class AnalyticPositionAngleFragment extends AnalyticBaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        initSubclassValues();
 
         view = inflater.inflate(R.layout.fragment_analytic_opt1, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
 
         assignViews();
         addActionToViews();
-
+        initSubclassValues();
         return view;
     }
 

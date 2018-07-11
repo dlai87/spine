@@ -14,6 +14,7 @@ import com.vasomedical.spinetracer.activity.DetectActivity;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class DetectingPosAngleFragment extends DetectingBaseFragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
                 timeStamp,
-                patient,
+                Global.patientModel,
                 Util.getCurrentDoctor(),
                 AlgorithmFactory.detectionOption,
                 null,

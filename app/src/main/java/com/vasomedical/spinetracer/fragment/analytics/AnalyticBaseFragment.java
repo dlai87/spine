@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -30,12 +32,16 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.SelProjectcAtivity;
+import com.vasomedical.spinetracer.activity.TestModeActivity;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
+import com.vasomedical.spinetracer.dialog.DoctorCommentDialog;
+import com.vasomedical.spinetracer.dialog.ReportDialog;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 import com.vasomedical.spinetracer.util.widget.button.NJButton;
 import com.vasomedical.spinetracer.util.widget.dialog.AlertDialog;
@@ -46,7 +52,7 @@ import java.util.ArrayList;
  * Created by dehualai on 6/24/18.
  */
 
-public abstract class AnalyticBaseFragment extends BaseFragment {
+public abstract class AnalyticBaseFragment extends BaseFragment implements DoctorCommentDialog.DoctorCommentInterface {
 
 
 
@@ -71,15 +77,27 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     protected RelativeLayout chartView;
 
+
+    protected TextView textView1;
+    protected TextView textView2;
+
     //Button reTestButton;
 
     // control buttons
     Button saveButton;
     Button abandonButton;
+    Button diagnosisButton;
     InspectionRecord record;
 
     Spinner spinner;
 
+    DoctorCommentDialog doctorCommentDialog;
+    protected String[] doctorComments;
+    protected String docComment = "";
+
+
+
+    protected abstract void defineDoctorComments();
 
 
     static int argb(String hex) {
@@ -130,7 +148,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
+        textView1 = (TextView) view.findViewById(R.id.tvLabel1);
+        textView2 = (TextView) view.findViewById(R.id.tvLabel2);
 
+        diagnosisButton = (Button) view.findViewById(R.id.buttonDiagnosis);
         saveButton = (Button)view.findViewById(R.id.buttonSave);
         abandonButton = (Button)view.findViewById(R.id.buttonAbandon);
 
@@ -152,6 +173,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         }
 
 
+
+        doctorCommentDialog = new DoctorCommentDialog(mContext);
+        doctorCommentDialog.setCommentOptions(doctorComments);
+        doctorCommentDialog.setDoctorCommentInterface(this);
     }
 
     protected void addActionToViews(){
@@ -178,33 +203,20 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
             }
         });
 
-        // re-test button, when input data is invalid, ask to re test
-        /*
-        reTestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+        diagnosisButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                defineDoctorComments();
+                doctorCommentDialog.setCommentOptions(doctorComments);
+                doctorCommentDialog.show();
             }
         });
-
-        cancelButton.updateTheme(
-                mContext.getResources().getColor(R.color.njbutton_cherry_red),
-                mContext.getResources().getColor(R.color.njbutton_cherry_red),
-                mContext.getResources().getColor(R.color.njbutton_red_pressed)
-        );
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        */
-
 
         abandonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mActivity, SelProjectcAtivity.class);
+                Intent intent = new Intent(mActivity, TestModeActivity.class);
                 startActivity(intent);
             }
         });
@@ -213,7 +225,11 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                record.setDoctorComments(getDoctorComment());
+                if(Global.patientModel == null || Global.userModel == null){
+                    Toast.makeText(mContext, "试用模式下不能保存", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                record.setDoctorComments(docComment);
                 saveToDatabase();
             }
         });
@@ -224,7 +240,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
     void saveToDatabase() {
 
-
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
     //    for (Pose pose : record.getInspectionData()) {
@@ -232,7 +247,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
     //        tbPose.smartInsert(database, pose, record.getId());
     //    }
 
-        record.setDoctorComments(getDoctorComment());
+        record.setDoctorComments(docComment);
         record.setScore(64); // TODO
         TBDetection tbDetection = new TBDetection();
         tbDetection.smartInsert(database, record);
@@ -285,44 +300,18 @@ public abstract class AnalyticBaseFragment extends BaseFragment {
 
 
 
-
-
-    protected void createandDisplayPdf() {
-
-        /*
-        String filename = "test_" + System.currentTimeMillis() + ".pdf";
-        PdfManager pdfManager = new PdfManager(mActivity);
-        pdfManager.generatePDF(filename,
-                record,
-                chartView);
-
-        Fragment pdfViewFragment = new PdfViewFragment();
-        Bundle args = new Bundle();
-        args.putString(PdfViewFragment.FILE_NAME, filename);
-        pdfViewFragment.setArguments(args);
-        fragmentUtil.showFragment(pdfViewFragment);
-        */
-
+    // Override interface DoctorCommentDialog.DoctorCommentInterface
+    @Override
+    public void setDocComment(String docComment){
+        this.docComment = docComment;
+        Log.i("show", "doc comment " + this.docComment);
     }
 
 
-    private String getDoctorComment(){
 
-        /*
-        StringBuffer buffer = new StringBuffer();
-        for (OnOffButton button: selectButtonArray){
-            if (button.isOn()){
-                buffer.append(button.getText() + ";\n");
-            }
-        }
-        if (diagnosisEditText.getText()!=null){
-            buffer.append(diagnosisEditText.getText() + ";\n");
-        }
 
-        return buffer.toString();
 
-        */
-        return null;
-    }
+
+
 
 }

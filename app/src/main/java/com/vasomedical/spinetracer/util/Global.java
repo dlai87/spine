@@ -3,6 +3,7 @@ package com.vasomedical.spinetracer.util;
 import android.os.Environment;
 
 import com.vasomedical.spinetracer.model.DoctorModel;
+import com.vasomedical.spinetracer.model.PatientModel;
 
 
 /**
@@ -20,6 +21,7 @@ public class Global {
 
     public static boolean login = false;
     public static DoctorModel userModel;
+    public static PatientModel patientModel;
 
     public static String USER_CURRENT_LANGUAGE = "zh";
 

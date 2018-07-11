@@ -94,7 +94,7 @@
                         android:textSize="21sp" />
 
                     <TextView
-                        android:id="@+id/tvMaxAngle"
+                        android:id="@+id/tvLabel1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="xxx"
@@ -117,7 +117,7 @@
                         android:textSize="21sp" />
 
                     <TextView
-                        android:id="@+id/tvCobb"
+                        android:id="@+id/tvLabel2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="xxx"

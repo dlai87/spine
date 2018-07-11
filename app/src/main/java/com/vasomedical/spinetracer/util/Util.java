@@ -98,6 +98,19 @@ public class Util {
     }
 
 
+    public static float degreeToDisplay(float degree){
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // output is one digital after point
+        try {
+            float normDegree = Float.valueOf(decimalFormat.format(degree));
+            return normDegree ;
+        }catch (Exception e){
+
+        }
+
+        return -99999;
+    }
+
+
     public static float meterToCM(float len, float offset , boolean reverse){
         len += offset;
         len = len * 100.0f;

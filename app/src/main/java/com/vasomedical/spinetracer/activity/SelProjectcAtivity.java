@@ -38,8 +38,6 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     private ReportDialog reportDialog;
 
 
-    private PatientModel patientModel;
-    private DoctorModel doctorModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +50,8 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         String patinetId = getIntent().getStringExtra("patinet_no");
         if (!TextUtils.isEmpty(patinetId)) {
             patientPresenter.selectPatientByNo(patinetId);
+        }else{
+            Global.patientModel = null;
         }
     }
 
@@ -86,7 +86,6 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         buttonItem5.setOnLongClickListener(this);
         buttonItem6.setOnLongClickListener(this);
 
-        doctorModel = Global.userModel;
         String name = Global.userModel == null ? "测试用户" : Global.userModel.getName();
         tvName.setText(name);
     }
@@ -192,7 +191,7 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void updatePatient(PatientModel peopleModel) {
-        patientModel = peopleModel;
+        Global.patientModel = peopleModel;
         tvPatientName.setText("病人:" + peopleModel.getName());
     }
 

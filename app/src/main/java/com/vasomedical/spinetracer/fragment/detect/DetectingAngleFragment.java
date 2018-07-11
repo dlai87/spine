@@ -20,6 +20,7 @@ import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptRotateFragment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSegment;
 import com.vasomedical.spinetracer.fragment.analytics.AnalyticOptSlantFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
+import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -88,7 +89,7 @@ public class DetectingAngleFragment extends DetectingBaseFragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
                 timeStamp,
-                patient,
+                Global.patientModel,
                 Util.getCurrentDoctor(),
                 AlgorithmFactory.detectionOption,
                 null,
