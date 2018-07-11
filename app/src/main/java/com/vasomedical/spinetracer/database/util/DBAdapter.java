@@ -182,6 +182,7 @@ public class DBAdapter extends SQLiteOpenHelper {
         keyValuePair.add(new String[] {DBGlobal.COL_EMAIL, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_HOSPITAL, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_DEPARTMENT, "TEXT"});
+        keyValuePair.add(new String[] {DBGlobal.COL_PASSWORD, "TEXT"});
         keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
 
         String SPEC = generateCreationSpec( DBGlobal.TABLE_DOCTOR, keyValuePair);

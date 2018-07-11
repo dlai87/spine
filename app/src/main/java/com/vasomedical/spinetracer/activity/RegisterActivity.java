@@ -25,7 +25,7 @@ import java.util.TimerTask;
 //界面--用户注册
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, DoctorView {
     private EditText editName, editPass, editPass2, editRealName, editEmail, editPhone;
-    private TextView editCompany, editClass;
+    private EditText editCompany, editClass;
     private View buttonBack, buttonRegister, buttonCompanyMore, buttonClassMore;
     private CheckBox buttonEye, buttonEye2;
     private DoctorPresenter doctorPresenter;
@@ -50,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editRealName = (EditText) findViewById(R.id.editRealName);
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPhone = (EditText) findViewById(R.id.editPhone);
-        editCompany = (TextView) findViewById(R.id.editCompany);
-        editClass = (TextView) findViewById(R.id.editClass);
+        editCompany = (EditText) findViewById(R.id.editCompany);
+        editClass = (EditText) findViewById(R.id.editClass);
         buttonEye = (CheckBox) findViewById(R.id.buttonEye);
         buttonEye2 = (CheckBox) findViewById(R.id.buttonEye2);
     }
@@ -119,14 +119,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         );
         builder.setPassword(editPass.getText().toString());
         builder.setRealName(editRealName.getText().toString());
-//        builder.setEmail(editEmail.getText().toString());
-//        builder.setPhone(editPhone.getText().toString());
+        builder.setEmail(editEmail.getText().toString());
+        builder.setPhone(editPhone.getText().toString());
+        builder.setHospital(editCompany.getText().toString());
+        builder.setDepartment(editClass.getText().toString());
         DoctorModel doctorModel = builder.build();
 
         if (TextUtils.isEmpty(doctorModel.getName()) || TextUtils.isEmpty(doctorModel.getPassword())) {
             Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         } else if (!doctorModel.getPassword().equals(editPass2.getText().toString())) {
             Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+        } else if (!doctorModel.getPassword().equals(editPass2.getText().toString())) {
+            Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editEmail.getText())) {
+            Toast.makeText(this, "邮箱不能为空", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editPhone.getText())) {
+            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editCompany.getText())) {
+            Toast.makeText(this, "医院名称不能为空", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editClass.getText())) {
+            Toast.makeText(this, "科室不能为空", Toast.LENGTH_SHORT).show();
         } else {
             doctorPresenter.register(doctorModel);
         }

@@ -148,6 +148,7 @@
         android:textColor="#ff00baff"
         android:textColorHint="#ff00baff"
         android:textSize="23sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPass2" />
@@ -155,13 +156,14 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:visibility="gone"
         android:layout_marginLeft="16dp"
         android:src="@mipmap/icon_name"
         app:layout_constraintBottom_toBottomOf="@+id/editRealName"
         app:layout_constraintStart_toStartOf="@+id/editRealName"
         app:layout_constraintTop_toTopOf="@+id/editRealName" />
 
-    <TextView
+    <EditText
         android:id="@+id/editCompany"
         android:layout_width="0dp"
         android:layout_height="68dp"
@@ -210,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="@+id/editCompany"
         app:layout_constraintTop_toTopOf="@+id/editCompany" />
 
-    <TextView
+    <EditText
         android:id="@+id/editClass"
         android:layout_width="0dp"
         android:layout_height="68dp"
