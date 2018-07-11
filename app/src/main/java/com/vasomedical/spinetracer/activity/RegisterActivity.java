@@ -132,13 +132,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else if (!doctorModel.getPassword().equals(editPass2.getText().toString())) {
             Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(editEmail.getText())) {
-            Toast.makeText(this, "邮箱不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(editPhone.getText())) {
-            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(editCompany.getText())) {
-            Toast.makeText(this, "医院名称不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入医院", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(editClass.getText())) {
-            Toast.makeText(this, "科室不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入科室空", Toast.LENGTH_SHORT).show();
         } else {
             doctorPresenter.register(doctorModel);
         }
