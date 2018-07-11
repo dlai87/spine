@@ -78,6 +78,26 @@ public class DoctorModel {
             return this;
         }
 
+        public DoctorBuilder setPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public DoctorBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public DoctorBuilder setHospital(String hospital) {
+            this.hospital = hospital;
+            return this;
+        }
+
+        public DoctorBuilder setDepartment(String department) {
+            this.department = department;
+            return this;
+        }
+
         public DoctorModel build() {
             return new DoctorModel(this);
         }
