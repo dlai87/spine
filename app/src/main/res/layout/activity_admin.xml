@@ -14,7 +14,7 @@
         android:layout_marginTop="93dp"
         android:text="管理员账户"
         android:textColor="#ff00baff"
-        android:textSize="28sp"
+        android:textSize="37sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
     <View
         android:id="@+id/bg1"
         android:layout_width="0dp"
-        android:layout_height="152dp"
+        android:layout_height="202dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="52dp"
@@ -33,7 +33,7 @@
 
     <ImageView
         android:id="@+id/img1"
-        android:layout_width="76dp"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:src="@mipmap/icon_fac3"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="用户管理"
         android:textColor="#ff00baff"
-        android:textSize="23sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/bg1"
         app:layout_constraintStart_toStartOf="@+id/bg1"
         app:layout_constraintTop_toBottomOf="@+id/img1" />
@@ -55,7 +55,7 @@
     <View
         android:id="@+id/bg2"
         android:layout_width="0dp"
-        android:layout_height="152dp"
+        android:layout_height="202dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_item_bg"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
 
     <ImageView
         android:id="@+id/img2"
-        android:layout_width="76dp"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:src="@mipmap/icon_item"
@@ -79,7 +79,7 @@
         android:layout_marginTop="16dp"
         android:text="测量模块"
         android:textColor="#ff00baff"
-        android:textSize="23sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/bg2"
         app:layout_constraintStart_toStartOf="@+id/bg2"
         app:layout_constraintTop_toBottomOf="@+id/img2" />
@@ -87,7 +87,7 @@
     <View
         android:id="@+id/bg3"
         android:layout_width="0dp"
-        android:layout_height="152dp"
+        android:layout_height="202dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -98,7 +98,7 @@
 
     <ImageView
         android:id="@+id/img3"
-        android:layout_width="76dp"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:src="@mipmap/icon_company2"
@@ -113,7 +113,7 @@
         android:layout_marginTop="8dp"
         android:text="医院管理"
         android:textColor="#ff00baff"
-        android:textSize="23sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/bg3"
         app:layout_constraintStart_toStartOf="@+id/bg3"
         app:layout_constraintTop_toBottomOf="@+id/img3" />
@@ -121,7 +121,7 @@
     <View
         android:id="@+id/bg4"
         android:layout_width="0dp"
-        android:layout_height="152dp"
+        android:layout_height="202dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_item_bg"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +130,7 @@
 
     <ImageView
         android:id="@+id/img4"
-        android:layout_width="76dp"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:src="@mipmap/icon_recod2"
@@ -145,7 +145,7 @@
         android:layout_marginTop="8dp"
         android:text="设备日志"
         android:textColor="#ff00baff"
-        android:textSize="23sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/bg4"
         app:layout_constraintStart_toStartOf="@+id/bg4"
         app:layout_constraintTop_toBottomOf="@+id/img4" />
@@ -161,10 +161,24 @@
         android:gravity="center"
         android:text="测量主界面"
         android:textColor="#ff00baff"
-        android:textSize="23sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bg3" />
 
 
+    <TextView
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginBottom="51dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#ff9298c6"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

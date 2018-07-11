@@ -141,4 +141,23 @@
     <string name="please_calibrate">请缓慢运动设备，当看到读数较稳定合理后，按"开始测量"。</string>
     <string name="calibrate">设备校准</string>
 
+    <!--hint-->
+    <string name="hint_companynmae"><i>医院名称</i></string>
+    <string name="hint_phone"><i>联系方式</i></string>
+    <string name="hint_address"><i>地址</i></string>
+    <string name="hint_username"><i>输入用户名</i></string>
+    <string name="hint_password"><i>输入密码</i></string>
+    <string name="hint_password2"><i>再次输入密码</i></string>
+    <string name="hint_companynmae1"><i>广东省第一人民医院</i></string>
+    <string name="hint_class"><i>耳鼻喉科</i></string>
+    <string name="hint_email"><i>输入电子邮箱</i></string>
+    <string name="hint_phone2"><i>输入手机号</i></string>
+    <string name="hint_peopleno"><i>输入病人编号</i></string>
+    <string name="hint_peoplename"><i>输入患者姓名</i></string>
+    <string name="hint_peoplesex"><i>请选择性别</i></string>
+    <string name="hint_peopledate"><i>请选择出生年月</i></string>
+    <string name="hint_peopledphone"><i>输入联系方式</i></string>
+    <string name="hint_peopleid"><i>输入身份证号码</i></string>
+    <string name="hint_peopleaddess"><i>输入联系地址</i></string>
+    <string name="hint_peoplemark"><i>输入备注</i></string>
 </resources>

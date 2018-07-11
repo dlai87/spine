@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="病人:--"
         android:textColor="#ff00baff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
         app:layout_constraintStart_toEndOf="@+id/buttonBack"
         app:layout_constraintTop_toTopOf="@+id/buttonBack" />
@@ -30,10 +29,10 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="选择测量项目"
         android:textColor="#ff00baff"
-        android:layout_marginTop="20dp"
-        android:textSize="23sp"
+        android:textSize="37sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
@@ -45,103 +44,109 @@
         android:layout_marginEnd="16dp"
         android:text="王医生 "
         android:textColor="#ff00baff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonBack" />
 
-    <TextView
-        android:id="@+id/buttonItem1"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="躯干\n倾斜角"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonItem2"
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:paddingRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
-    <TextView
-        android:id="@+id/buttonItem2"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="脊柱弯曲\nCOBB角"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonItem1"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        <TextView
+            android:id="@+id/buttonItem1"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="躯干\n倾斜角"
+            android:textColor="#ff00baff"
+            android:textSize="23sp" />
 
-    <TextView
-        android:id="@+id/buttonItem3"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="左右\n侧弯倾角"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonItem4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonItem1" />
+        <TextView
+            android:id="@+id/buttonItem2"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="脊柱弯曲\nCOBB角"
+            android:textColor="#ff00baff"
+            android:textSize="23sp" />
 
-    <TextView
-        android:id="@+id/buttonItem4"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="身体\n平衡度"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonItem3"
-        app:layout_constraintTop_toBottomOf="@+id/buttonItem1" />
+        <TextView
+            android:id="@+id/buttonItem3"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="左右\n侧弯倾角"
+            android:textColor="#ff00baff"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonItem4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonItem1" />
 
-    <TextView
-        android:id="@+id/buttonItem5"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="前倾/\n后仰角"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonItem6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonItem3" />
+        <TextView
+            android:id="@+id/buttonItem4"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="身体\n平衡度"
+            android:textColor="#ff00baff"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonItem3"
+            app:layout_constraintTop_toBottomOf="@+id/buttonItem1" />
 
-    <TextView
-        android:id="@+id/buttonItem6"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_item_bg"
-        android:gravity="center"
-        android:text="旋转角"
-        android:textColor="#ff00baff"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonItem5"
-        app:layout_constraintTop_toBottomOf="@+id/buttonItem3" />
+        <TextView
+            android:id="@+id/buttonItem5"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="前倾/\n后仰角"
+            android:textColor="#ff00baff"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonItem6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonItem3" />
 
+        <TextView
+            android:id="@+id/buttonItem6"
+            android:layout_height="220dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_item_bg"
+            android:gravity="center"
+            android:text="旋转角"
+            android:textColor="#ff00baff"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonItem5"
+            app:layout_constraintTop_toBottomOf="@+id/buttonItem3" />
+    </GridLayout>
 
 </android.support.constraint.ConstraintLayout>

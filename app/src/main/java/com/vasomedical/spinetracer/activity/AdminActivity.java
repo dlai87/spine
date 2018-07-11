@@ -1,10 +1,10 @@
 package com.vasomedical.spinetracer.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.util.Global;
@@ -12,7 +12,7 @@ import com.vasomedical.spinetracer.util.Global;
 //界面--管理员账户
 public class AdminActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private View buttonUser, buttonItem, buttonCompany, buttonDevice, buttonTestMain;
+    private View buttonUser, buttonItem, buttonCompany, buttonDevice, buttonTestMain, buttonLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         buttonCompany = findViewById(R.id.bg3);
         buttonDevice = findViewById(R.id.bg4);
         buttonTestMain = findViewById(R.id.buttonTestMain);
+        buttonLogout = findViewById(R.id.buttonLogout);
     }
 
     private void addAction() {
@@ -36,6 +37,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         buttonCompany.setOnClickListener(this);
         buttonDevice.setOnClickListener(this);
         buttonTestMain.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
     }
 
     @Override
@@ -56,6 +58,15 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         } else if (v == buttonTestMain) {//测量主界面
             Intent intent = new Intent(this, SelProjectcAtivity.class);
             startActivity(intent);
+        } else if (v == buttonLogout) {
+            Global.login = false;
+            Global.userModel = null;
+            SharedPreferences.Editor sharedata = getSharedPreferences("autologin", 0).edit();
+            //先将序列化结果写到byte缓存中，其实就分配一个内存空间
+            sharedata.putString("username", null);
+            sharedata.putString("password", null);
+            sharedata.commit();
+            onBackPressed();
         }
     }
 
