@@ -18,7 +18,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     private static DBAdapter mInstance = null;
     private static SQLiteDatabase db = null;
-    private static String name ;
+    private static String name;
     private String TAG = "DBAdapter";
 
 
@@ -28,7 +28,7 @@ public class DBAdapter extends SQLiteOpenHelper {
     }
 
     public static String getDatabaseName(Context ctx) {
-        if (DBGlobal.DB_ON_SDCARD == false){
+        if (DBGlobal.DB_ON_SDCARD == false) {
             name = DBGlobal.DB;
         } else {
             File a = ctx.getExternalFilesDir(null);
@@ -41,13 +41,14 @@ public class DBAdapter extends SQLiteOpenHelper {
         return name;
     }
 
-    /** Get a readable and writable from here.
-     *  This makes sure that only one database is open all the time.
+    /**
+     * Get a readable and writable from here.
+     * This makes sure that only one database is open all the time.
      *
      * @param ctx This context is used to get application context
      * @return
      */
-    public  static SQLiteDatabase getDatabase(Context ctx) {
+    public static SQLiteDatabase getDatabase(Context ctx) {
         if (mInstance == null) {
             name = getDatabaseName(ctx);
             mInstance = new DBAdapter(ctx.getApplicationContext(), name);
@@ -59,7 +60,7 @@ public class DBAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     *  Close database
+     * Close database
      */
     public static void closeDatabase() {
         if (db != null && db.isOpen()) {
@@ -84,6 +85,7 @@ public class DBAdapter extends SQLiteOpenHelper {
         createTableDetection(db);
         createTablePose(db);
         createTableDataPorcessed(db);
+        createTableLogs(db);
     }
 
     /**
@@ -110,8 +112,8 @@ public class DBAdapter extends SQLiteOpenHelper {
         SPEC.append("CREATE TABLE " + tableName + " (");
         for (int i = 0; i < keyValuePair.size(); i++) {
             String[] str = keyValuePair.get(i);
-            SPEC.append(" " + str[0] + " " + str[1] );
-            SPEC.append( i < keyValuePair.size() - 1  ? "," : ");");
+            SPEC.append(" " + str[0] + " " + str[1]);
+            SPEC.append(i < keyValuePair.size() - 1 ? "," : ");");
         }
         return SPEC.toString();
 
@@ -119,119 +121,137 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     /**
      * ///////////////////////////
-     *
+     * <p>
      * DB create code
-     *
+     * <p>
      * ////////////////////////////
      */
 
     ////=========== version 1
-
-    private void createTableMotion(SQLiteDatabase db){
+    private void createTableMotion(SQLiteDatabase db) {
 
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_X, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_Y,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_Z, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_R_X,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_R_Y,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_R_Z,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_R_W,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_EULER_X,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_EULER_Y,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_EULER_Z,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TIME,"TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_X, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_Y, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_Z, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_R_X, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_R_Y, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_R_Z, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_R_W, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_EULER_X, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_EULER_Y, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_EULER_Z, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TIME, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_MOTION, keyValuePair);
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_MOTION, keyValuePair);
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
     }
 
 
-    private void createTablePatient(SQLiteDatabase db){
+    private void createTablePatient(SQLiteDatabase db) {
 
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID_DOCTOR, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_NAME, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_GENDER, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_DATE_OF_BIRTH, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_PHONE_NUMBER, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_EMAIL, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_NOTE, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_PHOTO, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID_DOCTOR, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_NAME, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_GENDER, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_DATE_OF_BIRTH, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_PHONE_NUMBER, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_EMAIL, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_NOTE, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_PHOTO, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_PATIENT, keyValuePair);
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_PATIENT, keyValuePair);
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
     }
 
-    private void createTableDoctor(SQLiteDatabase db){
+    private void createTableDoctor(SQLiteDatabase db) {
 
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_NAME, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_PHONE_NUMBER, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_EMAIL, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_HOSPITAL, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_DEPARTMENT, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_PASSWORD, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_DOCTOR, keyValuePair);
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_NAME, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_PASSWORD, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_PHONE_NUMBER, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_EMAIL, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_HOSPITAL, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_DEPARTMENT, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
+
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_DOCTOR, keyValuePair);
+
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
     }
 
-    private void createTableDetection(SQLiteDatabase db){
+    private void createTableDetection(SQLiteDatabase db) {
 
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TIMESTAMP, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_PATIENT_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_DOCTOR_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_MOTION_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_DETECTION_TYPE, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_SAVE_CHART_PATH, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TIMESTAMP, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_PATIENT_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_DOCTOR_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_MOTION_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_DETECTION_TYPE, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_SAVE_CHART_PATH, "TEXT"});
         keyValuePair.add(new String[]{DBGlobal.COL_POSE_DATA, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_SCORE, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_COMMENT, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_DETECTION, keyValuePair);
+
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_DETECTION, keyValuePair);
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
     }
 
-    private void createTablePose(SQLiteDatabase db){
+    private void createTablePose(SQLiteDatabase db) {
 
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_DETECTION_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_DETECTION_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TRANSMISSTION_STATUS, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_POSE, keyValuePair);
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_POSE, keyValuePair);
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
     }
 
 
-    private void createTableDataPorcessed(SQLiteDatabase db){
+    private void createTableDataPorcessed(SQLiteDatabase db) {
         ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
-        keyValuePair.add(new String[] {DBGlobal.COL_AUTO_ID,"integer primary key autoincrement"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ID, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ENTRY_X, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_ENTRY_Y, "TEXT"});
-        keyValuePair.add(new String[] {DBGlobal.COL_TYPE, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ENTRY_X, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_ENTRY_Y, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_TYPE, "TEXT"});
 
-        String SPEC = generateCreationSpec( DBGlobal.TABLE_DATA_PROCESSED, keyValuePair);
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_DATA_PROCESSED, keyValuePair);
         db.execSQL(SPEC);
-        Log.d(TAG,"Db Created" + SPEC );
+        Log.d(TAG, "Db Created" + SPEC);
+    }
+
+    private void createTableLogs(SQLiteDatabase db) {
+
+        ArrayList<String[]> keyValuePair = new ArrayList<String[]>();
+        keyValuePair.add(new String[]{DBGlobal.COL_AUTO_ID, "integer primary key autoincrement"});
+        keyValuePair.add(new String[]{DBGlobal.COL_LOGS_DOCTORID, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_LOGS_DOCTORNAME, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_LOGS_THING, "TEXT"});
+        keyValuePair.add(new String[]{DBGlobal.COL_LOGS_TIME, "TEXT"});
+
+        String SPEC = generateCreationSpec(DBGlobal.TABLE_LOGS, keyValuePair);
+        db.execSQL(SPEC);
+        Log.d(TAG, "Db Created" + SPEC);
     }
 }

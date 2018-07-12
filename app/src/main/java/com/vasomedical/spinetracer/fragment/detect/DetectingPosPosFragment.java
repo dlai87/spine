@@ -44,14 +44,14 @@ public class DetectingPosPosFragment extends DetectingBaseFragment {
 
         analyticFragment = new AnalyticOptSegment();
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat(Util.FORMAT_DATE_TIME).format(new Date());
         InspectionRecord.InspectionRecordBuilder builder = new InspectionRecord.InspectionRecordBuilder(timeStamp, // TEMP: use timestamp as id
                 timeStamp,
                 Global.patientModel,
-                Util.getCurrentDoctor(),
+                Global.userModel,
                 AlgorithmFactory.detectionOption,
                 null,
-                0,
+                "",
                 "");
         analyticFragment.setRecord(builder.build());
 

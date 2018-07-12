@@ -14,9 +14,10 @@
         android:src="@mipmap/icon_back" />
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="新建/编辑 病历"
+        android:text="新建病历"
         android:textColor="#ff00baff"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
@@ -72,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editNo" />
 
-    <EditText
+    <TextView
         android:id="@+id/editSex"
         android:layout_width="0dp"
         android:layout_height="55dp"
@@ -80,6 +81,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
         android:hint="@string/hint_peoplesex"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -90,7 +92,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-    <EditText
+    <ImageView
+        android:id="@+id/btnSex"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="12dp"
+        android:src="@mipmap/icon_sanjiao"
+        app:layout_constraintBottom_toBottomOf="@+id/editSex"
+        app:layout_constraintEnd_toEndOf="@+id/editSex"
+        app:layout_constraintTop_toTopOf="@+id/editSex" />
+
+    <TextView
         android:id="@+id/editBirthDate"
         android:layout_width="0dp"
         android:layout_height="55dp"
@@ -98,6 +110,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
         android:hint="@string/hint_peopledate"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -107,6 +120,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editSex" />
+
+    <ImageView
+        android:id="@+id/btnDate"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="12dp"
+        android:src="@mipmap/icon_date"
+        app:layout_constraintBottom_toBottomOf="@+id/editBirthDate"
+        app:layout_constraintEnd_toEndOf="@+id/editBirthDate"
+        app:layout_constraintTop_toTopOf="@+id/editBirthDate" />
 
     <EditText
         android:id="@+id/editPhone"

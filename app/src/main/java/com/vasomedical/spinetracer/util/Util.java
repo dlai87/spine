@@ -32,16 +32,6 @@ public class Util {
     public static String FORMAT_DATE = "yyyy-MM-dd";
     public static String FORMAT_TIME = "HH:mm:ss";
     static String TAG = "Util";
-    private static DoctorModel currentDoctor;
-
-    public static DoctorModel getCurrentDoctor() {
-        return currentDoctor;
-    }
-
-    public static void setCurrentDoctor(DoctorModel currentDoctor) {
-        Util.currentDoctor = currentDoctor;
-    }
-
 
 
 

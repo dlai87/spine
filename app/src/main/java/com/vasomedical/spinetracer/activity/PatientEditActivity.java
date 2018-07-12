@@ -1,9 +1,13 @@
 package com.vasomedical.spinetracer.activity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,13 +19,14 @@ import com.vasomedical.spinetracer.activity.view.PatientView;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.util.Global;
 
+import java.util.Calendar;
 import java.util.List;
 
 //界面-病人添加或编辑
 public class PatientEditActivity extends AppCompatActivity implements View.OnClickListener, PatientView {
     private View buttonBack, buttonSave;
-    private TextView tvName;
-    private EditText editNo, editName, editSex, editBirthDate, editPhone, editIdCard, editAddress, editRemarks;
+    private TextView tvName, tvTitle, editSex, editBirthDate;
+    private EditText editNo, editName, editPhone, editIdCard, editAddress, editRemarks;
     private PatientPresenter patientPresenter;
     private boolean isUpdateModel = false;//是否编辑模式
 
@@ -36,16 +41,20 @@ public class PatientEditActivity extends AppCompatActivity implements View.OnCli
         String patinetId = getIntent().getStringExtra("patinet_no");
         if (!TextUtils.isEmpty(patinetId)) {
             patientPresenter.selectPatientByNo(patinetId);
+            tvTitle.setText("编辑病人");
+        } else {
+            tvTitle.setText("新建病人");
         }
     }
 
     private void findViews() {
         buttonSave = findViewById(R.id.buttonSave);
         buttonBack = findViewById(R.id.buttonBack);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvName = (TextView) findViewById(R.id.tvName);
         editNo = (EditText) findViewById(R.id.editNo);
-        editSex = (EditText) findViewById(R.id.editSex);
-        editBirthDate = (EditText) findViewById(R.id.editBirthDate);
+        editSex = (TextView) findViewById(R.id.editSex);
+        editBirthDate = (TextView) findViewById(R.id.editBirthDate);
         editPhone = (EditText) findViewById(R.id.editPhone);
         editIdCard = (EditText) findViewById(R.id.editIdCard);
         editAddress = (EditText) findViewById(R.id.editAddress);
@@ -59,6 +68,8 @@ public class PatientEditActivity extends AppCompatActivity implements View.OnCli
         patientPresenter = new PatientPresenterCompl(this, this);
         buttonSave.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
+        editSex.setOnClickListener(this);
+        editBirthDate.setOnClickListener(this);
     }
 
     @Override
@@ -67,7 +78,39 @@ public class PatientEditActivity extends AppCompatActivity implements View.OnCli
             onBackPressed();
         } else if (buttonSave == v) {
             savePeople();
+        } else if (editSex == v) {
+            ShowSexChoise();
+        } else if (editBirthDate == v) {
+            showDatePickerDialog();
         }
+    }
+
+    private void ShowSexChoise() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog);
+        //builder.setIcon(R.drawable.ic_launcher);
+        builder.setTitle("选择性别");
+        //    指定下拉列表的显示数据
+        final String[] cities = {"男", "女"};
+        //    设置一个下拉的列表选择项
+        builder.setItems(cities, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                editSex.setText(cities[which]);
+            }
+        });
+        builder.show();
+    }
+
+
+    private void showDatePickerDialog() {
+        Calendar c = Calendar.getInstance();
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                editBirthDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            }
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+
     }
 
     private void savePeople() {
@@ -92,9 +135,9 @@ public class PatientEditActivity extends AppCompatActivity implements View.OnCli
         } else if (TextUtils.isEmpty(peopleModel.getDate_of_birth())) {
             Toast.makeText(this, "出生日期不能为空", Toast.LENGTH_SHORT).show();
         } else {
-            if(isUpdateModel){
+            if (isUpdateModel) {
                 patientPresenter.updatePatient(peopleModel);
-            }else {
+            } else {
                 patientPresenter.savePatient(peopleModel);
             }
         }

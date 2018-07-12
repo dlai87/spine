@@ -36,7 +36,7 @@ public class InspectionRecord {
     PatientModel patient;
     DoctorModel doctor;
     String type;
-    int score;
+    String score;
     String doctorComments;
 
 
@@ -93,11 +93,11 @@ public class InspectionRecord {
         this.type = type;
     }
 
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -141,7 +141,7 @@ public class InspectionRecord {
         buffer.append(context.getResources().getString(R.string.inspection_type) + " : " + typeName + "\n");
 
 
-        Date time = Util.convertStringToTime(timestamp, "yyyyMMdd_HHmmss");
+        Date time = Util.convertStringToTime(timestamp, Util.FORMAT_DATE_TIME);
         buffer.append(context.getResources().getString(R.string.inspection_time) + " : " +
                 Util.convertTimeToString(time, "yyyy-MM-dd HH:mm") + "\n");
 
@@ -150,29 +150,7 @@ public class InspectionRecord {
         return buffer.toString();
     }
 
-    public String getComments(Context context){
-        StringBuffer buffer = new StringBuffer();
 
-        buffer.append(context.getResources().getString(R.string.result_score) + " : ");
-        switch (score%4){
-            case 0:
-                buffer.append(context.getResources().getString(R.string.result_score_0) + "\n\n");
-                break;
-            case 1:
-                buffer.append(context.getResources().getString(R.string.result_score_1) + "\n\n");
-                break;
-            case 2:
-                buffer.append(context.getResources().getString(R.string.result_score_2) + "\n\n");
-                break;
-            case 3:
-                buffer.append(context.getResources().getString(R.string.result_score_3) + "\n\n");
-                break;
-        }
-
-        buffer.append(context.getResources().getString(R.string.doctor_comment) + " :\n" );
-        buffer.append(doctorComments);
-        return buffer.toString();
-    }
 
     public static class InspectionRecordBuilder {
 
@@ -182,7 +160,7 @@ public class InspectionRecord {
         DoctorModel doctor;
         String type;
         ArrayList<Pose> inspectionData;
-        int score;
+        String score;
         String doctorComments;
 
         public InspectionRecordBuilder(String id,
@@ -191,7 +169,7 @@ public class InspectionRecord {
                                        DoctorModel doctor,
                                        int detect_opt,
                                        ArrayList<Pose> inspectionData,
-                                       int score,
+                                       String score,
                                        String doctorComments) {
             this.id = id;
             this.timestamp = timestamp;
@@ -209,7 +187,7 @@ public class InspectionRecord {
                                        DoctorModel doctor,
                                        String type,
                                        ArrayList<Pose> inspectionData,
-                                       int score,
+                                       String score,
                                        String doctorComments) {
             this.id = id;
             this.timestamp = timestamp;

@@ -62,7 +62,6 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
     protected ArrayList<Entry> filterData;
     protected ArrayList<Pose> rawData;
 
-    protected int score = -1;
 
     // UI elements
     protected View view;
@@ -94,6 +93,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
     DoctorCommentDialog doctorCommentDialog;
     protected String[] doctorComments;
     protected String docComment = "";
+    protected String score = "优";   // default
 
 
 
@@ -138,7 +138,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
         setStepIndicator(2);
         Bundle args = getArguments();
         if (args!=null){
-            score = args.getInt(SCORE);
+            score = args.getString(SCORE);
         }
         keyboardAdvance(view);
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -193,8 +193,8 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                // select_language = item;
                 // fixme select socre
+                score = item;
             }
 
             @Override
@@ -242,13 +242,15 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
 
         TBPose tbPose = new TBPose();
         SQLiteDatabase database = DBAdapter.getDatabase(mContext);
-    //    for (Pose pose : record.getInspectionData()) {
+        /*
+        for (Pose pose : record.getInspectionData()) {
             // FIXME: should be only one write
-    //        tbPose.smartInsert(database, pose, record.getId());
-    //    }
+            tbPose.smartInsert(database, pose, record.getId());
+        }
+        */
 
         record.setDoctorComments(docComment);
-        record.setScore(64); // TODO
+        record.setScore(score); // TODO
         TBDetection tbDetection = new TBDetection();
         tbDetection.smartInsert(database, record);
 
