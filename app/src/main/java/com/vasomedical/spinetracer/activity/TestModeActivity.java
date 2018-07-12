@@ -1,10 +1,15 @@
 package com.vasomedical.spinetracer.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +18,7 @@ import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
 import com.vasomedical.spinetracer.util.Global;
+import com.vasomedical.spinetracer.util.Util;
 
 //页面--测试模式
 public class TestModeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,12 +27,73 @@ public class TestModeActivity extends AppCompatActivity implements View.OnClickL
     private DoctorPresenter userPresenter;
     String userName, password;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_mode);
+
+
+        if (!hasPermissionsGranted(Global.PERMISSIONS)) {
+            requestPermissions();
+        }else{
+            runAfterPermissionGranted();
+        }
+
+
         findViews();
         addAction();
+        Util.checkFolder();
+
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, Global.PERMISSIONS, Global.REQUEST_PERMISSIONS);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == Global.REQUEST_PERMISSIONS) {
+            boolean allPermissionGranted = true;
+            if (grantResults.length == Global.PERMISSIONS.length) {
+                for (int result : grantResults) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        allPermissionGranted = false;
+                        // fixme :  show toast
+                        break;
+                    }
+                }
+                if(allPermissionGranted){
+                    runAfterPermissionGranted();
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+    private boolean hasPermissionsGranted(String[] permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this,permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                Log.e( "show", "No permission granted for :" + permission);
+                return false;
+            }
+        }
+        Log.i("show", "All permissions have been granted.");
+        return true;
+    }
+
+
+    private void runAfterPermissionGranted(){
+
+
     }
 
     private void findViews() {

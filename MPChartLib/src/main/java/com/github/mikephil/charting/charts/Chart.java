@@ -1514,15 +1514,14 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
 
         OutputStream stream = null;
         try {
-            stream = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()
-                    + pathOnSD + "/" + title
+            stream = new FileOutputStream(pathOnSD + "/" + title
                     + ".png");
 
             /*
              * Write bitmap to file using JPEG or PNG and 40% quality hint for
              * JPEG.
              */
-            b.compress(CompressFormat.PNG, 40, stream);
+            b.compress(CompressFormat.PNG, 50, stream);
 
             stream.close();
         } catch (Exception e) {

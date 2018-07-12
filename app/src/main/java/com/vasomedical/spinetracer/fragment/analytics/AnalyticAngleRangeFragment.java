@@ -18,6 +18,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.util.Global;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -113,6 +114,13 @@ public abstract class AnalyticAngleRangeFragment extends AnalyticBaseFragment {
     }
 
 
+
+    @Override
+    protected void saveChart(){
+        String saveFilename = "chart" + System.currentTimeMillis();
+        chartSavePath = Global.FOLDER_CHART + saveFilename + ".png";
+        mChart.saveToPath(saveFilename, Global.FOLDER_CHART  );
+    }
 
     private boolean getMinMaxValueFromDetectionData(){
 

@@ -11,6 +11,7 @@ import com.vasomedical.spinetracer.algorithm.AlgorithmBase;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.Pose;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -34,6 +35,17 @@ public class Util {
     static String TAG = "Util";
 
 
+    public static void checkFolder(){
+        createFolderIfNotExist(Global.FOLDER_APP_ROOT);
+        createFolderIfNotExist(Global.FOLDER_CHART);
+    }
+
+    private static void createFolderIfNotExist(String fileName) {
+        File file = new File(fileName);
+        if (file.exists() == false)
+            file.mkdir();
+
+    }
 
     public static String generateUniqueID(int len){
         final String STR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

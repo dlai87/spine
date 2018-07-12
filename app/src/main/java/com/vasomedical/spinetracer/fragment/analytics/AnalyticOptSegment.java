@@ -16,6 +16,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.renderer.SpineShapeChartRenderer;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.util.Global;
 
 import java.util.ArrayList;
 
@@ -71,6 +72,14 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
         setmBubbleChartSpineSegment(detectionData);
 
 
+    }
+
+
+    @Override
+    protected void saveChart(){
+        String saveFilename = "chart" + System.currentTimeMillis();
+        chartSavePath = Global.FOLDER_CHART + saveFilename + ".png";
+        mBubbleChartSpineSegment.saveToPath(saveFilename, Global.FOLDER_CHART  );
     }
 
     private void setmBubbleChartSpineSegment(ArrayList<Entry> inputData){

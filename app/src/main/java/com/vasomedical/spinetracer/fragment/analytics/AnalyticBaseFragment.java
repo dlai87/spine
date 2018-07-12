@@ -94,6 +94,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
     protected String[] doctorComments;
     protected String docComment = "";
     protected String score = "优";   // default
+    protected String chartSavePath = "";
 
 
 
@@ -229,8 +230,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
                     Toast.makeText(mContext, "试用模式下不能保存", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                saveChart();
                 record.setDoctorComments(docComment);
                 saveToDatabase();
+
             }
         });
 
@@ -260,6 +263,10 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
         alertDialog.setMessageView("测量数据已保存");
         alertDialog.setButtons("好", null, null);
         alertDialog.showDialog();
+    }
+
+    protected void saveChart(){
+
     }
 
     void displayScoreChart(){

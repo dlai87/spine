@@ -19,6 +19,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
+import com.vasomedical.spinetracer.util.Global;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,13 @@ public abstract class AnalyticPositionAngleFragment extends AnalyticBaseFragment
 
         super.addActionToViews();
 
+    }
+
+    @Override
+    protected void saveChart(){
+        String saveFilename = "chart" + System.currentTimeMillis();
+        chartSavePath = Global.FOLDER_CHART + saveFilename + ".png";
+        mBubbleChartFilter.saveToPath(saveFilename, Global.FOLDER_CHART  );
     }
 
 

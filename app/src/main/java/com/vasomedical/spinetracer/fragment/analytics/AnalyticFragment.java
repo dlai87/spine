@@ -181,7 +181,7 @@ public class AnalyticFragment extends BaseFragment {
                 //String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
                 boolean success = mChart.saveToPath("chart.jpg", "/Android/data/");
                 Log.e("show", "save to path success " + success );
-                success = mChart.saveToGallery("Chart.jpg",60);
+                //success = mChart.saveToGallery("Chart.jpg",60);
                 Log.e("show", "save to gallery success " + success);
                 createandDisplayPdf("Test");
             }

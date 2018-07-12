@@ -1,5 +1,6 @@
 package com.vasomedical.spinetracer.util;
 
+import android.Manifest;
 import android.os.Environment;
 
 import com.vasomedical.spinetracer.model.DoctorModel;
@@ -14,6 +15,14 @@ public class Global {
 
     public static String APP_FONT = "fonts/Roboto-Regular.ttf"; //"fonts/FZPWJW.TTF"; //"fonts/han_yi_zong_yi.ttf"; //
 
+    public static final int REQUEST_PERMISSIONS = 1;
+
+    public static final String[] PERMISSIONS = {
+            Manifest.permission.CAMERA,
+          //  Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+          //  Manifest.permission.READ_PHONE_STATE,
+    };
 
     public final static String FOLDER_APP_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.vasomed.spinetracker/";
     public final static String FOLDER_CHART = FOLDER_APP_ROOT + "chart/";
