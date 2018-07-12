@@ -1,6 +1,7 @@
 package com.vasomedical.spinetracer.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,6 +16,8 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
+
+import static android.provider.Telephony.Mms.Part.FILENAME;
 
 //页面--登录
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, DoctorView {
@@ -86,6 +89,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void loginCallBack(boolean success, String msg) {
         if (success) {
+            // 保存对象
+            SharedPreferences.Editor sharedata = getSharedPreferences("autologin", 0).edit();
+            //先将序列化结果写到byte缓存中，其实就分配一个内存空间
+            sharedata.putString("username", editName.getText().toString());
+            sharedata.putString("password", editPass.getText().toString());
+            sharedata.commit();
+
             if ("admin".equalsIgnoreCase(editName.getText().toString())) {
                 Intent intent = new Intent(this, AdminActivity.class);
                 startActivity(intent);

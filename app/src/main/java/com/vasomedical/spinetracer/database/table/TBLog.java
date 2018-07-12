@@ -29,6 +29,7 @@ public class TBLog {
 
 
     public ArrayList<LogModel> getLogsList(SQLiteDatabase db) {
+        try {
         /*  NOTE:
         * Cursor query (String table,
                 String[] columns,
@@ -39,39 +40,42 @@ public class TBLog {
                 String orderBy,
                 String limit)
                 */
-        ArrayList<LogModel> queryResult = new ArrayList<LogModel>();
-        Cursor result = db.query(DBGlobal.TABLE_LOGS, null, null, null, null, null, null);
-        if (result.getCount() > 0) {
-            result.moveToFirst();
-            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_AUTO_ID);
-            int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_DOCTORID);
-            int col_doctor_name = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_DOCTORNAME);
-            int col_thing = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_THING);
-            int col_time = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_TIME);
+            ArrayList<LogModel> queryResult = new ArrayList<LogModel>();
+            Cursor result = db.query(DBGlobal.TABLE_LOGS, null, null, null, null, null, null);
+            if (result.getCount() > 0) {
+                result.moveToFirst();
+                int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_AUTO_ID);
+                int col_doctor_id = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_DOCTORID);
+                int col_doctor_name = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_DOCTORNAME);
+                int col_thing = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_THING);
+                int col_time = result.getColumnIndexOrThrow(DBGlobal.COL_LOGS_TIME);
 
-            LogModel logModel = new LogModel();
-            logModel.setId(result.getInt(col_id));
-            logModel.setThing(result.getString(col_thing));
-            logModel.setTime(result.getString(col_time));
-            DoctorModel doctorModel = new DoctorModel();
-            doctorModel.setId(result.getString(col_doctor_id));
-            doctorModel.setName(result.getString(col_doctor_name));
-            logModel.setDoctorModel(doctorModel);
-            queryResult.add(logModel);
-            while (result.moveToNext()) {
-                logModel = new LogModel();
+                LogModel logModel = new LogModel();
                 logModel.setId(result.getInt(col_id));
                 logModel.setThing(result.getString(col_thing));
                 logModel.setTime(result.getString(col_time));
-                doctorModel = new DoctorModel();
+                DoctorModel doctorModel = new DoctorModel();
                 doctorModel.setId(result.getString(col_doctor_id));
                 doctorModel.setName(result.getString(col_doctor_name));
                 logModel.setDoctorModel(doctorModel);
                 queryResult.add(logModel);
+                while (result.moveToNext()) {
+                    logModel = new LogModel();
+                    logModel.setId(result.getInt(col_id));
+                    logModel.setThing(result.getString(col_thing));
+                    logModel.setTime(result.getString(col_time));
+                    doctorModel = new DoctorModel();
+                    doctorModel.setId(result.getString(col_doctor_id));
+                    doctorModel.setName(result.getString(col_doctor_name));
+                    logModel.setDoctorModel(doctorModel);
+                    queryResult.add(logModel);
+                }
             }
+            result.close();
+            return queryResult;
+        }catch (Exception e){
+            return null;
         }
-        result.close();
-        return queryResult;
     }
 
     public void smartInsert(SQLiteDatabase db, LogModel model) {

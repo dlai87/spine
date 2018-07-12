@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="72dp"
     tools:context=".activity.PatientActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:text="张三风 "
         android:textColor="#ff00baff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_marginLeft="8dp"
         android:text="1999-07-28"
         android:textColor="#ffffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintEnd_toStartOf="@+id/tvSex"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         android:text="男"
         app:layout_constraintHorizontal_weight="1"
         android:textColor="#ffffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/tvNo"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -53,7 +53,7 @@
         android:text="NO.432652722780 "
         android:textColor="#ffffffff"
         app:layout_constraintHorizontal_weight="3"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvSex"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />

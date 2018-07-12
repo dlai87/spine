@@ -3,9 +3,9 @@ package com.vasomedical.spinetracer.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +18,6 @@ import com.vasomedical.spinetracer.activity.view.PatientView;
 import com.vasomedical.spinetracer.activity.view.ProjectView;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
 import com.vasomedical.spinetracer.dialog.ReportDialog;
-import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.PatientModel;
 import com.vasomedical.spinetracer.model.ProjectModel;
 import com.vasomedical.spinetracer.util.Global;
@@ -38,7 +37,6 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     private ReportDialog reportDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +48,7 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
         String patinetId = getIntent().getStringExtra("patinet_no");
         if (!TextUtils.isEmpty(patinetId)) {
             patientPresenter.selectPatientByNo(patinetId);
-        }else{
+        } else {
             Global.patientModel = null;
         }
     }
@@ -213,6 +211,25 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     @Override
     public void updateUIProjetList(List<ProjectModel> projectModels) {
         this.projectModelList = projectModels;
+        if (!projectModelList.get(0).isEnable()) {
+            hideView(buttonItem1);
+        }
+        if (!projectModelList.get(1).isEnable()) {
+            hideView(buttonItem2);
+        }
+        if (!projectModelList.get(5).isEnable()) {
+            hideView(buttonItem4);
+        }
+        if (!projectModelList.get(3).isEnable()) {
+            hideView(buttonItem5);
+        }
+        if (!projectModelList.get(2).isEnable()) {
+            hideView(buttonItem3);
+        }
+        if (!projectModelList.get(4).isEnable()) {
+            hideView(buttonItem6);
+        }
+
     }
 
     @Override
@@ -247,6 +264,16 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
             reportDialog.setTitle(title);
             reportDialog.setMessage(mesg);
             reportDialog.show();
+        }
+    }
+
+    private void hideView(View view) {
+        GridLayout gridLayout = (GridLayout) view.getParent();
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            if (view == gridLayout.getChildAt(i)) {
+                gridLayout.removeViewAt(i);
+                break;
+            }
         }
     }
 }

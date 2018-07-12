@@ -1,6 +1,7 @@
 package com.vasomedical.spinetracer.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,11 @@ public class MianToolsActivity extends AppCompatActivity implements View.OnClick
         } else if (v == buttonLogout) {
             Global.login = false;
             Global.userModel = null;
+            SharedPreferences.Editor sharedata = getSharedPreferences("autologin", 0).edit();
+            //先将序列化结果写到byte缓存中，其实就分配一个内存空间
+            sharedata.putString("username", null);
+            sharedata.putString("password", null);
+            sharedata.commit();
             onBackPressed();
         } else if (v == buttonStartTest) {
             if (Global.login) {
