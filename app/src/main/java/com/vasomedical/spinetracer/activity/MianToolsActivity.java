@@ -64,6 +64,7 @@ public class MianToolsActivity extends AppCompatActivity implements View.OnClick
         } else if (v == buttonLogout) {
             Global.login = false;
             Global.userModel = null;
+            Global.patientModel=null;
             SharedPreferences.Editor sharedata = getSharedPreferences("autologin", 0).edit();
             //先将序列化结果写到byte缓存中，其实就分配一个内存空间
             sharedata.putString("username", null);
@@ -72,9 +73,16 @@ public class MianToolsActivity extends AppCompatActivity implements View.OnClick
             onBackPressed();
         } else if (v == buttonStartTest) {
             if (Global.login) {
-                Intent intent = new Intent(this, PatientActivity.class);
-                intent.putExtra("model_select", true);
-                startActivity(intent);
+                if (Global.patientModel == null) {
+                    Toast.makeText(this, "请在病人管理里面选择一个病人", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(this, SelProjectcAtivity.class);
+                    intent.putExtra("patinet_no", Global.patientModel.getId());
+                    startActivity(intent);
+                }
+//                Intent intent = new Intent(this, PatientActivity.class);
+//                intent.putExtra("model_select", true);
+//                startActivity(intent);
             } else {
                 Intent intent = new Intent(this, SelProjectcAtivity.class);
                 startActivity(intent);

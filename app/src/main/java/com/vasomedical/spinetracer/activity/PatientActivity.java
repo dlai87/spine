@@ -36,14 +36,14 @@ public class PatientActivity extends AppCompatActivity implements View.OnClickLi
         findViews();
         addAction();
 
-        selectModel = getIntent().getBooleanExtra("model_select", false);
-        if (selectModel) {//选择模式
-            groupAdd.setVisibility(View.GONE);
-            buttonEdit.setVisibility(View.GONE);
-            buttonDel.setVisibility(View.GONE);
-        } else {
-            buttonSelected.setVisibility(View.GONE);
-        }
+//        selectModel = getIntent().getBooleanExtra("model_select", false);
+//        if (selectModel) {//选择模式
+//            groupAdd.setVisibility(View.GONE);
+//            buttonEdit.setVisibility(View.GONE);
+//            buttonDel.setVisibility(View.GONE);
+//        } else {
+//            buttonSelected.setVisibility(View.GONE);
+//        }
     }
 
     private void findViews() {
@@ -91,9 +91,10 @@ public class PatientActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, PatientEditActivity.class);
             startActivity(intent);
         } else if (v == buttonSelected) {
-            Intent intent = new Intent(this, SelProjectcAtivity.class);
-            intent.putExtra("patinet_no", adapter.getSelectItem().getId());
-            startActivity(intent);
+            Global.patientModel = adapter.getSelectItem();
+//            Intent intent = new Intent(this, SelProjectcAtivity.class);
+//            intent.putExtra("patinet_no", adapter.getSelectItem().getId());
+//            startActivity(intent);
             finish();
         } else if (v == buttonDel) {
             if (adapter.getSelectItem() != null) {
