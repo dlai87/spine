@@ -2,6 +2,7 @@ package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -38,6 +39,7 @@ import com.vasomedical.spinetracer.database.table.TBPose;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.dialog.DoctorCommentDialog;
 import com.vasomedical.spinetracer.dialog.ReportDialog;
+import com.vasomedical.spinetracer.dialog.SaveSuccessDialog;
 import com.vasomedical.spinetracer.fragment.BaseFragment;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.Pose;
@@ -52,7 +54,7 @@ import java.util.ArrayList;
  * Created by dehualai on 6/24/18.
  */
 
-public abstract class AnalyticBaseFragment extends BaseFragment implements DoctorCommentDialog.DoctorCommentInterface {
+public abstract class AnalyticBaseFragment extends BaseFragment implements DoctorCommentDialog.DoctorCommentInterface, SaveSuccessDialog.DialogInterface {
 
 
 
@@ -259,11 +261,19 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
         tbDetection.smartInsert(database, record);
 
 
+        /*
         AlertDialog alertDialog = new AlertDialog(mContext);
         alertDialog.setTitleView("成功");
         alertDialog.setMessageView("测量数据已保存");
         alertDialog.setButtons("好", null, null);
         alertDialog.showDialog();
+        */
+
+        SaveSuccessDialog dialog = new SaveSuccessDialog(mContext);
+        dialog.setCallback(this);
+        dialog.show();
+
+
     }
 
     protected void saveChart(){
@@ -319,8 +329,12 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
 
 
 
-
-
+    // Override interface SaveSuccessDialog.DialogInterface
+    @Override
+    public void onOKButtonPressed(){
+        Intent intent = new Intent(mActivity, TestModeActivity.class);
+        startActivity(intent);
+    }
 
 
 

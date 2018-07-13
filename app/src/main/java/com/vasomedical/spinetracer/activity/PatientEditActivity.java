@@ -101,10 +101,9 @@ public class PatientEditActivity extends AppCompatActivity implements View.OnCli
         builder.show();
     }
 
-
     private void showDatePickerDialog() {
         Calendar c = Calendar.getInstance();
-        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT,  new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 editBirthDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
