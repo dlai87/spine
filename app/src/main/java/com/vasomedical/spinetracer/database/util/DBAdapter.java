@@ -5,10 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
+import com.vasomedical.spinetracer.database.table.TBDoctor;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.util.Global;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by dehualai on 12/28/16.
@@ -86,6 +90,12 @@ public class DBAdapter extends SQLiteOpenHelper {
         createTablePose(db);
         createTableDataPorcessed(db);
         createTableLogs(db);
+        //插入一个默认的管理员信息
+        TBDoctor tbDoctor = new TBDoctor();
+        DoctorModel doctorModel = new DoctorModel.DoctorBuilder(UUID.randomUUID().toString(), "admin")
+                .setRealName("管理员")
+                .setPassword("12345").build();
+        tbDoctor.insert(db, doctorModel);
     }
 
     /**

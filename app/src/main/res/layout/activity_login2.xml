@@ -115,6 +115,7 @@
         android:layout_marginBottom="24dp"
         android:text="还没账号？去注册"
         android:textColor="#ff9298c6"
+        android:visibility="gone"
         android:textSize="27sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

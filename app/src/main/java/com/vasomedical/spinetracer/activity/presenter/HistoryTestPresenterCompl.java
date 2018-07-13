@@ -8,9 +8,11 @@ import com.vasomedical.spinetracer.activity.view.HistoryTestView;
 import com.vasomedical.spinetracer.database.table.TBDetection;
 import com.vasomedical.spinetracer.database.table.TBPatient;
 import com.vasomedical.spinetracer.database.util.DBAdapter;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.model.HistoryTestModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
 import com.vasomedical.spinetracer.model.PatientModel;
+import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Global;
 
 import java.text.ParseException;
@@ -47,7 +49,7 @@ public class HistoryTestPresenterCompl implements HistoryTestPresenter {
             @Override
             public void run() {
                 List<InspectionRecord> inspectionRecordList = tbDetection.getDetectionList(db, Global.userModel);
-                final List<HistoryTestModel> historyTestModelList = recodeToHistoryModel(inspectionRecordList);
+                final List<InspectionRecord> historyTestModelList = recodeToHistoryModel2(inspectionRecordList);
 
                 handler.post(new Runnable() {
                     @Override
@@ -70,7 +72,7 @@ public class HistoryTestPresenterCompl implements HistoryTestPresenter {
                 for (PatientModel patientModel : patientModels) {
                     inspectionRecordList.addAll(tbDetection.getDetectionList(db, patientModel));
                 }
-                final List<HistoryTestModel> historyTestModelList = recodeToHistoryModel(inspectionRecordList);
+                final List<InspectionRecord> historyTestModelList = recodeToHistoryModel2(inspectionRecordList);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -85,6 +87,51 @@ public class HistoryTestPresenterCompl implements HistoryTestPresenter {
 
     private void addLog(String thing) {
         logsPresenter.addLog(thing);
+    }
+
+    private List<InspectionRecord> recodeToHistoryModel2(List<InspectionRecord> inspectionRecordList) {
+        List<InspectionRecord> inspectionRecordListNew = new ArrayList<>();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+        Map<String, List<InspectionRecord>> data = new HashMap<>();
+        for (InspectionRecord inspectionRecord : inspectionRecordList) {
+            String key = "";
+            try {
+                Date date = format1.parse(inspectionRecord.getTimestamp());
+                key = format2.format(date) + inspectionRecord.getPatient().getId();
+            } catch (Exception ignored) {
+            }
+            List<InspectionRecord> temp = data.get(key);
+            if (temp == null) {
+                temp = new ArrayList<>();
+            }
+            temp.add(inspectionRecord);
+            data.put(key, temp);
+        }
+
+        for (List<InspectionRecord> temp : data.values()) {
+            String timestamp = null;
+            try {
+                Date date = format1.parse(temp.get(0).getTimestamp());
+                timestamp = format2.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            InspectionRecord ItemInspec = new InspectionRecord.InspectionRecordBuilder(
+                    null,
+                    timestamp,
+                    temp.get(0).getPatient(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            ).build();
+
+            inspectionRecordListNew.add(ItemInspec);
+            inspectionRecordListNew.addAll(temp);
+        }
+        return inspectionRecordListNew;
     }
 
     private List<HistoryTestModel> recodeToHistoryModel(List<InspectionRecord> inspectionRecordList) {

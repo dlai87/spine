@@ -91,11 +91,15 @@ public class PatientActivity extends AppCompatActivity implements View.OnClickLi
             Intent intent = new Intent(this, PatientEditActivity.class);
             startActivity(intent);
         } else if (v == buttonSelected) {
-            Global.patientModel = adapter.getSelectItem();
+            if (adapter.getSelectItem() == null) {
+                Toast.makeText(this, "需要先选择病人", Toast.LENGTH_SHORT).show();
+            } else {
+                Global.patientModel = adapter.getSelectItem();
 //            Intent intent = new Intent(this, SelProjectcAtivity.class);
 //            intent.putExtra("patinet_no", adapter.getSelectItem().getId());
 //            startActivity(intent);
-            finish();
+                finish();
+            }
         } else if (v == buttonDel) {
             if (adapter.getSelectItem() != null) {
                 patientPresenter.deletPatient(adapter.getSelectItem().getId());

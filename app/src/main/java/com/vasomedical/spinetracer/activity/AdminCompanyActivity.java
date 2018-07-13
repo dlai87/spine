@@ -53,6 +53,7 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
         buttonCacnel.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
+        buttonAddClass.setOnClickListener(this);
 
         companyPresenter = new CompanyPresenterCompl(this, this);
         companyPresenter.reqCompanyInfo();

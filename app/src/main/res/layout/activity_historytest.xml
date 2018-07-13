@@ -35,6 +35,8 @@
         android:paddingRight="56dp"
         android:textColor="#ff00baff"
         android:textColorHint="#Ef00baff"
+        android:lines="1"
+        android:maxLength="10"
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

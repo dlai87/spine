@@ -105,7 +105,7 @@ public class TBDetection {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         String selection = DBGlobal.COL_PATIENT_ID + " =? "; // TEMP use timestamp to compare
         String[] selectionArgs = {patient.getId()};
-        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, DBGlobal.COL_TIMESTAMP, null, DBGlobal.COL_PATIENT_ID);
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, DBGlobal.COL_TIMESTAMP);
         if (result.getCount() > 0) {
             result.moveToFirst();
             int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
@@ -151,6 +151,7 @@ public class TBDetection {
                 ).build());
             }
         }
+        result.close();
         return queryResult;
     }
 
@@ -158,7 +159,7 @@ public class TBDetection {
         ArrayList<InspectionRecord> queryResult = new ArrayList<>();
         String selection = DBGlobal.COL_DOCTOR_ID + " =? "; // TEMP use timestamp to compare
         String[] selectionArgs = {doctorModel.getId()};
-        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, DBGlobal.COL_TIMESTAMP, null, DBGlobal.COL_PATIENT_ID);
+        Cursor result = db.query(DBGlobal.TABLE_DETECTION, null, selection, selectionArgs, null, null, DBGlobal.COL_TIMESTAMP);
         if (result.getCount() > 0) {
             result.moveToFirst();
             int col_detection_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
@@ -202,6 +203,7 @@ public class TBDetection {
                 ).build());
             }
         }
+        result.close();
         return queryResult;
     }
 

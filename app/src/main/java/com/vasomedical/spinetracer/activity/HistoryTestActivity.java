@@ -67,12 +67,12 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
         } else if (v == btnSearch) {
             historyTestPresenter.reqName(edSearch.getText().toString());
         } else if (v == btnReport) {
-            Map<HistoryTestModel, Set<InspectionRecord>> modelSetMap = historyTestAdapter.getSelectModel();
+            Map<InspectionRecord, Set<InspectionRecord>> modelSetMap = historyTestAdapter.getSelectModel();
         }
     }
 
     @Override
-    public void updateUI(List<HistoryTestModel> recordList) {
+    public void updateUI(List<InspectionRecord> recordList) {
         historyTestAdapter.setData(recordList);
     }
 }
