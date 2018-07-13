@@ -105,7 +105,7 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void saveCompayClassInfoCallBack(boolean success, String msg) {
-
+        // fixme :  msg是新增科室的信息，把这个信息添加到列表里。
     }
 
 }

@@ -3,10 +3,14 @@ package com.vasomedical.spinetracer.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.activity.view.CompanyView;
 
 /**
  * Created by dehualai on 7/12/18.
@@ -14,15 +18,22 @@ import com.vasomedical.spinetracer.R;
 
 public class InputTextDialog extends Dialog implements View.OnClickListener {
 
-    private TextView tvTitle, tvDesc;
     private View btnClose;
-    private String titleStr;//从外界设置的title文本
-    private String messageStr;//从外界设置的消息文本
+    EditText inputText;
+    Button button;
+    CompanyView callback;
+
+    public interface InputTextDialogInterface{
+        public void onConfirmButtonPressed(String newClass);
+    }
 
     public InputTextDialog(Context context) {
         super(context, R.style.ReportportDialog);
     }
 
+    public void setCallback(CompanyView callback){
+        this.callback = callback;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +46,29 @@ public class InputTextDialog extends Dialog implements View.OnClickListener {
     }
 
     private void findViews() {
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvDesc = (TextView) findViewById(R.id.tvDesc);
         btnClose = findViewById(R.id.btnClose);
+        inputText = findViewById(R.id.class_input_text);
+        button = findViewById(R.id.confirm_button);
     }
 
     private void addAction() {
         btnClose.setOnClickListener(this);
-        tvTitle.setText(titleStr);
-        tvDesc.setText(messageStr);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s = inputText.getText().toString();
+                Log.i("show", "inputtext[" + s + "]");
+                s.replace(" ", "");  // 去除空格
+                if(s != null && s.equals("")){
+                    if(callback!=null){
+                        callback.saveCompayClassInfoCallBack(true, s);
+                    }
+                }
+                dismiss();
+            }
+        });
     }
 
-    /**
-     * 从外界Activity为Dialog设置标题
-     *
-     * @param title
-     */
-    public void setTitle(String title) {
-        titleStr = title;
-        if (tvTitle != null) {
-            tvTitle.setText(title);
-        }
-    }
-
-    /**
-     * 从外界Activity为Dialog设置dialog的message
-     *
-     * @param message
-     */
-    public void setMessage(String message) {
-        messageStr = message;
-        if (tvDesc != null) {
-            tvDesc.setText(message);
-        }
-    }
 
 
     @Override
