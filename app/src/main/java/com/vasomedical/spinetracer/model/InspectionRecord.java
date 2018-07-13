@@ -38,6 +38,7 @@ public class InspectionRecord {
     String type;
     String score;
     String doctorComments;
+    String saveChartPath;
 
 
     ArrayList<Pose> inspectionData;
@@ -109,6 +110,14 @@ public class InspectionRecord {
         this.doctorComments = doctorComments;
     }
 
+    public String getSaveChartPath() {
+        return saveChartPath;
+    }
+
+    public void setSaveChartPath(String saveChartPath) {
+        this.saveChartPath = saveChartPath;
+    }
+
     public ArrayList<Pose> getInspectionData() {
         return inspectionData;
     }
@@ -170,7 +179,8 @@ public class InspectionRecord {
                                        int detect_opt,
                                        ArrayList<Pose> inspectionData,
                                        String score,
-                                       String doctorComments) {
+                                       String doctorComments
+        ) {
             this.id = id;
             this.timestamp = timestamp;
             this.patient = patient;
@@ -206,6 +216,8 @@ public class InspectionRecord {
         public void setDoctorComments(String doctorComments) {
             this.doctorComments = doctorComments;
         }
+
+
 
         public InspectionRecord build() {
             return new InspectionRecord(this);

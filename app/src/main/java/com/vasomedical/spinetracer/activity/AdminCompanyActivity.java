@@ -13,6 +13,7 @@ import com.vasomedical.spinetracer.activity.presenter.CompanyPresenter;
 import com.vasomedical.spinetracer.activity.presenter.CompanyPresenterCompl;
 import com.vasomedical.spinetracer.activity.presenter.ProjectPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.CompanyView;
+import com.vasomedical.spinetracer.dialog.InputTextDialog;
 import com.vasomedical.spinetracer.model.CompanyClassModel;
 import com.vasomedical.spinetracer.model.CompanyModel;
 import com.vasomedical.spinetracer.model.ProjectModel;
@@ -61,6 +62,9 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         if (v == buttonBack || v == buttonCacnel) {
             onBackPressed();
+        } else if(v == buttonAddClass){
+            InputTextDialog dialog = new InputTextDialog(this);
+            dialog.show();
         } else if (v == buttonSubmit) {
             if (this.companyModel == null) {
                 this.companyModel = new CompanyModel();

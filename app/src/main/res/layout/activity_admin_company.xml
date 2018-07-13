@@ -112,7 +112,7 @@
         android:maxLength="20"
         android:paddingEnd="8dp"
         android:paddingStart="56dp"
-        android:text="添加科室"
+            android:text="添加科室"
         android:textColor="#ff00baff"
         android:textColorHint="#ff00baff"
         android:textSize="23sp"
@@ -123,7 +123,7 @@
     <ImageView
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="120dp"
         android:src="@mipmap/icon_add"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAddClass"
         app:layout_constraintEnd_toEndOf="@+id/buttonAddClass"

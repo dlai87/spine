@@ -58,7 +58,7 @@
         android:id="@+id/img1"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_marginEnd="156dp"
+        android:layout_marginEnd="180dp"
         android:src="@mipmap/icon_add"
         app:layout_constraintBottom_toBottomOf="@+id/bg1"
         app:layout_constraintEnd_toEndOf="@+id/bg1"

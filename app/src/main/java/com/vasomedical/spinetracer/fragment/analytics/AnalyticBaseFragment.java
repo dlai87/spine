@@ -232,6 +232,7 @@ public abstract class AnalyticBaseFragment extends BaseFragment implements Docto
                 }
                 saveChart();
                 record.setDoctorComments(docComment);
+                record.setSaveChartPath(chartSavePath);
                 saveToDatabase();
 
             }
