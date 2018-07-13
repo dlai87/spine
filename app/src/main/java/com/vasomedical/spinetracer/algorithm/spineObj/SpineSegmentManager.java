@@ -1,6 +1,9 @@
 package com.vasomedical.spinetracer.algorithm.spineObj;
 
+import android.util.Log;
+
 import com.vasomedical.spinetracer.model.Pose;
+import com.vasomedical.spinetracer.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +63,18 @@ public class SpineSegmentManager {
     public ArrayList<SpineShape> covert2(ArrayList<ArrayList<Pose>> rawData){
         ArrayList<SpineShape> spineList = new ArrayList<SpineShape>();
 
+        SpineShape prePos = null;
         for(List<Pose> sub : rawData){
-            spineList.add(new SpineShape(sub));
+            SpineShape p = new SpineShape(sub);
+            spineList.add(p);
+            if(prePos != null){
+                float x = p.avergePose.getX() - prePos.getPose().getX();
+                float y = p.avergePose.getY() - prePos.getPose().getY();
+                float k = (float) Math.atan(y / x) ;
+                float degree = Util.radianToDegree(k);
+                Log.i("show", "x " + x  + " y " + y + " k " + k + " degree " + degree);
+            }
+            prePos = p;
         }
 
         return spineList;

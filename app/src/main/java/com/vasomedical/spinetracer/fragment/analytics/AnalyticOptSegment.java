@@ -2,6 +2,7 @@ package com.vasomedical.spinetracer.fragment.analytics;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.renderer.SpineShapeChartRenderer;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.model.Pose;
 import com.vasomedical.spinetracer.util.Global;
+import com.vasomedical.spinetracer.util.Util;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,8 @@ public class AnalyticOptSegment extends AnalyticBaseFragment{
 
     protected BubbleChart mBubbleChartSpineSegment;
     private TextView cobbsAngleText;
+
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
