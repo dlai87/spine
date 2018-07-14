@@ -17,9 +17,7 @@ public class AlgorithmOptSlant extends AlgorithmBase {
 
     public ArrayList<Entry> processData(ArrayList<Pose> inputData){
 
-        GlobalFlags.SpineShapeSegmentFlag = true;
-
-        int numSamples = 30;
+        int numSamples = 80;
         ArrayList<Entry> data =  createDataForChart(inputData, Coordinate.y, Coordinate.ry, numSamples);
 
         return normalizeData(data);

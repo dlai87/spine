@@ -9,6 +9,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.utils.GlobalFlags;
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.PatientPresenter;
 import com.vasomedical.spinetracer.activity.presenter.PatientPresenterCompl;
@@ -92,6 +93,8 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
 
 
+        GlobalFlags.SpineShapeSegmentFlag = false;
+
         if (v == buttonBack) {
             onBackPressed();
         } else if (v == buttonItem1) {
@@ -120,6 +123,8 @@ public class SelProjectcAtivity extends AppCompatActivity implements View.OnClic
                 AlgorithmFactory.detectionOption = AlgorithmFactory.DETECT_OPT_3;
 
                 startActivity(intent);
+
+                GlobalFlags.SpineShapeSegmentFlag = true;
 
 
             } else {

@@ -105,7 +105,7 @@ public abstract class AnalyticPositionAngleFragment extends AnalyticBaseFragment
 
         // create a dataset and give it a type
         BubbleDataSet set1 = new BubbleDataSet(yVals1, "");
-        set1.setColor(ColorTemplate.COLORFUL_COLORS[0], 0);
+        set1.setColor(Color.BLUE, 200);
         set1.setDrawValues(true);
 
 
