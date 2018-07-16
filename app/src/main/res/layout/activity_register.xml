@@ -163,7 +163,7 @@
         app:layout_constraintStart_toStartOf="@+id/editRealName"
         app:layout_constraintTop_toTopOf="@+id/editRealName" />
 
-    <EditText
+    <TextView
         android:id="@+id/editCompany"
         android:layout_width="0dp"
         android:layout_height="68dp"
@@ -172,12 +172,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_item_bg"
         android:gravity="center_vertical"
-        android:hint="@string/hint_companynmae1"
+        android:hint="@string/hint_companynmae2"
         android:lines="1"
         android:maxLength="20"
         android:paddingLeft="56dp"
         android:paddingRight="56dp"
-        android:text="广东省第一人民医院"
         android:textColor="#ff00baff"
         android:textColorHint="#ff00baff"
         android:textSize="23sp"
@@ -213,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="@+id/editCompany"
         app:layout_constraintTop_toTopOf="@+id/editCompany" />
 
-    <EditText
+    <TextView
         android:id="@+id/editClass"
         android:layout_width="0dp"
         android:layout_height="68dp"
@@ -222,12 +221,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_item_bg"
         android:gravity="center_vertical"
-        android:hint="@string/hint_class"
+        android:hint="@string/hint_class2"
         android:lines="1"
         android:maxLength="20"
         android:paddingLeft="56dp"
         android:paddingRight="56dp"
-        android:text="耳鼻喉科"
         android:textColor="#ff00baff"
         android:textColorHint="#ff00baff"
         android:textSize="23sp"

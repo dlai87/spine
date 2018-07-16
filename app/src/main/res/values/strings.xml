@@ -149,7 +149,9 @@
     <string name="hint_password"><i>输入密码</i></string>
     <string name="hint_password2"><i>再次输入密码</i></string>
     <string name="hint_companynmae1"><i>广东省第一人民医院</i></string>
+    <string name="hint_companynmae2"><i>请在医院管理里面添加医院名称</i></string>
     <string name="hint_class"><i>耳鼻喉科</i></string>
+    <string name="hint_class2"><i>请在医院管理里面添加科室</i></string>
     <string name="hint_email"><i>输入电子邮箱</i></string>
     <string name="hint_phone2"><i>输入手机号</i></string>
     <string name="hint_peopleno"><i>输入病人编号</i></string>
