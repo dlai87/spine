@@ -2,6 +2,7 @@ package com.vasomedical.spinetracer.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -63,8 +64,9 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         if (v == buttonBack || v == buttonCacnel) {
             onBackPressed();
-        } else if(v == buttonAddClass){
+        } else if (v == buttonAddClass) {
             InputTextDialog dialog = new InputTextDialog(this);
+            dialog.setCallback(this);
             dialog.show();
         } else if (v == buttonSubmit) {
             if (this.companyModel == null) {
@@ -85,12 +87,14 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
             editAddress.setText(companyModel.getAddress());
             editPhone.setText(companyModel.getPhone());
             if (companyModel.getClassModelList() != null) {
+                StringBuilder stringBuilder = new StringBuilder();
                 for (int index = 0; index < companyModel.getClassModelList().size(); index++) {
-                    StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(index + 1);
                     stringBuilder.append("、");
                     stringBuilder.append(companyModel.getClassModelList().get(index).getName());
+                    stringBuilder.append("\n");
                 }
+                tvClassList.setText(stringBuilder.toString());
             }
         }
     }
@@ -105,7 +109,11 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void saveCompayClassInfoCallBack(boolean success, String msg) {
-        // fixme :  msg是新增科室的信息，把这个信息添加到列表里。
+        if (success && !TextUtils.isEmpty(msg)) {
+            CompanyClassModel classModel = new CompanyClassModel();
+            classModel.setName(msg);
+            companyPresenter.addCompanyClassInfo(classModel);
+        }
     }
 
 }

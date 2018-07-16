@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.vasomedical.spinetracer.activity.view.CompanyView;
 import com.vasomedical.spinetracer.model.CompanyClassModel;
@@ -44,9 +45,11 @@ public class CompanyPresenterCompl implements CompanyPresenter {
                 List<CompanyClassModel> companyClassModelList = new ArrayList<>();
                 String classNameStr = preferences.getString(compnay_class, "");
                 for (String className : classNameStr.split(",")) {
-                    CompanyClassModel classModel = new CompanyClassModel();
-                    classModel.setName(className);
-                    companyClassModelList.add(classModel);
+                    if (!TextUtils.isEmpty(className)) {
+                        CompanyClassModel classModel = new CompanyClassModel();
+                        classModel.setName(className);
+                        companyClassModelList.add(classModel);
+                    }
                 }
                 companyModel.setClassModelList(companyClassModelList);
                 handler.post(new Runnable() {
@@ -82,11 +85,21 @@ public class CompanyPresenterCompl implements CompanyPresenter {
     }
 
     @Override
-    public void addCompanyClassInfo(CompanyClassModel companyClassModel) {
+    public void addCompanyClassInfo(final CompanyClassModel companyClassModel) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                SharedPreferences.Editor editor = preferences.edit();
+                List<CompanyClassModel> companyClassModelList = new ArrayList<>();
+                String classNameStr = preferences.getString(compnay_class, "");
+                if (!classNameStr.contains(companyClassModel.getName())) {
+                    classNameStr += "," + companyClassModel.getName();
+                    classNameStr = classNameStr.replaceAll(",,", ",");
+                }
+                editor.putString(compnay_class, classNameStr);
+                editor.apply();
+                reqCompanyInfo();
             }
         }).start();
     }

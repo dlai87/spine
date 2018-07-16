@@ -3,6 +3,7 @@ package com.vasomedical.spinetracer.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ public class InputTextDialog extends Dialog implements View.OnClickListener {
     Button button;
     CompanyView callback;
 
-    public interface InputTextDialogInterface{
+    public interface InputTextDialogInterface {
         public void onConfirmButtonPressed(String newClass);
     }
 
@@ -31,7 +32,7 @@ public class InputTextDialog extends Dialog implements View.OnClickListener {
         super(context, R.style.ReportportDialog);
     }
 
-    public void setCallback(CompanyView callback){
+    public void setCallback(CompanyView callback) {
         this.callback = callback;
     }
 
@@ -59,8 +60,8 @@ public class InputTextDialog extends Dialog implements View.OnClickListener {
                 String s = inputText.getText().toString();
                 Log.i("show", "inputtext[" + s + "]");
                 s.replace(" ", "");  // 去除空格
-                if(s != null && s.equals("")){
-                    if(callback!=null){
+                if (!TextUtils.isEmpty(s)) {
+                    if (callback != null) {
                         callback.saveCompayClassInfoCallBack(true, s);
                     }
                 }
@@ -68,7 +69,6 @@ public class InputTextDialog extends Dialog implements View.OnClickListener {
             }
         });
     }
-
 
 
     @Override
