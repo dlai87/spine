@@ -238,6 +238,41 @@ public class TBDoctor {
         return doctorModel;
     }
 
+    public boolean removeById(SQLiteDatabase db, String id) {
+        String[] args = {id};
+        int code = db.delete(DBGlobal.TABLE_DOCTOR, DBGlobal.COL_ID + "=?", args);
+        return code > 0;
+    }
+
+    public DoctorModel getDoctorById(SQLiteDatabase db, String id) {
+        Cursor result = db.query(DBGlobal.TABLE_DOCTOR,
+                null,
+                DBGlobal.COL_ID + "=?",
+                new String[]{id,}, null, null, null);
+
+        DoctorModel doctorModel = null;
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+            int col_id = result.getColumnIndexOrThrow(DBGlobal.COL_ID);
+            int col_name = result.getColumnIndexOrThrow(DBGlobal.COL_NAME);
+            int col_phone = result.getColumnIndexOrThrow(DBGlobal.COL_PHONE_NUMBER);
+            int col_email = result.getColumnIndexOrThrow(DBGlobal.COL_EMAIL);
+            int col_hospital = result.getColumnIndexOrThrow(DBGlobal.COL_HOSPITAL);
+            int col_department = result.getColumnIndexOrThrow(DBGlobal.COL_DEPARTMENT);
+            int col_password = result.getColumnIndexOrThrow(DBGlobal.COL_PASSWORD);
+
+            doctorModel = new DoctorModel.DoctorBuilder(result.getString(col_id), result.getString(col_name))
+                    .phone(result.getString(col_phone))
+                    .email(result.getString(col_email))
+                    .hospital(result.getString(col_hospital))
+                    .department(result.getString(col_department))
+                    .setPassword(result.getString(col_password))
+                    .build();
+        }
+        result.close();
+        return doctorModel;
+    }
+
     public void smartInsert(SQLiteDatabase db, DoctorModel model) {
         ArrayList<DoctorModel> models = getDoctorList(db);
         boolean exist = false;

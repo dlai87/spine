@@ -16,6 +16,9 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
+import com.vasomedical.spinetracer.model.DoctorModel;
+
+import java.util.List;
 
 import static android.provider.Telephony.Mms.Part.FILENAME;
 
@@ -111,6 +114,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void registerCallBack(boolean success, String msg) {
+
+    }
+
+    @Override
+    public void selectAllDoctor(List<DoctorModel> doctorModelList) {
+
+    }
+
+    @Override
+    public void selectDoctor(DoctorModel doctorMode) {
+
+    }
+
+    @Override
+    public void updateDoctorInfo(boolean success, String msg) {
+
+    }
+
+    @Override
+    public void removeDoctor(boolean success, String msg) {
 
     }
 }

@@ -22,10 +22,10 @@ import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.CompanyView;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
-import com.vasomedical.spinetracer.model.CompanyClassModel;
 import com.vasomedical.spinetracer.model.CompanyModel;
 import com.vasomedical.spinetracer.model.DoctorModel;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,13 +33,14 @@ import java.util.TimerTask;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener, DoctorView, CompanyView {
     private EditText editName, editPass, editPass2, editRealName, editEmail, editPhone;
-    private TextView editCompany, editClass;
-    private View buttonBack, buttonRegister, buttonCompanyMore, buttonClassMore;
+    private TextView tvTitle, editCompany, editClass;
+    private View buttonBack, buttonCompanyMore, buttonClassMore;
+    private TextView buttonRegister;
     private CheckBox buttonEye, buttonEye2;
     private DoctorPresenter doctorPresenter;
     private CompanyPresenter companyPresenter;
     private CompanyModel companyModel;
-
+    private String doctorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +54,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonBack = findViewById(R.id.buttonBack);
         buttonCompanyMore = findViewById(R.id.buttonCompanyMore);
         buttonClassMore = findViewById(R.id.buttonClassMore);
-        buttonRegister = findViewById(R.id.buttonRegister);
+        buttonRegister = (TextView) findViewById(R.id.buttonRegister);
         editName = (EditText) findViewById(R.id.editName);
         editPass = (EditText) findViewById(R.id.editPass);
         editPass2 = (EditText) findViewById(R.id.editPass2);
         editRealName = (EditText) findViewById(R.id.editRealName);
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPhone = (EditText) findViewById(R.id.editPhone);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
         editCompany = (TextView) findViewById(R.id.editCompany);
         editClass = (TextView) findViewById(R.id.editClass);
         buttonEye = (CheckBox) findViewById(R.id.buttonEye);
@@ -90,13 +92,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
 
         }, 200);//这里的时间大概是自己测试的
+
+
+        //编辑模式
+        doctorId = getIntent().getStringExtra("doctor_no");
+        if (!TextUtils.isEmpty(doctorId)) {
+            doctorPresenter.delectDoctor(doctorId);
+            tvTitle.setText("编辑医生");
+            buttonRegister.setText("更新");
+        } else {
+            tvTitle.setText("注册医生");
+            buttonRegister.setText("注冊");
+        }
     }
 
     @Override
     public void onClick(View v) {
         if (v == buttonRegister) {
-            //注册
-            userRegister();
+            if (TextUtils.isEmpty(doctorId)) {
+                userRegister();//注册
+            } else {
+                userUpdate();//更新
+            }
         } else if (v == buttonBack) {
             onBackPressed();
         } else if (v == editClass) {
@@ -125,6 +142,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (success) {
             finish();
         }
+    }
+
+    @Override
+    public void selectAllDoctor(List<DoctorModel> doctorModelList) {
+
+    }
+
+    @Override
+    public void selectDoctor(DoctorModel doctorMode) {
+        if (doctorMode != null) {
+            editName.setText(doctorMode.getName());
+//            editPass.setText(doctorMode.getPassword());
+            editRealName.setText(doctorMode.getRealName());
+            editEmail.setText(doctorMode.getEmail());
+            editPhone.setText(doctorMode.getPhone());
+            editCompany.setText(doctorMode.getHospital());
+            editClass.setText(doctorMode.getDepartment());
+        }
+    }
+
+    @Override
+    public void updateDoctorInfo(boolean success, String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        if (success) {
+            finish();
+        }
+    }
+
+    @Override
+    public void removeDoctor(boolean success, String msg) {
+
     }
 
     private void userRegister() {
@@ -156,6 +204,39 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "请选择医院科室", Toast.LENGTH_SHORT).show();
         } else {
             doctorPresenter.register(doctorModel);
+        }
+    }
+
+    private void userUpdate() {
+        DoctorModel.DoctorBuilder builder = new DoctorModel.DoctorBuilder(
+                null,
+                editName.getText().toString()
+        );
+        builder.setPassword(editPass.getText().toString());
+        builder.setRealName(editRealName.getText().toString());
+        builder.setEmail(editEmail.getText().toString());
+        builder.setPhone(editPhone.getText().toString());
+        builder.setHospital(editCompany.getText().toString());
+        builder.setDepartment(editClass.getText().toString());
+        DoctorModel doctorModel = builder.build();
+        doctorModel.setId(doctorId);
+
+        if (TextUtils.isEmpty(doctorModel.getName()) || TextUtils.isEmpty(doctorModel.getPassword())) {
+            Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+        } else if (!doctorModel.getPassword().equals(editPass2.getText().toString())) {
+            Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+        } else if (!doctorModel.getPassword().equals(editPass2.getText().toString())) {
+            Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editEmail.getText())) {
+            Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editPhone.getText())) {
+            Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editCompany.getText())) {
+            Toast.makeText(this, "请在医院管理里面添加医院名称", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(editClass.getText())) {
+            Toast.makeText(this, "请选择医院科室", Toast.LENGTH_SHORT).show();
+        } else {
+            doctorPresenter.updateDoctorInfo(doctorModel);
         }
     }
 

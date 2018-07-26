@@ -44,7 +44,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (buttonUser == v) {//用户管理
             //Toast.makeText(this, "用户管理", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, DoctorActivity.class);
             startActivity(intent);
         } else if (v == buttonItem) {//测量模块
             Intent intent = new Intent(this, AdminProjectActivity.class);

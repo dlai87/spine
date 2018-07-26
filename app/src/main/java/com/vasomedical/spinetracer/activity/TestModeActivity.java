@@ -17,8 +17,11 @@ import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenter;
 import com.vasomedical.spinetracer.activity.presenter.DoctorPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.DoctorView;
+import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.util.Global;
 import com.vasomedical.spinetracer.util.Util;
+
+import java.util.List;
 
 //页面--测试模式
 public class TestModeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -127,6 +130,26 @@ public class TestModeActivity extends AppCompatActivity implements View.OnClickL
 
                 @Override
                 public void registerCallBack(boolean success, String msg) {
+
+                }
+
+                @Override
+                public void selectAllDoctor(List<DoctorModel> doctorModelList) {
+
+                }
+
+                @Override
+                public void selectDoctor(DoctorModel doctorMode) {
+
+                }
+
+                @Override
+                public void updateDoctorInfo(boolean success, String msg) {
+
+                }
+
+                @Override
+                public void removeDoctor(boolean success, String msg) {
 
                 }
             });

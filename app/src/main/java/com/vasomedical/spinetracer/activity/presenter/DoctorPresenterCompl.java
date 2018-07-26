@@ -11,6 +11,7 @@ import com.vasomedical.spinetracer.database.util.DBAdapter;
 import com.vasomedical.spinetracer.model.DoctorModel;
 import com.vasomedical.spinetracer.util.Global;
 
+import java.util.List;
 import java.util.UUID;
 
 //用户管理的数据操作-实现
@@ -74,6 +75,77 @@ public class DoctorPresenterCompl implements DoctorPresenter {
                 if (!isExist) {
                     addLog(doctorModel, "注册成功");
                 }
+            }
+        }).start();
+    }
+
+    @Override
+    public void selectAllDoctor() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<DoctorModel> doctorModelList = tbDoctor.getDoctorList(db);
+                for (DoctorModel doctorModel : doctorModelList) {
+                    if (doctorModel.getName().equals("admin")) {
+                        doctorModelList.remove(doctorModel);
+                        break;
+                    }
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        doctorView.selectAllDoctor(doctorModelList);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    public void selectDoctor(final String id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final DoctorModel existDoctorModel = tbDoctor.getDoctorById(db, id);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        doctorView.selectDoctor(existDoctorModel);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    public void updateDoctorInfo(final DoctorModel doctorModel) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tbDoctor.smartInsert(db, doctorModel);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        doctorView.updateDoctorInfo(true, "更新成功");
+                    }
+                });
+                addLog(doctorModel, "更新成功");
+            }
+        }).start();
+    }
+
+    @Override
+    public void delectDoctor(final String doctorid) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final boolean success = tbDoctor.removeById(db, doctorid);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        doctorView.removeDoctor(success, success ? "删除成功" : "删除失败");
+                    }
+                });
             }
         }).start();
     }
