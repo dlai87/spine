@@ -45,7 +45,7 @@ public class TBPatient {
     }
 
     public void delete(SQLiteDatabase db, String id) {
-        db.delete(DBGlobal.TABLE_PATIENT, DBGlobal.COL_ID, new String[]{id});
+        db.delete(DBGlobal.TABLE_PATIENT, DBGlobal.COL_ID + "=?", new String[]{id});
     }
 
 

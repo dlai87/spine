@@ -83,9 +83,15 @@ public class AdminCompanyActivity extends AppCompatActivity implements View.OnCl
     public void updateCompanyUI(CompanyModel companyModel) {
         this.companyModel = companyModel;
         if (companyModel != null) {
-            editName.setText(companyModel.getName());
-            editAddress.setText(companyModel.getAddress());
-            editPhone.setText(companyModel.getPhone());
+            if (TextUtils.isEmpty(editName.getText())) {
+                editName.setText(companyModel.getName());
+            }
+            if (TextUtils.isEmpty(editAddress.getText())) {
+                editAddress.setText(companyModel.getAddress());
+            }
+            if (TextUtils.isEmpty(editPhone.getText())) {
+                editPhone.setText(companyModel.getPhone());
+            }
             if (companyModel.getClassModelList() != null) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int index = 0; index < companyModel.getClassModelList().size(); index++) {
