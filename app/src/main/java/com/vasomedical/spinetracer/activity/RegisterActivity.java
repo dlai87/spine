@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             buttonRegister.setText("更新");
         } else {
             tvTitle.setText("注册医生");
-            buttonRegister.setText("注冊");
+            buttonRegister.setText("注册");
         }
     }
 
