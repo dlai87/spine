@@ -57,6 +57,9 @@
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".activity.DoctorInfoUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.DoctorActivity"
             android:screenOrientation="portrait" />
         <activity

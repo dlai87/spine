@@ -8,6 +8,7 @@ import android.util.JsonWriter;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.adapter.HistoryTestAdapter;
@@ -17,6 +18,7 @@ import com.vasomedical.spinetracer.activity.presenter.LogsPresenterCompl;
 import com.vasomedical.spinetracer.activity.view.HistoryTestView;
 import com.vasomedical.spinetracer.model.HistoryTestModel;
 import com.vasomedical.spinetracer.model.InspectionRecord;
+import com.vasomedical.spinetracer.util.PdfUtils;
 
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView recyclerview;
     private HistoryTestAdapter historyTestAdapter;
     private HistoryTestPresenter historyTestPresenter;
+    private PdfUtils mPdfUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
 
         historyTestPresenter = new HistoryTestPresenterCompl(this, this);
         historyTestPresenter.reqAll();
+        mPdfUtils = new PdfUtils(this);
     }
 
     @Override
@@ -68,6 +72,10 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
             historyTestPresenter.reqName(edSearch.getText().toString());
         } else if (v == btnReport) {
             Map<InspectionRecord, Set<InspectionRecord>> modelSetMap = historyTestAdapter.getSelectModel();
+            String pdfName = System.currentTimeMillis() + ".dpf";
+            mPdfUtils.output(pdfName, modelSetMap);
+
+            Toast.makeText(this, "文件保存在SD卡，Spine文件夹里面，文件名为:" + pdfName+" 保存时间需要一定的时间", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.activity.adapter.viewholder.HistoryTestViewHolder;
@@ -57,6 +58,7 @@ public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHold
                 holder.tvName.setText(model.getPatient().getName());
                 holder.tvDate.setText(model.getTimestamp() + " No." + model.getPatient().getId());
                 holder.radioButton.setTag(R.id.HistoryTestModel, model);
+                model.tempView1 = holder.radioButton;
             } else {
                 String type = model.getType();
                 String typeName = "";
@@ -76,7 +78,16 @@ public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHold
                     typeName = mContext.getResources().getString(R.string.detect_option_7);
                 }
                 holder.itemName1.setText(typeName);
-                holder.checkbox1.setTag(R.id.HistoryTestModel, model);
+                holder.checkbox1.setTag(R.id.InspectionRecord, model);
+                model.tempView12 = holder.checkbox1;
+                //向上查找
+                for (int index = position; index >= 0; index--) {
+                    InspectionRecord lastRecode = data.get(index);
+                    if (lastRecode.getId() == null) {
+                        holder.checkbox1.setTag(R.id.HistoryTestModel, lastRecode);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -135,20 +146,31 @@ public class HistoryTestAdapter extends RecyclerView.Adapter<HistoryTestViewHold
             if (isChecked) {
                 selectModel.put(model, setInspectionRecord);
             } else {
+                while(!setInspectionRecord.isEmpty()){
+                    InspectionRecord record = setInspectionRecord.iterator().next();
+                    if (record.tempView12 != null) {
+                        record.tempView12.setChecked(false);
+                    }
+                    if (record.tempView1 != null) {
+                        record.tempView1.setChecked(false);
+                    }
+                }
                 selectModel.remove(model);
             }
         } else {
             Set<InspectionRecord> setInspectionRecord = selectModel.get(model);
-            InspectionRecord inspectionRecord = (InspectionRecord) buttonView.getTag(R.id.InspectionRecord);
             if (setInspectionRecord == null) {
-                setInspectionRecord = new HashSet<>();
-            }
-            if (isChecked) {
-                setInspectionRecord.add(inspectionRecord);
+                Toast.makeText(mContext, "请在前面先打上勾", Toast.LENGTH_SHORT).show();
+                buttonView.setChecked(false);
             } else {
-                setInspectionRecord.remove(inspectionRecord);
+                InspectionRecord inspectionRecord = (InspectionRecord) buttonView.getTag(R.id.InspectionRecord);
+                if (isChecked) {
+                    setInspectionRecord.add(inspectionRecord);
+                } else {
+                    setInspectionRecord.remove(inspectionRecord);
+                }
+                selectModel.put(model, setInspectionRecord);
             }
-            selectModel.put(model, setInspectionRecord);
         }
     }
 

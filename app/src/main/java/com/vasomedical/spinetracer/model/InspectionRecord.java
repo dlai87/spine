@@ -1,6 +1,8 @@
 package com.vasomedical.spinetracer.model;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.CompoundButton;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.algorithm.AlgorithmFactory;
@@ -39,6 +41,7 @@ public class InspectionRecord {
     String score;
     String doctorComments;
     String saveChartPath;
+    public CompoundButton tempView1,tempView12;
 
 
     ArrayList<Pose> inspectionData;

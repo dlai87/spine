@@ -35,7 +35,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorViewHolder> {
     public void onBindViewHolder(@NonNull DoctorViewHolder holder, int position) {
         if (data != null) {
             DoctorModel peopleModel = data.get(position);
-            holder.tvName.setText(peopleModel.getName() + " 医生");
+            holder.tvName.setText(peopleModel.getName());
             holder.tvClass.setText(peopleModel.getDepartment());
             holder.tvCompany.setText(peopleModel.getHospital());
             holder.selectView.setVisibility(peopleModel == selectModel ? View.VISIBLE : View.INVISIBLE);

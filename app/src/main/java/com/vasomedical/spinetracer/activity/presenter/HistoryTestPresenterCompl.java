@@ -121,7 +121,7 @@ public class HistoryTestPresenterCompl implements HistoryTestPresenter {
                     null,
                     timestamp,
                     temp.get(0).getPatient(),
-                    null,
+                    temp.get(0).getDoctor(),
                     null,
                     null,
                     null,

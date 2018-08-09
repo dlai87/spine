@@ -23,7 +23,7 @@ import java.util.List;
 
 //界面--医生管理
 public class DoctorActivity extends AppCompatActivity implements View.OnClickListener, DoctorView {
-    private View buttonBack, buttonAdd, groupAdd, buttonEdit, buttonDel;
+    private View buttonBack, buttonAdd, groupAdd, buttonEdit, buttonDel, buttonUpdate;
     private RecyclerView recyclerview;
     private DoctorAdapter adapter;
     private DoctorPresenter doctorPresenter;
@@ -42,6 +42,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
         buttonAdd = findViewById(R.id.bg1);
         groupAdd = findViewById(R.id.buttonAdd);
         buttonEdit = findViewById(R.id.buttonEdit);
+        buttonUpdate = findViewById(R.id.buttonUpdate);
         buttonDel = findViewById(R.id.buttonDel);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
     }
@@ -50,6 +51,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
         doctorPresenter = new DoctorPresenterCompl(this, this);
         buttonBack.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
+        buttonUpdate.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
         buttonDel.setOnClickListener(this);
 
@@ -106,6 +108,14 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
                 dialog.setDoctorPresenter(doctorPresenter);
                 dialog.setDoctorModel(adapter.getSelectItem());
                 dialog.show();
+            } else {
+                Toast.makeText(this, "需要先选择医生", Toast.LENGTH_SHORT).show();
+            }
+        } else if (v == buttonUpdate) {
+            if (adapter.getSelectItem() != null) {
+                Intent intent = new Intent(this, DoctorInfoUpdateActivity.class);
+                intent.putExtra("doctor_no", adapter.getSelectItem().getId());
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "需要先选择医生", Toast.LENGTH_SHORT).show();
             }
