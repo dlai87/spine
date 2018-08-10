@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     tools:context=".activity.PatientActivity">
 
     <TextView
@@ -22,7 +22,7 @@
         android:id="@+id/tvCompany"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:padding="8dp"
         android:text="上海xxx医院"
         android:textColor="#ffffffff"
         android:textSize="20sp"
@@ -35,8 +35,7 @@
         android:id="@+id/tvClass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
+        android:padding="8dp"
         android:text="骨科"
         android:textColor="#ffffffff"
         app:layout_constraintHorizontal_weight="3"
@@ -48,7 +47,8 @@
     <View
         android:id="@+id/selectView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvClass"
         android:background="@drawable/button_item_bg" />
 
 </android.support.constraint.ConstraintLayout>

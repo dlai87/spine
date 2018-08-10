@@ -72,10 +72,10 @@ public class HistoryTestActivity extends AppCompatActivity implements View.OnCli
             historyTestPresenter.reqName(edSearch.getText().toString());
         } else if (v == btnReport) {
             Map<InspectionRecord, Set<InspectionRecord>> modelSetMap = historyTestAdapter.getSelectModel();
-            String pdfName = System.currentTimeMillis() + ".dpf";
+            String pdfName = System.currentTimeMillis() + ".pdf";
             mPdfUtils.output(pdfName, modelSetMap);
 
-            Toast.makeText(this, "文件保存在SD卡，Spine文件夹里面，文件名为:" + pdfName+" 保存时间需要一定的时间", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "文件保存在SD卡，Spine文件夹里面，文件名为:" + pdfName+" 保存时间需要一定的时间，保存完成后将自动开", Toast.LENGTH_LONG).show();
         }
     }
 

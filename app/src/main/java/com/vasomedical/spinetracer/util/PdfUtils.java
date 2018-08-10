@@ -1,18 +1,19 @@
 package com.vasomedical.spinetracer.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
-import android.print.PrintAttributes;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vasomedical.spinetracer.R;
 import com.vasomedical.spinetracer.model.DoctorModel;
@@ -176,6 +177,7 @@ public class PdfUtils {
                 e.printStackTrace();
             }
             document.close();
+            openFile(mContext, file1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -191,4 +193,30 @@ public class PdfUtils {
         mTextLayout.draw(page.getCanvas());
         document.finishPage(page);
     }
+
+    /**
+     * 调用系统应用打开文件
+     *
+     * @param context
+     * @param file
+     */
+    public static void openFile(Context context, File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //设置intent的Action属性
+        intent.setAction(Intent.ACTION_VIEW);
+        //获取文件file的MIME类型
+        //   String type = getMIMEType(file);
+        //设置intent的data和Type属性。
+        //intent.setDataAndType(Uri.fromFile(file), type);
+        intent.setData(Uri.fromFile(file));
+        //跳转
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            // logger.error("FileUtil", e);
+            Toast.makeText(context, "找不到打开此文件的应用！", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
