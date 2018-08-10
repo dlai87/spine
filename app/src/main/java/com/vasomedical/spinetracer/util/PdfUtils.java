@@ -22,6 +22,8 @@ import com.vasomedical.spinetracer.model.PatientModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,10 +72,14 @@ public class PdfUtils {
             Typeface textTypeface = Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
             textPaint.setTypeface(textTypeface);
 
-            StringBuilder content = new StringBuilder();
+            Date nowTime=new Date();
+            System.out.println(nowTime);
+            SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            StringBuilder content = new StringBuilder("  PDF报告 "+time.format(nowTime));
             //医生
             DoctorModel doctor = ((InspectionRecord) modelSetMap.keySet().toArray()[0]).getDoctor();
-            content.append("\n  医生姓名：" + doctor.getName());
+            content.append("\n\n\n  医生姓名：" + doctor.getName());
             content.append("\n  所在医院：" + doctor.getHospital());
             content.append("\n  科室：" + doctor.getDepartment());
 
