@@ -250,6 +250,6 @@ public class DetectFragment extends BaseFragment {
         }catch (Exception e){
 
         }
-        poseLog.recordPoseData(pose);
+        poseLog.recordPoseData(pose, null);
     }
 }

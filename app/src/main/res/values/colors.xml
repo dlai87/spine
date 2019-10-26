@@ -3,8 +3,8 @@
 
 
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#151D32</color>
+    <color name="colorPrimaryDark">#151D32</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="selected_item_color">#30d1d5</color>
@@ -52,6 +52,8 @@
     <color name="njbutton_cherry_red">#FF6259</color>
     <!--  r: 127 g:234 b:255 -->
     <color name="njbutton_transparent">#00000000</color>
+    <!-- r:35 g:41 b:76 -->
+    <color name="bg">#23294C</color>
 
 
 

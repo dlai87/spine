@@ -85,8 +85,8 @@ public class AnalyticFragment extends BaseFragment {
     @Override
     protected void assignViews() {
 
-        saveButton = (Button)view.findViewById(R.id.saveButton);
-        mChart = (LineChart) view.findViewById(R.id.chart1);
+       // saveButton = (Button)view.findViewById(R.id.saveButton);
+      //  mChart = (LineChart) view.findViewById(R.id.chart1);
         invalidDetectionLayout = (LinearLayout)view.findViewById(R.id.invalid_detection_layout);
         validLayout = (ScrollView)view.findViewById(R.id.scrollView);
         reTestButton = (Button)view.findViewById(R.id.re_test_button);
@@ -181,7 +181,7 @@ public class AnalyticFragment extends BaseFragment {
                 //String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/";
                 boolean success = mChart.saveToPath("chart.jpg", "/Android/data/");
                 Log.e("show", "save to path success " + success );
-                success = mChart.saveToGallery("Chart.jpg",60);
+                //success = mChart.saveToGallery("Chart.jpg",60);
                 Log.e("show", "save to gallery success " + success);
                 createandDisplayPdf("Test");
             }

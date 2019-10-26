@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PatientEditActivity">
+
+    <ImageView
+        android:id="@+id/buttonBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:src="@mipmap/icon_back" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新建病历"
+        android:textColor="#ff00baff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonBack" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="王医生 "
+        android:textColor="#ff00baff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonBack" />
+
+    <EditText
+        android:id="@+id/editNo"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_peopleno"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_peoplename"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNo" />
+
+    <TextView
+        android:id="@+id/editSex"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_peoplesex"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+    <ImageView
+        android:id="@+id/btnSex"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="12dp"
+        android:src="@mipmap/icon_sanjiao"
+        app:layout_constraintBottom_toBottomOf="@+id/editSex"
+        app:layout_constraintEnd_toEndOf="@+id/editSex"
+        app:layout_constraintTop_toTopOf="@+id/editSex" />
+
+    <TextView
+        android:id="@+id/editBirthDate"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_peopledate"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSex" />
+
+    <ImageView
+        android:id="@+id/btnDate"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="12dp"
+        android:src="@mipmap/icon_date"
+        app:layout_constraintBottom_toBottomOf="@+id/editBirthDate"
+        app:layout_constraintEnd_toEndOf="@+id/editBirthDate"
+        app:layout_constraintTop_toTopOf="@+id/editBirthDate" />
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_peopledphone"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBirthDate" />
+
+    <EditText
+        android:id="@+id/editIdCard"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_peopleid"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPhone" />
+
+    <EditText
+        android:id="@+id/editAddress"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_peopleaddess"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editIdCard" />
+
+    <EditText
+        android:id="@+id/editRemarks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="left|top"
+        android:hint="@string/hint_peoplemark"
+        android:lines="6"
+        android:padding="16dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+
+    <TextView
+        android:id="@+id/buttonSave"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

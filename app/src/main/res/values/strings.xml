@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">SpineTracer</string>
-    <string name="app_name_long">Java Hello Motion Tracking Example</string>
+    <string name="app_name">Spine Tracer</string>
+    <string name="app_name_long">Spine Tracer</string>
     <string name="text">See Logcat for pose update.</string>
     <string name="exception_tango_error">"Tango exception! Try again!"</string>
     <string name="exception_tango_invalid">"Tango invalid exception! Try again!"</string>
@@ -52,11 +52,13 @@
     <string name="email_is_occupied">Email is occupied</string>
 
     <string name="please_select_detect_options">请选择测试项目</string>
-    <string name="detect_option_1">脊柱侧弯倾角</string>
-    <string name="detect_option_2">矢面旋转角</string>
-    <string name="detect_option_3">前倾／后伸</string>
-    <string name="detect_option_4">左倾／右倾</string>
-    <string name="detect_option_5">驼背角</string>
+    <string name="detect_option_1">躯干倾斜角</string>
+    <string name="detect_option_2">驼背角</string>
+    <string name="detect_option_3">脊柱弯曲Cobb角</string>
+    <string name="detect_option_4">脊柱左右侧弯倾角</string>
+    <string name="detect_option_5">前倾/后仰角</string>
+    <string name="detect_option_6">旋转角</string>
+    <string name="detect_option_7">身体平衡度</string>
     <string name="intro">详细介绍</string>
     <string name="next">下一步</string>
     <string name="start">开始测量</string>
@@ -92,4 +94,72 @@
     <string name="cannot">Cannot</string>
     <string name="album_name">CameraSample</string>
 
+    <string name="item1_desc">
+        <Data><![CDATA[ 目的:探讨青少年特发性脊柱侧凸躯干倾斜和脊柱畸形常用测量值之间的关系。
+方法:对术前接受全脊柱MRI扫描的30例女性患者进行回顾性研究，全脊柱MRI 加扫顶椎横截面以观察顶椎旋转，可替代CT检查测量的椎体矢状面旋转度（RAsag）。胸椎和胸腰椎RAsag测量与临床上获得的躯干倾斜角（ATI）和Cobb测量进行日期匹配。计算双侧Pearson相关性检验，α=0.01。
+结果:患者平均年龄15.4岁（11~18岁）；BMI为17.6(17.5~24.1)。侧凸分型：Lenke 1型8例，2型7例，3型1例，4型3例，5型8例，6型3例。完成了40个侧凸（23个胸椎，17个胸腰椎）的统计，分析日期匹配的数据点。在胸椎侧凸，ATI与Cobb的相关性为r =0.719，P <0.001；ATI与RAsag的相关性为r =0.720，P <0.003；ATI与Cobb角柔韧性呈负相关r =－0.530，P <0.01。在胸腰椎侧凸，ATI与Cobb相关性为r =0.828，P <0.003；ATI与RAsag相关性为r =0.810，P <0.004；与Cobb柔韧性无相关性r =-0.420，P <0.225。
+结论:躯干倾斜和脊柱的胸椎和胸腰椎横断面畸形是有相关性的，就像躯干横截面和脊柱冠状面畸形有相关性一样；减轻躯干畸形能限制胸椎畸形，但与胸腰椎脊柱柔韧性无相关性。 ]]> </Data>
+    </string>
+
+
+    <string name="save">保存</string>
+
+    <string name="result_score">测量结果评级</string>
+    <string name="doctor_comment_multi_option">医生诊断（可多选）</string>
+    <string name="doctor_comment">医生诊断</string>
+    <string name="suggest_diagnosis">参考结论</string>
+    <string name="please_select_diagnosis">请选择适用的参考结论（可多选）</string>
+    <string name="please_write_diagnosis">备注（选填）</string>
+
+
+    <string name="vertical_move">竖直移动</string>
+    <string name="horizontal_move">水平移动</string>
+    <string name="please_select_correct_points">请选择脊柱弯曲相应起始点和结束点，以计算Cobb\'s角</string>
+    <string name="cobbs_angle">Cobb\'s角</string>
+
+    <string name="analytic_label_left_right_1">右侧弯角度：</string>
+    <string name="analytic_label_left_right_2">左侧弯角度：</string>
+    <string name="analytic_label_forward_back_1">前倾角度：</string>
+    <string name="analytic_label_forward_back_2">后仰角度：</string>
+    <string name="analytic_label_rotate_1">右转角度：</string>
+    <string name="analytic_label_rotate_2">左转角度：</string>
+    <string name="analytic_label_balance_1">右侧倾斜：</string>
+    <string name="analytic_label_balance_2">左侧倾斜：</string>
+
+
+    <string name="result_score_0">健康</string>
+    <string name="result_score_1">较健康</string>
+    <string name="result_score_2">需警惕</string>
+    <string name="result_score_3">需治疗</string>
+
+    <string name="generate_report_time">打印报告时间</string>
+    <string name="email_report">发送至邮箱</string>
+    <string name="back">返回</string>
+    <string name="inspection_type">测量类型</string>
+    <string name="inspection_time">测量时间</string>
+    <string name="doctor">医生</string>
+    <string name="please_calibrate">请缓慢运动设备，当看到读数较稳定合理后，按"开始测量"。</string>
+    <string name="calibrate">设备校准</string>
+
+    <!--hint-->
+    <string name="hint_companynmae"><i>医院名称</i></string>
+    <string name="hint_phone"><i>联系方式</i></string>
+    <string name="hint_address"><i>地址</i></string>
+    <string name="hint_username"><i>输入用户名</i></string>
+    <string name="hint_password"><i>输入密码</i></string>
+    <string name="hint_password2"><i>再次输入密码</i></string>
+    <string name="hint_companynmae1"><i>广东省第一人民医院</i></string>
+    <string name="hint_companynmae2"><i>请在医院管理里面添加医院名称</i></string>
+    <string name="hint_class"><i>耳鼻喉科</i></string>
+    <string name="hint_class2"><i>请在医院管理里面添加科室</i></string>
+    <string name="hint_email"><i>输入电子邮箱</i></string>
+    <string name="hint_phone2"><i>输入手机号</i></string>
+    <string name="hint_peopleno"><i>输入病人编号</i></string>
+    <string name="hint_peoplename"><i>输入患者姓名</i></string>
+    <string name="hint_peoplesex"><i>请选择性别</i></string>
+    <string name="hint_peopledate"><i>请选择出生年月</i></string>
+    <string name="hint_peopledphone"><i>输入联系方式</i></string>
+    <string name="hint_peopleid"><i>输入身份证号码</i></string>
+    <string name="hint_peopleaddess"><i>输入联系地址</i></string>
+    <string name="hint_peoplemark"><i>输入备注</i></string>
 </resources>

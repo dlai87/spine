@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AdminCompanyActivity">
+
+
+    <ImageView
+        android:id="@+id/buttonBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:src="@mipmap/icon_back" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="医院管理"
+        android:textColor="#ff00baff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonBack" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="0dp"
+        android:layout_height="166dp"
+        android:layout_margin="16dp"
+        android:background="#ffffff"
+        android:padding="24dp"
+        android:src="@mipmap/logo_company"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_companynmae"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_phone"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+    <EditText
+        android:id="@+id/editAddress"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_address"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPhone" />
+
+    <TextView
+        android:id="@+id/buttonAddClass"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingEnd="8dp"
+        android:paddingStart="56dp"
+        android:text="添加科室"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="120dp"
+        android:src="@mipmap/icon_add"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAddClass"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAddClass"
+        app:layout_constraintStart_toStartOf="@+id/buttonAddClass"
+        app:layout_constraintTop_toTopOf="@+id/buttonAddClass" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddClass">
+
+        <TextView
+            android:id="@+id/tvClassList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="1、耳鼻喉科\n2、内科\n3、外科\n4、妇科专科"
+            android:textColor="#ffd8daef"
+            android:textSize="23sp" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/buttonSubmit"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCacnel"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/buttonCacnel"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonSubmit" />
+
+</android.support.constraint.ConstraintLayout>

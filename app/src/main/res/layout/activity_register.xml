@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity">
+
+    <ImageView
+        android:id="@+id/buttonBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:src="@mipmap/icon_back" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新用户注册"
+        android:textColor="#ff00baff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonBack" />
+
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="57dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_username"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_face2"
+        app:layout_constraintBottom_toBottomOf="@+id/editName"
+        app:layout_constraintStart_toStartOf="@+id/editName"
+        app:layout_constraintTop_toTopOf="@+id/editName" />
+
+    <EditText
+        android:id="@+id/editPass"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_lock"
+        app:layout_constraintBottom_toBottomOf="@+id/editPass"
+        app:layout_constraintStart_toStartOf="@+id/editPass"
+        app:layout_constraintTop_toTopOf="@+id/editPass" />
+
+    <CheckBox
+        android:id="@+id/buttonEye"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:button="@drawable/checkbox_eye"
+        app:layout_constraintBottom_toBottomOf="@+id/editPass"
+        app:layout_constraintEnd_toEndOf="@+id/editPass"
+        app:layout_constraintTop_toTopOf="@+id/editPass" />
+
+    <EditText
+        android:id="@+id/editPass2"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_password2"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPass" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_lock"
+        app:layout_constraintBottom_toBottomOf="@+id/editPass2"
+        app:layout_constraintStart_toStartOf="@+id/editPass2"
+        app:layout_constraintTop_toTopOf="@+id/editPass2" />
+
+    <CheckBox
+        android:id="@+id/buttonEye2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:button="@drawable/checkbox_eye"
+        app:layout_constraintBottom_toBottomOf="@+id/editPass2"
+        app:layout_constraintEnd_toEndOf="@+id/editPass2"
+        app:layout_constraintTop_toTopOf="@+id/editPass2" />
+
+    <EditText
+        android:id="@+id/editRealName"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="输入用户名"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPass2" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_name"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/editRealName"
+        app:layout_constraintStart_toStartOf="@+id/editRealName"
+        app:layout_constraintTop_toTopOf="@+id/editRealName" />
+
+    <TextView
+        android:id="@+id/editCompany"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_companynmae2"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRealName" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_company"
+        app:layout_constraintBottom_toBottomOf="@+id/editCompany"
+        app:layout_constraintStart_toStartOf="@+id/editCompany"
+        app:layout_constraintTop_toTopOf="@+id/editCompany" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="68dp"
+        android:layout_marginRight="56dp"
+        android:background="#38499C"
+        app:layout_constraintBottom_toBottomOf="@+id/editCompany"
+        app:layout_constraintEnd_toEndOf="@+id/editCompany"
+        app:layout_constraintTop_toTopOf="@+id/editCompany" />
+
+    <ImageView
+        android:id="@+id/buttonCompanyMore"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:src="@mipmap/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/editCompany"
+        app:layout_constraintEnd_toEndOf="@+id/editCompany"
+        app:layout_constraintTop_toTopOf="@+id/editCompany" />
+
+    <TextView
+        android:id="@+id/editClass"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_class2"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCompany" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_class"
+        app:layout_constraintBottom_toBottomOf="@+id/editClass"
+        app:layout_constraintStart_toStartOf="@+id/editClass"
+        app:layout_constraintTop_toTopOf="@+id/editClass" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="68dp"
+        android:layout_marginRight="56dp"
+        android:background="#38499C"
+        app:layout_constraintBottom_toBottomOf="@+id/editClass"
+        app:layout_constraintEnd_toEndOf="@+id/editClass"
+        app:layout_constraintTop_toTopOf="@+id/editClass" />
+
+    <ImageView
+        android:id="@+id/buttonClassMore"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:src="@mipmap/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/editClass"
+        app:layout_constraintEnd_toEndOf="@+id/editClass"
+        app:layout_constraintTop_toTopOf="@+id/editClass" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editClass" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_email"
+        app:layout_constraintBottom_toBottomOf="@+id/editEmail"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toTopOf="@+id/editEmail" />
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_item_bg"
+        android:hint="@string/hint_phone2"
+        android:inputType="textEmailAddress"
+        android:lines="1"
+        android:maxLength="20"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:textColor="#ff00baff"
+        android:textColorHint="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/icon_phone"
+        app:layout_constraintBottom_toBottomOf="@+id/editPhone"
+        app:layout_constraintStart_toStartOf="@+id/editPhone"
+        app:layout_constraintTop_toTopOf="@+id/editPhone" />
+
+    <TextView
+        android:id="@+id/buttonRegister"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_item_bg"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="#ff00baff"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

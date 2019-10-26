@@ -10,16 +10,15 @@
         android:id="@+id/invalid_detection_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:gravity="center">
+        android:visibility="gone">
 
         <com.vasomedical.spinetracer.util.widget.textView.NJTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/invalid_detection_data"
             android:layout_marginBottom="@dimen/margin_2"
-            />
+            android:text="@string/invalid_detection_data" />
 
         <com.vasomedical.spinetracer.util.widget.button.NJButton
             android:id="@+id/re_test_button"
@@ -27,7 +26,7 @@
             android:layout_height="@dimen/button_h_6"
             android:text="@string/re_test"
             android:textColor="@color/njbutton_white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -41,95 +40,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="save"
-                android:id="@+id/saveButton"/>
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart1"
-                android:layout_width="@dimen/img_chart_w"
-                android:layout_height="@dimen/img_chart_h" />
+            <!-- chart -->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
+                android:text="脊柱段图"/>
+
+            <com.github.rongi.rotate_layout.layout.RotateLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
+                app:angle="270">
+
+                <!-- should rotate 90 / 270 -->
+
+                <com.github.mikephil.charting.charts.BubbleChart
+                    android:id="@+id/bubbleChartSpineSegment"
+                    android:layout_width="@dimen/img_chart_w"
+                    android:layout_height="@dimen/img_chart_w"
+                    android:background="@android:color/white"
+                    />
+
+            </com.github.rongi.rotate_layout.layout.RotateLayout>
+
+
             <TextView
+                android:id="@+id/cobbs_angle_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adgfnaoregtjaoerijgjadoring"/>
+                android:text=""/>
+
 
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>

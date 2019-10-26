@@ -100,6 +100,10 @@
 
     <dimen name="img_chart_w">640dp</dimen>
     <dimen name="img_chart_h">320dp</dimen>
+    <dimen name="img_chart_h2">200dp</dimen>
+
+    <dimen name="img_chart_seg_w">320dp</dimen>
+    <dimen name="img_chart_seg_h">400dp</dimen>
 
     <dimen name="img_avatar_w">110dp</dimen>
     <dimen name="img_avatar_h">110dp</dimen>
@@ -122,5 +126,9 @@
     <dimen name="patient_info_dialog_h">380dp</dimen>
 
     <dimen name="step_indicator_w">400dp</dimen>
+    <dimen name="angle_rule_w">400dp</dimen>
+    <dimen name="angle_rule_h">200dp</dimen>
+    <dimen name="angle_indicator_r">20dp</dimen>
+
 
 </resources>

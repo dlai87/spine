@@ -1,0 +1,6 @@
+package com.vasomedical.spinetracer.activity;
+
+import android.support.v7.app.AppCompatActivity;
+
+public class PdfActivity extends AppCompatActivity {
+}

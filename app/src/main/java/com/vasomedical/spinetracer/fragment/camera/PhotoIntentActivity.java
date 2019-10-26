@@ -24,8 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+
 import com.vasomedical.spinetracer.MainActivity;
 import com.vasomedical.spinetracer.R;
+import com.vasomedical.spinetracer.util.Util;
 
 
 public class PhotoIntentActivity extends Activity {
@@ -83,7 +85,7 @@ public class PhotoIntentActivity extends Activity {
 
 	private File createImageFile() throws IOException {
 		// Create an image file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		String timeStamp = new SimpleDateFormat(Util.FORMAT_DATE_TIME).format(new Date());
 		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
 		File albumF = getAlbumDir();
 		File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);

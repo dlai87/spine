@@ -1,0 +1,4 @@
+<resources>
+    <item name="HistoryTestModel" type="id" />
+    <item name="InspectionRecord" type="id" />
+</resources>
